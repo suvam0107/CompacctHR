@@ -1,0 +1,10 @@
+// src/app/layout/footer/footer.scss
+@use '../../../../theme/variables' as *;
+
+.app-footer {
+  height: 48px;
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}

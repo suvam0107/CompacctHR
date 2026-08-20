@@ -1,0 +1,7 @@
+{
+  "success": true,
+  "data": {
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6IkFheXVzaCBTaGFybWEiLCJlbWFpbCI6ImFheXVzaEBjb21wYWNjdC5pbiIsInJvbGVzIjpbIkhSQWRtaW4iXSwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjk5OTk5OTk5OTl9.mock_signature"
+  },
+  "message": "Login successful"
+}

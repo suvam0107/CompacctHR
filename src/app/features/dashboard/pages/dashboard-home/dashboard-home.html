@@ -1,0 +1,102 @@
+<!-- src/app/features/dashboard/pages/dashboard-home/dashboard-home.html -->
+<div class="dashboard-container">
+  <!-- Page Header -->
+  <app-page-header
+    title="Dashboard"
+    [subtitle]="'Welcome back, ' + (user()?.name || 'User') + '. Here is an overview of today\'s activities.'"
+  >
+    <a routerLink="/attendance/log" class="btn btn-outline-primary btn-sm d-flex align-items-center gap-1">
+      <i class="pi pi-list"></i>
+      <span>View Attendance</span>
+    </a>
+  </app-page-header>
+
+  <!-- KPI Stat Cards Row -->
+  <div class="row g-3 mb-4">
+    @if (isDashboardLoading() && !summary()) {
+      @for (i of [1, 2, 3, 4]; track i) {
+        <div class="col-12 col-sm-6 col-xl-3">
+          <app-loading-skeleton type="card"></app-loading-skeleton>
+        </div>
+      }
+    } @else if (summary()) {
+      <!-- Stat 1: Total Employees -->
+      <div class="col-12 col-sm-6 col-xl-3">
+        <app-stat-card
+          label="Total Employees"
+          [value]="summary()!.stats.totalEmployees.value"
+          icon="pi pi-users"
+          [trend]="summary()!.stats.totalEmployees.trend"
+          [trendValue]="summary()!.stats.totalEmployees.trendValue"
+          colorVariant="primary"
+        ></app-stat-card>
+      </div>
+
+      <!-- Stat 2: Present Today -->
+      <div class="col-12 col-sm-6 col-xl-3">
+        <app-stat-card
+          label="Present Today"
+          [value]="summary()!.stats.presentToday.value"
+          icon="pi pi-check-circle"
+          [trend]="summary()!.stats.presentToday.trend"
+          [trendValue]="summary()!.stats.presentToday.trendValue"
+          [subtext]="summary()!.stats.presentToday.percentage ? summary()!.stats.presentToday.percentage + '% Attendance' : ''"
+          colorVariant="success"
+        ></app-stat-card>
+      </div>
+
+      <!-- Stat 3: On Leave Today -->
+      <div class="col-12 col-sm-6 col-xl-3">
+        <app-stat-card
+          label="On Leave Today"
+          [value]="summary()!.stats.onLeaveToday.value"
+          icon="pi pi-calendar-times"
+          [trend]="summary()!.stats.onLeaveToday.trend"
+          [trendValue]="summary()!.stats.onLeaveToday.trendValue"
+          colorVariant="warning"
+        ></app-stat-card>
+      </div>
+
+      <!-- Stat 4: Open Positions -->
+      <div class="col-12 col-sm-6 col-xl-3">
+        <app-stat-card
+          label="Open Positions"
+          [value]="summary()!.stats.openPositions.value"
+          icon="pi pi-briefcase"
+          [trend]="summary()!.stats.openPositions.trend"
+          [trendValue]="summary()!.stats.openPositions.trendValue"
+          colorVariant="info"
+        ></app-stat-card>
+      </div>
+    }
+  </div>
+
+  <!-- Main Widgets Row -->
+  <div class="row g-4 mb-4">
+    <!-- Today's Attendance Widget -->
+    <div class="col-12 col-lg-6">
+      <app-attendance-widget
+        [attendance]="summary()?.todayAttendance || null"
+        [isLoading]="isDashboardLoading() && !summary()"
+      ></app-attendance-widget>
+    </div>
+
+    <!-- Leave Balances Widget -->
+    <div class="col-12 col-lg-6">
+      <app-leave-widget
+        [balances]="leaveBalances()"
+        [isLoading]="isLeaveLoading() && leaveBalances().length === 0"
+      ></app-leave-widget>
+    </div>
+  </div>
+
+  <!-- Announcements Full-Width Widget -->
+  <div class="row g-4">
+    <div class="col-12">
+      <app-announcements-widget
+        [announcements]="summary()?.announcements || []"
+        [isLoading]="isDashboardLoading() && !summary()"
+      ></app-announcements-widget>
+    </div>
+  </div>
+</div>

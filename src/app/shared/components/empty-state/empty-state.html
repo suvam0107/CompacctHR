@@ -1,0 +1,15 @@
+<!-- src/app/shared/components/empty-state/empty-state.html -->
+<div class="empty-state text-center p-4">
+  <div class="empty-icon-wrapper mb-3 d-inline-flex align-items-center justify-content-center">
+    <i [class]="icon"></i>
+  </div>
+  <h3 class="empty-title mb-1">{{ title }}</h3>
+  @if (message) {
+    <p class="empty-message mb-3">{{ message }}</p>
+  }
+  @if (actionLabel) {
+    <button type="button" class="btn btn-outline-primary btn-sm" (click)="action.emit()">
+      {{ actionLabel }}
+    </button>
+  }
+</div>

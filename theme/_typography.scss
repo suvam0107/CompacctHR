@@ -1,0 +1,24 @@
+// theme/_typography.scss
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+html,
+body {
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  font-size: 14px;
+  color: var(--color-text);
+  background-color: var(--color-surface-alt);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  color: var(--color-text);
+  font-weight: 600;
+  margin-top: 0;
+}
+
+input, select, textarea, button {
+  font-family: inherit;
+}

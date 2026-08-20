@@ -1,0 +1,19 @@
+// src/app/features/dashboard/pages/dashboard-home/dashboard-home.scss
+@use '../../../../../../theme/variables' as *;
+
+.dashboard-container {
+  padding-bottom: var(--space-4);
+}
+
+.btn-outline-primary {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 6px 12px;
+
+  &:hover {
+    background-color: var(--color-primary);
+    color: #ffffff;
+  }
+}

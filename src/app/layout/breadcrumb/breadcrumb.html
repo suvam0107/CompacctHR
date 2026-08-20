@@ -1,0 +1,21 @@
+<!-- src/app/layout/breadcrumb/breadcrumb.html -->
+@if (breadcrumbs().length > 0) {
+  <nav aria-label="breadcrumb" class="d-none d-md-block">
+    <ol class="breadcrumb mb-0">
+      <li class="breadcrumb-item">
+        <a routerLink="/dashboard" class="text-decoration-none">
+          <i class="pi pi-home"></i>
+        </a>
+      </li>
+      @for (crumb of breadcrumbs(); track $index; let last = $last) {
+        <li class="breadcrumb-item" [class.active]="last" [attr.aria-current]="last ? 'page' : null">
+          @if (!last && crumb.url) {
+            <a [routerLink]="crumb.url" class="text-decoration-none">{{ crumb.label }}</a>
+          } @else {
+            <span>{{ crumb.label }}</span>
+          }
+        </li>
+      }
+    </ol>
+  </nav>
+}

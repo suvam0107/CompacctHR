@@ -1,0 +1,131 @@
+// src/app/auth/pages/login/login.scss
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.login-header {
+  margin-bottom: var(--space-6);
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--space-2);
+  }
+
+  .subtitle {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+// Inline Error Alert Banner
+.alert-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background-color: color-mix(in srgb, var(--color-danger) 8%, transparent);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-4);
+
+  .alert-icon {
+    color: var(--color-danger);
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .alert-message {
+    color: var(--color-danger);
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+
+    .form-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-text);
+    }
+
+    .password-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-1);
+
+      .forgot-link {
+        font-size: 0.8125rem;
+        font-weight: 500;
+        color: var(--color-primary);
+
+        &:hover {
+          color: var(--color-primary-hover);
+        }
+      }
+    }
+
+    .field-error {
+      color: var(--color-danger);
+      font-size: 0.75rem;
+      margin-top: 2px;
+    }
+  }
+
+  .remember-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .remember-checkbox {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+
+      .remember-label {
+        font-size: 0.85rem;
+        color: var(--color-text);
+        cursor: pointer;
+      }
+    }
+  }
+
+  .submit-btn {
+    margin-top: var(--space-2);
+    font-weight: 600;
+    padding: var(--space-3) var(--space-4);
+  }
+}
+
+.login-support {
+  margin-top: var(--space-6);
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+
+  .support-link {
+    color: var(--color-primary);
+    font-weight: 500;
+
+    &:hover {
+      color: var(--color-primary-hover);
+    }
+  }
+}

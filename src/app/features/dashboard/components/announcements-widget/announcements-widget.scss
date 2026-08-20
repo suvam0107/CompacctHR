@@ -1,0 +1,53 @@
+// src/app/features/dashboard/components/announcements-widget/announcements-widget.scss
+@use '../../../../../../theme/variables' as *;
+
+.announcements-widget {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.widget-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.announcement-item {
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  transition: border-color 120ms ease-out;
+
+  &:hover {
+    border-color: var(--color-primary-light);
+  }
+
+  &.is-important {
+    border-left: 3px solid var(--color-warning);
+  }
+}
+
+.badge-important {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-warning);
+  background-color: rgba(183, 121, 31, 0.12);
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+}
+
+.category-tag {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.announcement-date {
+  font-size: 0.75rem;
+}
+
+.announcement-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text);
+}

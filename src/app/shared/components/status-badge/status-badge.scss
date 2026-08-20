@@ -1,0 +1,62 @@
+// src/app/shared/components/status-badge/status-badge.scss
+@use '../../../../../theme/variables' as *;
+
+.status-badge {
+  padding: 3px 8px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.badge-success {
+  color: var(--color-success);
+  background-color: rgba(30, 142, 90, 0.12);
+
+  .status-dot {
+    background-color: var(--color-success);
+  }
+}
+
+.badge-warning {
+  color: var(--color-warning);
+  background-color: rgba(183, 121, 31, 0.12);
+
+  .status-dot {
+    background-color: var(--color-warning);
+  }
+}
+
+.badge-danger {
+  color: var(--color-danger);
+  background-color: rgba(192, 54, 44, 0.12);
+
+  .status-dot {
+    background-color: var(--color-danger);
+  }
+}
+
+.badge-info {
+  color: var(--color-info);
+  background-color: rgba(43, 108, 176, 0.12);
+
+  .status-dot {
+    background-color: var(--color-info);
+  }
+}
+
+.badge-neutral {
+  color: var(--color-text-muted);
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+
+  .status-dot {
+    background-color: var(--color-text-muted);
+  }
+}

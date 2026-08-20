@@ -1,0 +1,33 @@
+// src/app/layout/breadcrumb/breadcrumb.scss
+@use '../../../../theme/variables' as *;
+
+.breadcrumb {
+  font-size: 0.8125rem;
+  padding: 0;
+  background: transparent;
+
+  .breadcrumb-item {
+    display: inline-flex;
+    align-items: center;
+
+    a {
+      color: rgba(255, 255, 255, 0.75);
+      transition: color 120ms ease-out;
+
+      &:hover {
+        color: #ffffff;
+      }
+    }
+
+    &.active span {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    + .breadcrumb-item::before {
+      content: '/';
+      padding: 0 var(--space-2);
+      color: rgba(255, 255, 255, 0.4);
+    }
+  }
+}

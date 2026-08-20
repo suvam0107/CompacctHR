@@ -1,0 +1,92 @@
+<!-- src/app/layout/sidebar/sidebar.html -->
+<aside class="app-sidebar" [class.collapsed]="collapsed()" [class.mobile-open]="mobileOpen()">
+  <!-- Sidebar Header -->
+  <div class="sidebar-header">
+    <a routerLink="/dashboard" class="brand-link" (click)="onNavigate()">
+      <div class="logo-container">
+        <img src="assets/images/Compacctlogo.png" alt="Compacct Logo" class="sidebar-logo" />
+      </div>
+      <span class="brand-title">Compacct<span class="brand-accent">HR</span></span>
+    </a>
+  </div>
+
+  <!-- Navigation Menu List -->
+  <nav class="sidebar-nav">
+    <ul class="nav-list">
+      @for (item of menuItems(); track item.id) {
+        @if (!item.children || item.children.length === 0) {
+          <!-- Single Menu Item -->
+          <li class="nav-item">
+            <a
+              [routerLink]="item.route"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: item.route === '/dashboard' }"
+              class="nav-link"
+              [title]="collapsed() ? item.label : ''"
+              (click)="onNavigate()"
+            >
+              <span class="nav-icon-wrap">
+                <i [class]="item.icon + ' nav-icon'"></i>
+              </span>
+              <span class="nav-label">{{ item.label }}</span>
+            </a>
+          </li>
+        } @else {
+          <!-- Parent Menu Item with Children -->
+          <li class="nav-item has-submenu" [class.expanded]="isMenuExpanded(item.id)">
+            <button
+              type="button"
+              class="nav-link submenu-trigger"
+              (click)="toggleSubmenu(item.id, $event)"
+              [title]="collapsed() ? item.label : ''"
+            >
+              <span class="nav-icon-wrap">
+                <i [class]="item.icon + ' nav-icon'"></i>
+              </span>
+              <span class="nav-label">{{ item.label }}</span>
+              <i
+                class="pi pi-chevron-down submenu-arrow"
+                [class.rotated]="isMenuExpanded(item.id)"
+              ></i>
+            </button>
+
+            <!-- Submenu Items with Smooth Grid Accordion -->
+            <div class="submenu-collapse" [class.open]="isMenuExpanded(item.id)">
+              <div class="submenu-inner">
+                <ul class="submenu-list">
+                  @for (child of item.children; track child.id) {
+                    <li class="submenu-item">
+                      <a
+                        [routerLink]="child.route"
+                        routerLinkActive="active"
+                        class="submenu-link"
+                        (click)="onNavigate()"
+                      >
+                        <i [class]="child.icon + ' child-icon'"></i>
+                        <span>{{ child.label }}</span>
+                      </a>
+                    </li>
+                  }
+                </ul>
+              </div>
+            </div>
+          </li>
+        }
+      }
+    </ul>
+  </nav>
+
+  <!-- Sidebar Footer -->
+  <div class="sidebar-footer">
+    <div class="footer-expanded">
+      <i class="pi pi-shield text-light"></i>
+      <div class="system-status">
+        <div class="status-title">Enterprise ERP</div>
+        <div class="status-subtitle">Active Session</div>
+      </div>
+    </div>
+    <div class="footer-collapsed">
+      <i class="pi pi-shield text-light" title="Enterprise ERP"></i>
+    </div>
+  </div>
+</aside>

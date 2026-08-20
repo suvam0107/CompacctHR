@@ -1,0 +1,30 @@
+{
+  "success": true,
+  "data": {
+    "balances": [
+      {
+        "leaveType": "Casual Leave",
+        "code": "CL",
+        "total": 12,
+        "used": 4,
+        "remaining": 8
+      },
+      {
+        "leaveType": "Sick Leave",
+        "code": "SL",
+        "total": 10,
+        "used": 2,
+        "remaining": 8
+      },
+      {
+        "leaveType": "Earned Leave",
+        "code": "EL",
+        "total": 18,
+        "used": 5,
+        "remaining": 13
+      }
+    ],
+    "pendingApprovalsCount": 2
+  },
+  "message": "Leave balances retrieved successfully"
+}

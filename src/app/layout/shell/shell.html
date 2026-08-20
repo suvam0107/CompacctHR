@@ -1,0 +1,33 @@
+<!-- src/app/layout/shell/shell.html -->
+<p-toast></p-toast>
+
+<!-- Top global HTTP progress bar -->
+@if (isLoading()) {
+  <div class="global-progress-bar">
+    <div class="progress-bar-indicator"></div>
+  </div>
+}
+
+<div class="shell-layout d-flex">
+  <!-- Mobile Sidebar Backdrop Overlay -->
+  @if (mobileSidebarOpen()) {
+    <div class="mobile-sidebar-backdrop" (click)="closeMobileSidebar()"></div>
+  }
+
+  <!-- Navigation Sidebar -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Main Content Wrapper -->
+  <div class="main-wrapper d-flex flex-column flex-grow-1 min-vh-100">
+    <!-- Top Header -->
+    <app-header></app-header>
+
+    <!-- Page Outlet Content -->
+    <main class="content-area flex-grow-1 p-3 p-md-4">
+      <router-outlet></router-outlet>
+    </main>
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+  </div>
+</div>

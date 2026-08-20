@@ -1,0 +1,50 @@
+// src/app/features/dashboard/components/attendance-widget/attendance-widget.scss
+@use '../../../../../../theme/variables' as *;
+
+.attendance-widget {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.widget-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.punch-box {
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+
+  .punch-label {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .punch-time {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-top: var(--space-1);
+  }
+}
+
+.working-hours-bar {
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 8px 16px;
+
+  &:hover {
+    background-color: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
+  }
+}

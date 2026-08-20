@@ -1,0 +1,64 @@
+// src/app/features/dashboard/components/leave-widget/leave-widget.scss
+@use '../../../../../../theme/variables' as *;
+
+.leave-widget {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.widget-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.btn-outline-primary {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 4px 10px;
+
+  &:hover {
+    background-color: var(--color-primary);
+    color: #ffffff;
+  }
+}
+
+.balance-item {
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+}
+
+.leave-code-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+
+.leave-name {
+  font-size: 0.875rem;
+  color: var(--color-text);
+}
+
+.leave-count {
+  font-size: 0.875rem;
+}
+
+.leave-progress-track {
+  height: 6px;
+  background-color: var(--color-border);
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-top: var(--space-1);
+}
+
+.leave-progress-fill {
+  height: 100%;
+  background-color: var(--color-primary);
+  border-radius: 9999px;
+  transition: width 200ms ease-out;
+}

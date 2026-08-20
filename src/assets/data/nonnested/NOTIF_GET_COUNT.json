@@ -1,0 +1,7 @@
+{
+  "success": true,
+  "data": {
+    "unreadCount": 3
+  },
+  "message": "Unread count retrieved"
+}

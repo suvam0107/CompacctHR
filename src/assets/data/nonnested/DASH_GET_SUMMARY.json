@@ -1,0 +1,63 @@
+{
+  "success": true,
+  "data": {
+    "stats": {
+      "totalEmployees": {
+        "value": 142,
+        "trend": "up",
+        "trendValue": "+4 this month"
+      },
+      "presentToday": {
+        "value": 128,
+        "percentage": 90.1,
+        "trend": "up",
+        "trendValue": "+2% vs yesterday"
+      },
+      "onLeaveToday": {
+        "value": 11,
+        "trend": "flat",
+        "trendValue": "Same as yesterday"
+      },
+      "openPositions": {
+        "value": 8,
+        "trend": "down",
+        "trendValue": "-1 this week"
+      }
+    },
+    "todayAttendance": {
+      "checkInTime": "09:15 AM",
+      "checkOutTime": null,
+      "totalHours": "6h 45m",
+      "expectedHours": "8h 00m",
+      "status": "Present",
+      "lastActivity": "2026-08-20T09:15:00Z"
+    },
+    "announcements": [
+      {
+        "id": 1,
+        "title": "Annual Company Town Hall & Strategy Review 2026",
+        "category": "Company Event",
+        "date": "2026-08-25T10:00:00Z",
+        "isImportant": true,
+        "author": "Leadership Team"
+      },
+      {
+        "id": 2,
+        "title": "Updated Health Insurance Policy Documents Uploaded",
+        "category": "HR Policy",
+        "date": "2026-08-18T14:30:00Z",
+        "isImportant": false,
+        "author": "HR Department"
+      },
+      {
+        "id": 3,
+        "title": "Scheduled Maintenance for HR ERP Platform this Saturday",
+        "category": "IT Operations",
+        "date": "2026-08-15T09:00:00Z",
+        "isImportant": false,
+        "author": "IT Support"
+      }
+    ]
+  },
+  "message": "Dashboard summary retrieved successfully"
+}

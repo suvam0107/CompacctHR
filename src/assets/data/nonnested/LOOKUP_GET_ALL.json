@@ -1,0 +1,25 @@
+{
+  "success": true,
+  "data": {
+    "departments": [
+      { "id": 1, "name": "Engineering", "code": "ENG" },
+      { "id": 2, "name": "Human Resources", "code": "HR" },
+      { "id": 3, "name": "Finance & Accounts", "code": "FIN" },
+      { "id": 4, "name": "Sales & Marketing", "code": "MKT" },
+      { "id": 5, "name": "Operations", "code": "OPS" }
+    ],
+    "designations": [
+      { "id": 1, "name": "Software Engineer", "departmentId": 1 },
+      { "id": 2, "name": "Senior Software Engineer", "departmentId": 1 },
+      { "id": 3, "name": "HR Manager", "departmentId": 2 },
+      { "id": 4, "name": "Accountant", "departmentId": 3 },
+      { "id": 5, "name": "Sales Executive", "departmentId": 4 }
+    ],
+    "leaveTypes": [
+      { "id": 1, "code": "CL", "name": "Casual Leave", "defaultDays": 12 },
+      { "id": 2, "code": "SL", "name": "Sick Leave", "defaultDays": 10 },
+      { "id": 3, "code": "EL", "name": "Earned Leave", "defaultDays": 18 }
+    ]
+  },
+  "message": "Lookups retrieved successfully"
+}

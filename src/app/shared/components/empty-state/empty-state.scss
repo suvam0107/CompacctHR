@@ -1,0 +1,28 @@
+// src/app/shared/components/empty-state/empty-state.scss
+@use '../../../../../theme/variables' as *;
+
+.empty-state {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.empty-icon-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 1.5rem;
+}
+
+.empty-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.empty-message {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}

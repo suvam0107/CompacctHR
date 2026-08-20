@@ -1,0 +1,39 @@
+<!-- src/app/features/dashboard/components/announcements-widget/announcements-widget.html -->
+<div class="card announcements-widget h-100 shadow-sm rounded">
+  <div class="card-header d-flex align-items-center justify-content-between bg-transparent p-3 border-bottom">
+    <div class="d-flex align-items-center gap-2">
+      <i class="pi pi-megaphone text-primary"></i>
+      <h3 class="widget-title mb-0">Company Announcements</h3>
+    </div>
+    <span class="badge rounded-pill bg-light text-dark border">{{ announcements.length }} Updates</span>
+  </div>
+
+  <div class="card-body p-3">
+    @if (isLoading) {
+      <app-loading-skeleton [rows]="3" height="50px"></app-loading-skeleton>
+    } @else if (announcements && announcements.length > 0) {
+      <div class="announcements-list d-flex flex-column gap-3">
+        @for (item of announcements; track item.id) {
+          <div class="announcement-item p-3 rounded" [class.is-important]="item.isImportant">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-1">
+              <div class="d-flex align-items-center gap-2">
+                @if (item.isImportant) {
+                  <span class="badge-important">Important</span>
+                }
+                <span class="category-tag">{{ item.category }}</span>
+              </div>
+              <span class="announcement-date text-muted">{{ item.date | dateFormat: 'medium' }}</span>
+            </div>
+
+            <h4 class="announcement-title mb-1">{{ item.title }}</h4>
+            <div class="announcement-author text-muted small">Posted by {{ item.author }}</div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="text-center py-4 text-muted">
+        <p>No active announcements.</p>
+      </div>
+    }
+  </div>
+</div>

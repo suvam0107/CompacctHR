@@ -1,0 +1,24 @@
+{
+  "success": true,
+  "data": {
+    "user": {
+      "id": 1,
+      "name": "Aayush Sharma",
+      "email": "aayush@compacct.in",
+      "roles": ["HRAdmin"],
+      "avatarUrl": null
+    },
+    "permissions": [
+      "employee:view",
+      "employee:create",
+      "employee:edit",
+      "attendance:view",
+      "leave:view",
+      "leave:approve",
+      "payroll:view",
+      "payroll:process"
+    ],
+    "menuFlags": {}
+  },
+  "message": "Session retrieved successfully"
+}

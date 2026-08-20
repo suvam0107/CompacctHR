@@ -1,0 +1,38 @@
+// theme/_variables.scss
+:root {
+  // Brand blues
+  --color-primary: #14539a;        // primary actions, active nav, links
+  --color-primary-hover: #0f3f76;
+  --color-primary-tint: #eaf2fb;   // selected row / hover background
+  --color-primary-light: #dce9f8;  // badges, chip backgrounds
+
+  // Neutrals
+  --color-surface: #ffffff;
+  --color-surface-alt: #f7f9fc;    // page background
+  --color-border: #e3e8ef;
+  --color-text: #1f2937;
+  --color-text-muted: #6b7280;
+
+  // Semantic (muted, not neon)
+  --color-success: #1e8e5a;
+  --color-warning: #b7791f;
+  --color-danger: #c0362c;
+  --color-info: #2b6cb0;
+
+  // Elevation
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
+  --shadow-md: 0 2px 8px rgba(16, 24, 40, 0.08);
+
+  // Skeleton shimmer (LoadingSkeleton only — see §7 Motion)
+  --skeleton-base: #edf1f7;
+  --skeleton-shimmer: #f9fbfd;
+
+  // Radius & spacing scale (used across shared components)
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+}

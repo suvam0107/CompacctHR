@@ -1,0 +1,92 @@
+// src/app/shared/components/stat-card/stat-card.scss
+@use '../../../../../theme/variables' as *;
+
+.stat-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  transition: transform 140ms ease-out, box-shadow 140ms ease-out;
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.stat-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.stat-meta {
+  font-size: 0.75rem;
+}
+
+.stat-subtext {
+  color: var(--color-text-muted);
+}
+
+.stat-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.trend-badge {
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.75rem;
+
+  &.trend-up {
+    color: var(--color-success);
+    background-color: rgba(30, 142, 90, 0.1);
+  }
+
+  &.trend-down {
+    color: var(--color-danger);
+    background-color: rgba(192, 54, 44, 0.1);
+  }
+
+  &.trend-flat {
+    color: var(--color-text-muted);
+    background-color: var(--color-surface-alt);
+  }
+}
+
+// Color variants
+.variant-primary .stat-icon-wrapper {
+  color: var(--color-primary);
+  background-color: var(--color-primary-tint);
+}
+
+.variant-success .stat-icon-wrapper {
+  color: var(--color-success);
+  background-color: rgba(30, 142, 90, 0.12);
+}
+
+.variant-warning .stat-icon-wrapper {
+  color: var(--color-warning);
+  background-color: rgba(183, 121, 31, 0.12);
+}
+
+.variant-info .stat-icon-wrapper {
+  color: var(--color-info);
+  background-color: rgba(43, 108, 176, 0.12);
+}
+
+.variant-danger .stat-icon-wrapper {
+  color: var(--color-danger);
+  background-color: rgba(192, 54, 44, 0.12);
+}

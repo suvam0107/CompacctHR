@@ -1,0 +1,58 @@
+<!-- src/app/features/dashboard/components/attendance-widget/attendance-widget.html -->
+<div class="card attendance-widget h-100 shadow-sm rounded">
+  <div class="card-header d-flex align-items-center justify-content-between bg-transparent p-3 border-bottom">
+    <div class="d-flex align-items-center gap-2">
+      <i class="pi pi-clock text-primary"></i>
+      <h3 class="widget-title mb-0">Today's Attendance</h3>
+    </div>
+    @if (!isLoading && attendance) {
+      <app-status-badge [status]="attendance.status"></app-status-badge>
+    }
+  </div>
+
+  <div class="card-body p-3">
+    @if (isLoading) {
+      <app-loading-skeleton [rows]="3" height="24px"></app-loading-skeleton>
+    } @else if (attendance) {
+      <div class="punch-details row g-3 text-center mb-3">
+        <div class="col-6">
+          <div class="punch-box p-3 rounded">
+            <span class="punch-label">Check-In</span>
+            <div class="punch-time text-success">{{ attendance.checkInTime || '--:--' }}</div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="punch-box p-3 rounded">
+            <span class="punch-label">Check-Out</span>
+            <div class="punch-time text-primary">{{ attendance.checkOutTime || '--:--' }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="working-hours-bar p-3 rounded mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-1">
+          <span class="small text-muted">Total Hours Logged</span>
+          <span class="fw-bold text-dark">{{ attendance.totalHours }}</span>
+        </div>
+        <div class="small text-muted">
+          Expected: {{ attendance.expectedHours || '8h 00m' }}
+        </div>
+      </div>
+
+      <div class="widget-actions d-flex gap-2">
+        <button
+          type="button"
+          class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2"
+          (click)="handlePunch()"
+        >
+          <i class="pi pi-fingerprint"></i>
+          <span>Web Punch (Clock-Out)</span>
+        </button>
+      </div>
+    } @else {
+      <div class="text-center py-4 text-muted">
+        <p>No attendance records available for today.</p>
+      </div>
+    }
+  </div>
+</div>

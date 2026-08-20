@@ -1,0 +1,72 @@
+<!-- src/app/layout/header/header.html -->
+<header class="app-header d-flex align-items-center justify-content-between px-3 px-md-4">
+  <div class="d-flex align-items-center gap-3">
+    <button
+      type="button"
+      class="sidebar-toggle-btn btn btn-link p-1"
+      (click)="toggleSidebar()"
+      [attr.aria-label]="sidebarCollapsed() ? 'Expand sidebar' : 'Collapse sidebar'"
+    >
+      <i class="pi" [class.pi-bars]="sidebarCollapsed()" [class.pi-align-left]="!sidebarCollapsed()"></i>
+    </button>
+
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+
+  <div class="d-flex align-items-center gap-3">
+    <!-- Notification Bell -->
+    <div class="notification-wrapper position-relative">
+      <button type="button" class="btn-icon position-relative" aria-label="Notifications">
+        <i class="pi pi-bell"></i>
+        @if (unreadNotifications() > 0) {
+          <span class="notification-badge">{{ unreadNotifications() }}</span>
+        }
+      </button>
+    </div>
+
+    <!-- User Profile Dropdown -->
+    <div class="user-dropdown-wrapper position-relative">
+      <button
+        type="button"
+        class="user-profile-btn d-flex align-items-center gap-2 p-1 rounded"
+        (click)="toggleUserMenu()"
+        [attr.aria-expanded]="isUserMenuOpen()"
+      >
+        <div class="avatar-circle">
+          @if (user()?.avatarUrl) {
+            <img [src]="user()?.avatarUrl" [alt]="user()?.name" class="avatar-img" />
+          } @else {
+            <span class="avatar-initials">{{ user()?.name | initials }}</span>
+          }
+        </div>
+        <div class="user-info d-none d-lg-block text-start">
+          <div class="user-name">{{ user()?.name }}</div>
+          <div class="user-role">{{ user()?.roles?.[0] || 'User' }}</div>
+        </div>
+        <i class="pi pi-chevron-down ms-1 text-muted" style="font-size: 0.75rem;"></i>
+      </button>
+
+      <!-- Dropdown Menu -->
+      @if (isUserMenuOpen()) {
+        <div class="user-dropdown-menu shadow-md rounded p-2">
+          <div class="dropdown-header px-3 py-2 border-bottom">
+            <div class="fw-semibold text-dark">{{ user()?.name }}</div>
+            <div class="text-muted small">{{ user()?.email }}</div>
+          </div>
+
+          <div class="dropdown-items py-1">
+            <a routerLink="/profile" class="dropdown-item d-flex align-items-center gap-2 px-3 py-2" (click)="closeUserMenu()">
+              <i class="pi pi-user text-muted"></i>
+              <span>My Profile</span>
+            </a>
+            <div class="dropdown-divider my-1"></div>
+            <button type="button" class="dropdown-item d-flex align-items-center gap-2 px-3 py-2 text-danger" (click)="logout()">
+              <i class="pi pi-sign-out text-danger"></i>
+              <span>Sign Out</span>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</header>

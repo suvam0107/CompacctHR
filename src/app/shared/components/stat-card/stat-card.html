@@ -1,0 +1,35 @@
+<!-- src/app/shared/components/stat-card/stat-card.html -->
+<div class="stat-card p-3 rounded" [class]="'variant-' + colorVariant">
+  <div class="d-flex align-items-start justify-content-between">
+    <div class="stat-content">
+      <span class="stat-label">{{ label }}</span>
+      <div class="stat-value mt-1">{{ value }}</div>
+
+      @if (trend || subtext) {
+        <div class="stat-meta d-flex align-items-center gap-2 mt-2">
+          @if (trend && trendValue) {
+            <span class="trend-badge d-flex align-items-center gap-1" [class]="'trend-' + trend">
+              @if (trend === 'up') {
+                <i class="pi pi-arrow-up"></i>
+              } @else if (trend === 'down') {
+                <i class="pi pi-arrow-down"></i>
+              } @else {
+                <i class="pi pi-minus"></i>
+              }
+              <span>{{ trendValue }}</span>
+            </span>
+          }
+          @if (subtext) {
+            <span class="stat-subtext">{{ subtext }}</span>
+          }
+        </div>
+      }
+    </div>
+
+    @if (icon) {
+      <div class="stat-icon-wrapper d-flex align-items-center justify-content-center">
+        <i [class]="icon"></i>
+      </div>
+    }
+  </div>
+</div>
