@@ -1,0 +1,24 @@
+{
+  "success": true,
+  "data": {
+    "employee": {
+      "id": 1,
+      "name": "ADMIN",
+      "employeeCode": "EMP-001",
+      "department": "Engineering",
+      "designation": "Senior Software Engineer"
+    },
+    "ctc": 960000,
+    "components": [
+      { "label": "Basic", "type": "earning", "amount": 400000, "isMonthly": true },
+      { "label": "HRA", "type": "earning", "amount": 200000, "isMonthly": true },
+      { "label": "Special Allowance", "type": "earning", "amount": 240000, "isMonthly": true },
+      { "label": "Employer PF", "type": "earning", "amount": 57600, "isMonthly": true },
+      { "label": "Gratuity", "type": "earning", "amount": 19230, "isMonthly": false },
+      { "label": "Provident Fund (Employee)", "type": "deduction", "amount": 57600, "isMonthly": true },
+      { "label": "Professional Tax", "type": "deduction", "amount": 2400, "isMonthly": false }
+    ],
+    "effectiveFrom": "2026-04-01"
+  },
+  "message": "Salary structure detail retrieved successfully"
+}

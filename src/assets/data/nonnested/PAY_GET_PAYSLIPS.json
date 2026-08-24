@@ -1,0 +1,13 @@
+{
+  "success": true,
+  "data": [
+    { "id": 501, "period": "July 2026", "periodFrom": "2026-07-01", "periodTo": "2026-07-31", "grossPay": 85000, "deductions": 7200, "netPay": 77800, "status": "Processed", "processedAt": "2026-07-31T18:00:00Z" },
+    { "id": 502, "period": "June 2026", "periodFrom": "2026-06-01", "periodTo": "2026-06-30", "grossPay": 85000, "deductions": 7200, "netPay": 77800, "status": "Processed", "processedAt": "2026-06-30T18:00:00Z" },
+    { "id": 503, "period": "May 2026", "periodFrom": "2026-05-01", "periodTo": "2026-05-31", "grossPay": 85000, "deductions": 7200, "netPay": 77800, "status": "Processed", "processedAt": "2026-05-31T18:00:00Z" },
+    { "id": 504, "period": "April 2026", "periodFrom": "2026-04-01", "periodTo": "2026-04-30", "grossPay": 85000, "deductions": 7200, "netPay": 77800, "status": "Processed", "processedAt": "2026-04-30T18:00:00Z" },
+    { "id": 505, "period": "March 2026", "periodFrom": "2026-03-01", "periodTo": "2026-03-31", "grossPay": 80000, "deductions": 6800, "netPay": 73200, "status": "Processed", "processedAt": "2026-03-31T18:00:00Z" },
+    { "id": 506, "period": "February 2026", "periodFrom": "2026-02-01", "periodTo": "2026-02-28", "grossPay": 80000, "deductions": 6800, "netPay": 73200, "status": "Processed", "processedAt": "2026-02-28T18:00:00Z" }
+  ],
+  "totalCount": 12,
+  "message": "Payslips retrieved successfully"
+}

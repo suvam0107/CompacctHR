@@ -1,0 +1,8 @@
+{
+  "success": true,
+  "data": {
+    "id": 16,
+    "employeeCode": "EMP-016",
+    "message": "Employee created successfully."
+  }
+}

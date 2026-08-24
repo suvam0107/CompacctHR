@@ -1,0 +1,10 @@
+{
+  "success": true,
+  "data": [
+    { "id": 301, "employeeId": 3, "employeeName": "Priya Verma", "leaveTypeId": 1, "leaveTypeName": "Casual Leave", "leaveTypeCode": "CL", "fromDate": "2026-08-27", "toDate": "2026-08-28", "days": 2, "reason": "Attending family function out of station", "status": "Pending", "appliedAt": "2026-08-21T10:15:00Z" },
+    { "id": 302, "employeeId": 5, "employeeName": "Sneha Roy", "leaveTypeId": 3, "leaveTypeName": "Earned Leave", "leaveTypeCode": "EL", "fromDate": "2026-09-01", "toDate": "2026-09-05", "days": 5, "reason": "Personal travel", "status": "Pending", "appliedAt": "2026-08-22T14:30:00Z" },
+    { "id": 303, "employeeId": 10, "employeeName": "Deepak Patel", "leaveTypeId": 2, "leaveTypeName": "Sick Leave", "leaveTypeCode": "SL", "fromDate": "2026-08-25", "toDate": "2026-08-25", "days": 1, "reason": "Doctor appointment", "status": "Pending", "appliedAt": "2026-08-24T08:30:00Z" }
+  ],
+  "totalCount": 10,
+  "message": "Leave approvals list retrieved successfully"
+}

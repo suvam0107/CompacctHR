@@ -1,0 +1,30 @@
+{
+  "success": true,
+  "data": [
+    { "date": "2026-08-01", "status": "WeekOff", "checkIn": null, "checkOut": null, "totalHours": "0h 00m" },
+    { "date": "2026-08-02", "status": "WeekOff", "checkIn": null, "checkOut": null, "totalHours": "0h 00m" },
+    { "date": "2026-08-03", "status": "Present", "checkIn": "09:00 AM", "checkOut": "06:00 PM", "totalHours": "9h 00m" },
+    { "date": "2026-08-04", "status": "Present", "checkIn": "09:10 AM", "checkOut": "06:05 PM", "totalHours": "8h 55m" },
+    { "date": "2026-08-05", "status": "Late", "checkIn": "09:40 AM", "checkOut": "06:40 PM", "totalHours": "9h 00m" },
+    { "date": "2026-08-06", "status": "Present", "checkIn": "09:05 AM", "checkOut": "06:10 PM", "totalHours": "9h 05m" },
+    { "date": "2026-08-07", "status": "Present", "checkIn": "08:58 AM", "checkOut": "06:00 PM", "totalHours": "9h 02m" },
+    { "date": "2026-08-08", "status": "WeekOff", "checkIn": null, "checkOut": null, "totalHours": "0h 00m" },
+    { "date": "2026-08-09", "status": "WeekOff", "checkIn": null, "checkOut": null, "totalHours": "0h 00m" },
+    { "date": "2026-08-10", "status": "Present", "checkIn": "09:02 AM", "checkOut": "06:02 PM", "totalHours": "9h 00m" },
+    { "date": "2026-08-11", "status": "HalfDay", "checkIn": "09:00 AM", "checkOut": "01:30 PM", "totalHours": "4h 30m" },
+    { "date": "2026-08-12", "status": "Present", "checkIn": "09:00 AM", "checkOut": "06:00 PM", "totalHours": "9h 00m" },
+    { "date": "2026-08-13", "status": "Present", "checkIn": "09:15 AM", "checkOut": "06:15 PM", "totalHours": "9h 00m" },
+    { "date": "2026-08-14", "status": "Holiday", "checkIn": null, "checkOut": null, "totalHours": "0h 00m" },
+    { "date": "2026-08-15", "status": "Holiday", "checkIn": null, "checkOut": null, "totalHours": "0h 00m" },
+    { "date": "2026-08-16", "status": "WeekOff", "checkIn": null, "checkOut": null, "totalHours": "0h 00m" },
+    { "date": "2026-08-17", "status": "Present", "checkIn": "09:00 AM", "checkOut": "06:00 PM", "totalHours": "9h 00m" },
+    { "date": "2026-08-18", "status": "Present", "checkIn": "09:05 AM", "checkOut": "06:05 PM", "totalHours": "9h 00m" },
+    { "date": "2026-08-19", "status": "Present", "checkIn": "09:01 AM", "checkOut": "06:00 PM", "totalHours": "8h 59m" },
+    { "date": "2026-08-20", "status": "Present", "checkIn": "09:15 AM", "checkOut": "06:00 PM", "totalHours": "8h 45m" },
+    { "date": "2026-08-21", "status": "Present", "checkIn": "09:00 AM", "checkOut": "06:00 PM", "totalHours": "9h 00m" },
+    { "date": "2026-08-22", "status": "WeekOff", "checkIn": null, "checkOut": null, "totalHours": "0h 00m" },
+    { "date": "2026-08-23", "status": "WeekOff", "checkIn": null, "checkOut": null, "totalHours": "0h 00m" },
+    { "date": "2026-08-24", "status": "Present", "checkIn": "09:05 AM", "checkOut": null, "totalHours": "6h 45m" }
+  ],
+  "message": "Calendar attendance data retrieved successfully"
+}

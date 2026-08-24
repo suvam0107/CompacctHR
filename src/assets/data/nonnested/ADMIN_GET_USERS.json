@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "data": [
+    { "id": 1, "employeeId": 1, "name": "ADMIN", "email": "admin@compacct.in", "roles": ["SuperAdmin", "HRAdmin"], "isActive": true, "lastLogin": "2026-08-24T09:15:00Z" },
+    { "id": 2, "employeeId": 2, "name": "Aayush Sharma", "email": "aayush@compacct.in", "roles": ["HRAdmin", "Manager"], "isActive": true, "lastLogin": "2026-08-24T08:30:00Z" },
+    { "id": 3, "employeeId": 3, "name": "Priya Verma", "email": "priya.v@compacct.in", "roles": ["Employee"], "isActive": true, "lastLogin": "2026-08-23T17:45:00Z" },
+    { "id": 4, "employeeId": 4, "name": "Rahul Mehta", "email": "rahul.m@compacct.in", "roles": ["Manager"], "isActive": true, "lastLogin": "2026-08-24T09:00:00Z" },
+    { "id": 5, "employeeId": 6, "name": "Vikram Singh", "email": "vikram.s@compacct.in", "roles": ["Manager"], "isActive": true, "lastLogin": "2026-08-24T08:50:00Z" }
+  ],
+  "totalCount": 15,
+  "message": "Admin users list retrieved successfully"
+}

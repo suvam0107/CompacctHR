@@ -7,6 +7,8 @@ import { providePrimeNG } from 'primeng/config';
 import { MessageService } from 'primeng/api';
 import { routes } from './app.routes';
 import { CompacctHRPreset } from '../../theme/primeng-preset';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { tokenRefreshInterceptor } from './core/interceptors/token-refresh.interceptor';
 import { loadingInterceptor } from './core/interceptors/loading.interceptor';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
 
@@ -16,7 +18,12 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(
-      withInterceptors([loadingInterceptor, errorInterceptor]),
+      withInterceptors([
+        authInterceptor,
+        tokenRefreshInterceptor,
+        loadingInterceptor,
+        errorInterceptor
+      ]),
       withXsrfConfiguration({
         cookieName: 'XSRF-TOKEN',
         headerName: 'X-XSRF-TOKEN'

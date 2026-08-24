@@ -13,10 +13,14 @@
       "employee:create",
       "employee:edit",
       "attendance:view",
+      "attendance:approve",
       "leave:view",
       "leave:approve",
       "payroll:view",
-      "payroll:process"
+      "payroll:process",
+      "profile:view",
+      "admin:view",
+      "admin:manage"
     ],
     "menuFlags": {}
   },

@@ -67,7 +67,22 @@ export class AuthService {
   }
 
   restoreSession(): Observable<boolean> {
-    // App-boot silent refresh stub (will be wired to refresh endpoint)
-    return of(false);
+    if (environment.useMockData) {
+      return of(false);
+    }
+
+    return this.api.callNested<AuthSessionResponse>(SPC.AUTH_ME).pipe(
+      tap(sessionRes => {
+        if (sessionRes.success && sessionRes.data?.user) {
+          this.authStore.setSession(sessionRes.data.user, sessionRes.data.permissions ?? []);
+        }
+      }),
+      map(sessionRes => !!(sessionRes.success && sessionRes.data?.user)),
+      catchError(() => {
+        this.authStore.clearSession();
+        return of(false);
+      })
+    );
   }
 }
+

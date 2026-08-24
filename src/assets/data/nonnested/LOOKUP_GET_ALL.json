@@ -19,6 +19,22 @@
       { "id": 1, "code": "CL", "name": "Casual Leave", "defaultDays": 12 },
       { "id": 2, "code": "SL", "name": "Sick Leave", "defaultDays": 10 },
       { "id": 3, "code": "EL", "name": "Earned Leave", "defaultDays": 18 }
+    ],
+    "employmentTypes": [
+      { "id": 1, "name": "Full-Time" },
+      { "id": 2, "name": "Part-Time" },
+      { "id": 3, "name": "Contractor" }
+    ],
+    "genders": [
+      { "id": 1, "name": "Male" },
+      { "id": 2, "name": "Female" },
+      { "id": 3, "name": "Other" }
+    ],
+    "documentTypes": [
+      { "id": 1, "name": "Aadhaar" },
+      { "id": 2, "name": "PAN" },
+      { "id": 3, "name": "Offer Letter" },
+      { "id": 4, "name": "Resignation Letter" }
     ]
   },
   "message": "Lookups retrieved successfully"

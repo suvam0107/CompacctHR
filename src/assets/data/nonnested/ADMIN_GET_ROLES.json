@@ -1,0 +1,10 @@
+{
+  "success": true,
+  "data": [
+    { "id": 1, "code": "SuperAdmin", "name": "Super Administrator", "description": "Full un-restricted system access across all modules", "permissionCount": 12 },
+    { "id": 2, "code": "HRAdmin", "name": "HR Administrator", "description": "Access to Employee Management, Leave Approvals, and Payroll processing", "permissionCount": 9 },
+    { "id": 3, "code": "Manager", "name": "People Manager", "description": "Access to team attendance, team leave approvals, and employee view", "permissionCount": 5 },
+    { "id": 4, "code": "Employee", "name": "Standard Employee", "description": "Access to own attendance log, leave application, and payslips", "permissionCount": 4 }
+  ],
+  "message": "Roles retrieved successfully"
+}

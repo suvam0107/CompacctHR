@@ -1,0 +1,17 @@
+{
+  "success": true,
+  "data": [
+    { "id": 101, "employeeId": 1, "employeeName": "ADMIN", "date": "2026-08-24", "checkIn": "09:05 AM", "checkOut": "06:10 PM", "totalHours": "9h 05m", "status": "Present", "remarks": "On time" },
+    { "id": 102, "employeeId": 2, "employeeName": "Aayush Sharma", "date": "2026-08-24", "checkIn": "09:45 AM", "checkOut": null, "totalHours": "6h 30m", "status": "Late", "remarks": "Traffic delay" },
+    { "id": 103, "employeeId": 3, "employeeName": "Priya Verma", "date": "2026-08-24", "checkIn": "09:00 AM", "checkOut": "06:00 PM", "totalHours": "9h 00m", "status": "Present", "remarks": null },
+    { "id": 104, "employeeId": 4, "employeeName": "Rahul Mehta", "date": "2026-08-24", "checkIn": null, "checkOut": null, "totalHours": "0h 00m", "status": "Absent", "remarks": "Uninformed leave" },
+    { "id": 105, "employeeId": 5, "employeeName": "Sneha Roy", "date": "2026-08-24", "checkIn": "09:12 AM", "checkOut": "01:30 PM", "totalHours": "4h 18m", "status": "HalfDay", "remarks": "Approved half day" },
+    { "id": 106, "employeeId": 6, "employeeName": "Vikram Singh", "date": "2026-08-24", "checkIn": "08:55 AM", "checkOut": "06:05 PM", "totalHours": "9h 10m", "status": "Present", "remarks": null },
+    { "id": 107, "employeeId": 7, "employeeName": "Ananya Sen", "date": "2026-08-24", "checkIn": null, "checkOut": null, "totalHours": "0h 00m", "status": "Absent", "remarks": "On Earned Leave" },
+    { "id": 108, "employeeId": 8, "employeeName": "Rohan Gupta", "date": "2026-08-24", "checkIn": "09:10 AM", "checkOut": "06:15 PM", "totalHours": "9h 05m", "status": "Present", "remarks": null },
+    { "id": 109, "employeeId": 9, "employeeName": "Kavita Rao", "date": "2026-08-24", "checkIn": "09:02 AM", "checkOut": "06:00 PM", "totalHours": "8h 58m", "status": "Present", "remarks": null },
+    { "id": 110, "employeeId": 10, "employeeName": "Deepak Patel", "date": "2026-08-24", "checkIn": "09:30 AM", "checkOut": "06:30 PM", "totalHours": "9h 00m", "status": "Late", "remarks": null }
+  ],
+  "totalCount": 300,
+  "message": "Attendance log retrieved successfully"
+}

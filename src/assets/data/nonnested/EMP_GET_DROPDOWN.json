@@ -1,0 +1,17 @@
+{
+  "success": true,
+  "data": [
+    { "id": 1, "employeeCode": "EMP-001", "name": "ADMIN" },
+    { "id": 2, "employeeCode": "EMP-002", "name": "Aayush Sharma" },
+    { "id": 3, "employeeCode": "EMP-003", "name": "Priya Verma" },
+    { "id": 4, "employeeCode": "EMP-004", "name": "Rahul Mehta" },
+    { "id": 5, "employeeCode": "EMP-005", "name": "Sneha Roy" },
+    { "id": 6, "employeeCode": "EMP-006", "name": "Vikram Singh" },
+    { "id": 7, "employeeCode": "EMP-007", "name": "Ananya Sen" },
+    { "id": 8, "employeeCode": "EMP-008", "name": "Rohan Gupta" },
+    { "id": 9, "employeeCode": "EMP-009", "name": "Kavita Rao" },
+    { "id": 10, "employeeCode": "EMP-010", "name": "Deepak Patel" }
+  ],
+  "totalCount": 142,
+  "message": "Employee dropdown data retrieved successfully"
+}

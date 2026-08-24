@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "data": [
+    { "id": 201, "leaveTypeId": 1, "leaveTypeName": "Casual Leave", "leaveTypeCode": "CL", "fromDate": "2026-07-10", "toDate": "2026-07-10", "days": 1, "reason": "Personal work at bank", "status": "Approved", "appliedAt": "2026-07-08T09:30:00Z", "reviewedBy": "Aayush Sharma", "reviewedAt": "2026-07-08T14:00:00Z", "remarks": "Approved" },
+    { "id": 202, "leaveTypeId": 2, "leaveTypeName": "Sick Leave", "leaveTypeCode": "SL", "fromDate": "2026-06-15", "toDate": "2026-06-16", "days": 2, "reason": "Fever and viral infection", "status": "Approved", "appliedAt": "2026-06-15T08:00:00Z", "reviewedBy": "Aayush Sharma", "reviewedAt": "2026-06-16T10:00:00Z", "remarks": "Get well soon" },
+    { "id": 203, "leaveTypeId": 3, "leaveTypeName": "Earned Leave", "leaveTypeCode": "EL", "fromDate": "2026-05-02", "toDate": "2026-05-06", "days": 5, "reason": "Annual family vacation", "status": "Approved", "appliedAt": "2026-04-20T11:00:00Z", "reviewedBy": "Aayush Sharma", "reviewedAt": "2026-04-21T09:30:00Z", "remarks": "Have a great trip" },
+    { "id": 204, "leaveTypeId": 1, "leaveTypeName": "Casual Leave", "leaveTypeCode": "CL", "fromDate": "2026-08-28", "toDate": "2026-08-28", "days": 1, "reason": "Family event", "status": "Pending", "appliedAt": "2026-08-20T16:45:00Z", "reviewedBy": null, "reviewedAt": null, "remarks": null }
+  ],
+  "totalCount": 45,
+  "message": "Leave history retrieved successfully"
+}

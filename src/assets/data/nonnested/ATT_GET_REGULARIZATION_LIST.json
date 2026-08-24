@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "data": [
+    { "id": 1, "employeeId": 2, "employeeName": "Aayush Sharma", "date": "2026-08-05", "originalStatus": "Late", "requestedStatus": "Present", "reason": "Client meeting in morning", "status": "Pending", "submittedAt": "2026-08-06T10:00:00Z", "reviewedBy": null, "reviewedAt": null },
+    { "id": 2, "employeeId": 4, "employeeName": "Rahul Mehta", "date": "2026-08-11", "originalStatus": "Absent", "requestedStatus": "HalfDay", "reason": "Biometric device offline during exit", "status": "Pending", "submittedAt": "2026-08-12T09:30:00Z", "reviewedBy": null, "reviewedAt": null },
+    { "id": 3, "employeeId": 5, "employeeName": "Sneha Roy", "date": "2026-08-10", "originalStatus": "Late", "requestedStatus": "Present", "reason": "Met with vendor before office", "status": "Approved", "submittedAt": "2026-08-11T11:15:00Z", "reviewedBy": "ADMIN", "reviewedAt": "2026-08-11T16:00:00Z" },
+    { "id": 4, "employeeId": 8, "employeeName": "Rohan Gupta", "date": "2026-08-03", "originalStatus": "Absent", "requestedStatus": "Present", "reason": "Forgot ID card and biometric failed", "status": "Rejected", "submittedAt": "2026-08-04T09:00:00Z", "reviewedBy": "ADMIN", "reviewedAt": "2026-08-04T14:20:00Z" }
+  ],
+  "totalCount": 10,
+  "message": "Regularization requests retrieved successfully"
+}

@@ -1,0 +1,44 @@
+{
+  "success": true,
+  "data": {
+    "personal": {
+      "id": 1,
+      "employeeCode": "EMP-001",
+      "name": "ADMIN",
+      "email": "admin@compacct.in",
+      "phone": "+91 98765 43210",
+      "dob": "1992-05-14",
+      "gender": "Male",
+      "address": "123 Tech Park, Sector 5, Kolkata, WB - 700091",
+      "avatarUrl": null
+    },
+    "employment": {
+      "departmentId": 1,
+      "departmentName": "Engineering",
+      "designationId": 2,
+      "designationName": "Senior Software Engineer",
+      "joinDate": "2022-01-15",
+      "employmentType": "Full-Time",
+      "reportingManagerId": 2,
+      "reportingManagerName": "Aayush Sharma",
+      "status": "Active"
+    },
+    "documents": [
+      { "id": 1, "type": "Aadhaar", "fileName": "aadhaar_card_masked.pdf", "uploadedAt": "2022-01-16T10:00:00Z", "url": "/assets/documents/aadhaar.pdf" },
+      { "id": 2, "type": "PAN", "fileName": "pan_card.pdf", "uploadedAt": "2022-01-16T10:05:00Z", "url": "/assets/documents/pan.pdf" }
+    ],
+    "leaveBalances": [
+      { "leaveTypeId": 1, "leaveTypeName": "Casual Leave", "code": "CL", "total": 12, "used": 2, "remaining": 10 },
+      { "leaveTypeId": 2, "leaveTypeName": "Sick Leave", "code": "SL", "total": 10, "used": 1, "remaining": 9 },
+      { "leaveTypeId": 3, "leaveTypeName": "Earned Leave", "code": "EL", "total": 18, "used": 5, "remaining": 13 }
+    ],
+    "salaryInfo": {
+      "ctc": 960000,
+      "basic": 400000,
+      "hra": 200000,
+      "allowances": 360000,
+      "effectiveFrom": "2026-04-01"
+    }
+  },
+  "message": "User profile retrieved successfully"
+}
