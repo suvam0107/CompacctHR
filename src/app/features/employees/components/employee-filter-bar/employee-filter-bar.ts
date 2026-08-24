@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
 import { LookupCacheService } from '../../../../core/state/lookup-cache.service';
 import { SearchInput } from '../../../../shared/components/search-input/search-input';
 import { EmployeeFilterParams } from '../../models/employee.model';
@@ -12,7 +13,7 @@ import { DropdownOption } from '../../../../shared/models/dropdown-option.model'
 @Component({
   selector: 'app-employee-filter-bar',
   standalone: true,
-  imports: [CommonModule, FormsModule, SelectModule, ButtonModule, SearchInput],
+  imports: [CommonModule, FormsModule, SelectModule, ButtonModule, TooltipModule, SearchInput],
   templateUrl: './employee-filter-bar.html',
   styleUrls: ['./employee-filter-bar.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
