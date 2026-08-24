@@ -1,0 +1,52 @@
+<div class="system-settings-page">
+  <app-page-header
+    title="System Settings"
+    subtitle="Configure global ERP parameters, security policies, and integrations"
+  ></app-page-header>
+
+  @if (saveSuccess()) {
+    <div class="success-banner">
+      <i class="pi pi-check-circle"></i>
+      <span>System settings have been updated and applied.</span>
+    </div>
+  }
+
+  <div class="settings-card">
+    <div class="settings-list">
+      @for (setting of adminService.settings(); track setting.key) {
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-header">
+              <span class="setting-label">{{ setting.label }}</span>
+              <span class="setting-cat">{{ setting.category }}</span>
+            </div>
+            <p class="setting-desc">{{ setting.description }}</p>
+          </div>
+
+          <div class="setting-control">
+            @if (setting.key === 'enable_email_notifications') {
+              <p-toggleswitch [(ngModel)]="setting.value"></p-toggleswitch>
+            } @else {
+              <input
+                type="text"
+                pInputText
+                [(ngModel)]="setting.value"
+                class="setting-input"
+              />
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="card-footer">
+      <p-button
+        label="Save Preferences"
+        icon="pi pi-check"
+        [loading]="isSaving()"
+        size="small"
+        (onClick)="onSaveSettings()"
+      ></p-button>
+    </div>
+  </div>
+</div>

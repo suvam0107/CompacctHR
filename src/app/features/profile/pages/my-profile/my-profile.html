@@ -1,0 +1,122 @@
+<div class="my-profile-page">
+  @if (profileService.isLoading() && !profileService.profile()) {
+    <app-loading-skeleton type="card" [rows]="4"></app-loading-skeleton>
+  } @else if (profileService.profile(); as p) {
+    <app-page-header
+      title="My Profile"
+      subtitle="View personal, employment, compensation records and update contact info"
+    >
+      <div actions class="header-actions">
+        <p-button
+          [label]="isEditing() ? 'Cancel Edit' : 'Edit Contact Details'"
+          [icon]="isEditing() ? 'pi pi-times' : 'pi pi-user-edit'"
+          [outlined]="isEditing()"
+          size="small"
+          (onClick)="toggleEdit()"
+        ></p-button>
+      </div>
+    </app-page-header>
+
+    @if (saveSuccess()) {
+      <div class="success-banner">
+        <i class="pi pi-check-circle"></i>
+        <span>Your profile contact information has been updated successfully.</span>
+      </div>
+    }
+
+    <!-- Profile Header Card -->
+    <div class="profile-card">
+      <div class="card-left">
+        <app-avatar [name]="p.personal.name" [imageUrl]="p.personal.avatarUrl" size="xl"></app-avatar>
+        <div class="user-meta">
+          <div class="name-row">
+            <h2 class="user-name">{{ p.personal.name }}</h2>
+            <app-status-badge [status]="p.employment.status"></app-status-badge>
+          </div>
+          <span class="user-role">{{ p.employment.designationName }} • {{ p.employment.departmentName }}</span>
+          <span class="user-code">Employee Code: {{ p.personal.employeeCode }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Form / Display Sections -->
+    @if (isEditing()) {
+      <div class="edit-card">
+        <h3 class="card-title"><i class="pi pi-pencil"></i> Update Contact Details</h3>
+        <form [formGroup]="profileForm" (ngSubmit)="onSave()" class="edit-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="phone">Phone Number *</label>
+              <input id="phone" type="text" pInputText formControlName="phone" class="w-full" />
+            </div>
+
+            <div class="form-group full-width">
+              <label for="address">Residential Address *</label>
+              <input id="address" type="text" pInputText formControlName="address" class="w-full" />
+            </div>
+          </div>
+
+          <div class="form-footer">
+            <p-button label="Cancel" [text]="true" severity="secondary" size="small" (onClick)="isEditing.set(false)"></p-button>
+            <p-button type="submit" label="Save Changes" icon="pi pi-check" [loading]="isSaving()" size="small"></p-button>
+          </div>
+        </form>
+      </div>
+    }
+
+    <!-- Detail Blocks Grid -->
+    <div class="details-grid">
+      <div class="section-card">
+        <h3 class="section-heading"><i class="pi pi-user"></i> Personal Information</h3>
+        <div class="field-list">
+          <div class="field-row">
+            <span class="field-label">Email</span>
+            <span class="field-value">{{ p.personal.email }}</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">Phone</span>
+            <span class="field-value">{{ p.personal.phone }}</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">Date of Birth</span>
+            <span class="field-value">{{ p.personal.dob | dateFormat:'medium' }}</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">Gender</span>
+            <span class="field-value">{{ p.personal.gender }}</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">Address</span>
+            <span class="field-value">{{ p.personal.address }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h3 class="section-heading"><i class="pi pi-briefcase"></i> Employment Information</h3>
+        <div class="field-list">
+          <div class="field-row">
+            <span class="field-label">Department</span>
+            <span class="field-value">{{ p.employment.departmentName }}</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">Designation</span>
+            <span class="field-value">{{ p.employment.designationName }}</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">Employment Type</span>
+            <span class="field-value">{{ p.employment.employmentType }}</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">Joining Date</span>
+            <span class="field-value">{{ p.employment.joinDate | dateFormat:'medium' }}</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">Reporting Manager</span>
+            <span class="field-value">{{ p.employment.reportingManagerName || 'None' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

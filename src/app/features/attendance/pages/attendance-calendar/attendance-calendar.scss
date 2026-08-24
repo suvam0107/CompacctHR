@@ -1,0 +1,134 @@
+// src/app/features/attendance/pages/attendance-calendar/attendance-calendar.scss
+.attendance-calendar-page {
+  .month-navigator {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    .current-month-label {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--color-text, #1F2937);
+      min-width: 140px;
+      text-align: center;
+    }
+  }
+
+  .summary-chips {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+
+    .chip {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--color-surface, #FFFFFF);
+      border: 1px solid var(--color-border, #E3E8EF);
+      border-radius: var(--radius-sm, 4px);
+
+      .chip-label {
+        font-size: 0.8125rem;
+        color: var(--color-text-muted, #6B7280);
+      }
+
+      .chip-val {
+        font-size: 0.875rem;
+        font-weight: 600;
+      }
+
+      &.chip-present .chip-val {
+        color: var(--color-success, #1E8E5A);
+      }
+
+      &.chip-late .chip-val {
+        color: var(--color-warning, #B7791F);
+      }
+
+      &.chip-leave .chip-val {
+        color: var(--color-danger, #C0362C);
+      }
+    }
+  }
+
+  .calendar-card {
+    background: var(--color-surface, #FFFFFF);
+    border: 1px solid var(--color-border, #E3E8EF);
+    border-radius: var(--radius-md, 8px);
+    padding: 1.25rem;
+
+    .days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.75rem;
+
+      @media (max-width: 1024px) {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      @media (max-width: 640px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .day-card {
+        border: 1px solid var(--color-border, #E3E8EF);
+        border-radius: var(--radius-sm, 4px);
+        padding: 0.75rem;
+        background: var(--color-surface, #FFFFFF);
+        min-height: 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        &.day-weekoff {
+          background-color: var(--color-surface-alt, #F7F9FC);
+          opacity: 0.75;
+        }
+
+        &.day-holiday {
+          background-color: #FEF3C7;
+          border-color: #FDE68A;
+        }
+
+        .day-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 0.5rem;
+
+          .day-number {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--color-text, #1F2937);
+          }
+        }
+
+        .day-body {
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+          font-size: 0.75rem;
+          color: var(--color-text-muted, #6B7280);
+
+          .time-row {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+
+            .pi {
+              font-size: 0.6875rem;
+            }
+          }
+
+          .hours-row {
+            font-weight: 600;
+            color: var(--color-text, #1F2937);
+            margin-top: 0.25rem;
+          }
+        }
+      }
+    }
+  }
+}

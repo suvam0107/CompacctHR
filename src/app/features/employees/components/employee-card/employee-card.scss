@@ -1,0 +1,95 @@
+// src/app/features/employees/components/employee-card/employee-card.scss
+.employee-card {
+  background: var(--color-surface, #FFFFFF);
+  border: 1px solid var(--color-border, #E3E8EF);
+  border-radius: var(--radius-md, 8px);
+  padding: 1.25rem;
+  transition: all 0.15s ease-out;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &:hover {
+    border-color: var(--color-primary-light, #DCE9F8);
+    box-shadow: var(--shadow-md, 0 2px 8px rgba(16, 24, 40, 0.08));
+    transform: translateY(-2px);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    margin-bottom: 1rem;
+
+    .header-details {
+      flex: 1;
+      overflow: hidden;
+
+      .emp-name {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: var(--color-text, #1F2937);
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .emp-code {
+        font-size: 0.75rem;
+        color: var(--color-text-muted, #6B7280);
+      }
+    }
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+    flex: 1;
+
+    .info-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8125rem;
+      color: var(--color-text, #1F2937);
+
+      .info-icon {
+        font-size: 0.875rem;
+        color: var(--color-text-muted, #6B7280);
+      }
+
+      .info-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  .card-footer {
+    border-top: 1px solid var(--color-border, #E3E8EF);
+    padding-top: 0.875rem;
+
+    .view-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--color-primary, #14539A);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      .pi {
+        font-size: 0.75rem;
+      }
+    }
+  }
+}

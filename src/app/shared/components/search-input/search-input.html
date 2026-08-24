@@ -1,0 +1,17 @@
+<div class="search-input-wrapper">
+  <i class="pi pi-search search-icon"></i>
+  <input
+    type="text"
+    class="search-input-control"
+    [placeholder]="placeholder"
+    [value]="searchTerm"
+    (input)="onInput($event)"
+    (keydown)="onKeyDown($event)"
+    aria-label="Search"
+  />
+  @if (searchTerm) {
+    <button type="button" class="clear-btn" (click)="clear()" aria-label="Clear search">
+      <i class="pi pi-times"></i>
+    </button>
+  }
+</div>

@@ -1,0 +1,64 @@
+<div class="attendance-calendar-page">
+  <app-page-header
+    title="Attendance Calendar"
+    subtitle="Monthly attendance overview and breakdown"
+  >
+    <div actions class="header-actions">
+      <div class="month-navigator">
+        <p-button icon="pi pi-chevron-left" [outlined]="true" size="small" (onClick)="prevMonth()"></p-button>
+        <span class="current-month-label">{{ monthName() }}</span>
+        <p-button icon="pi pi-chevron-right" [outlined]="true" size="small" (onClick)="nextMonth()"></p-button>
+      </div>
+    </div>
+  </app-page-header>
+
+  <!-- Summary KPI row -->
+  <div class="summary-chips">
+    <div class="chip chip-present">
+      <span class="chip-label">Present</span>
+      <span class="chip-val">{{ presentDaysCount() }} Days</span>
+    </div>
+    <div class="chip chip-late">
+      <span class="chip-label">Late Marks</span>
+      <span class="chip-val">{{ lateDaysCount() }} Days</span>
+    </div>
+    <div class="chip chip-leave">
+      <span class="chip-label">Leave / Half-Day</span>
+      <span class="chip-val">{{ leaveDaysCount() }} Days</span>
+    </div>
+  </div>
+
+  <!-- Calendar Matrix Grid -->
+  <div class="calendar-card">
+    <div class="days-grid">
+      @for (day of attendanceService.calendarDays(); track day.date) {
+        <div class="day-card" [ngClass]="'day-' + day.status.toLowerCase()">
+          <div class="day-header">
+            <span class="day-number">{{ day.date.slice(8) }}</span>
+            <app-status-badge [status]="day.status"></app-status-badge>
+          </div>
+
+          <div class="day-body">
+            @if (day.checkIn) {
+              <div class="time-row">
+                <i class="pi pi-sign-in"></i>
+                <span>{{ day.checkIn }}</span>
+              </div>
+            }
+            @if (day.checkOut) {
+              <div class="time-row">
+                <i class="pi pi-sign-out"></i>
+                <span>{{ day.checkOut }}</span>
+              </div>
+            }
+            @if (day.totalHours && day.totalHours !== '0h 00m') {
+              <div class="hours-row">
+                <span>{{ day.totalHours }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="attendance-log-page">
+  <app-page-header
+    title="Daily Attendance Log"
+    subtitle="View, track and export biometric check-in/out records"
+  >
+    <div actions class="header-actions">
+      <app-date-range-picker (rangeChange)="onRangeChange($event)"></app-date-range-picker>
+    </div>
+  </app-page-header>
+
+  <app-data-table
+    [columns]="columns"
+    [value]="attendanceService.logs()"
+    [loading]="attendanceService.isLoading()"
+    exportFilename="compacct_attendance_log"
+    title="Attendance Records"
+  ></app-data-table>
+</div>

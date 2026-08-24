@@ -1,0 +1,139 @@
+<div class="data-table-container">
+  <!-- Table Header Bar -->
+  @if (title || showSearch || showExport || toolbarTemplate) {
+    <div class="table-topbar">
+      <div class="topbar-left">
+        @if (title) {
+          <div class="table-titles">
+            <h3 class="table-title">{{ title }}</h3>
+            @if (subtitle) {
+              <p class="table-subtitle">{{ subtitle }}</p>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="topbar-right">
+        @if (toolbarTemplate) {
+          <ng-container *ngTemplateOutlet="toolbarTemplate"></ng-container>
+        }
+
+        @if (showSearch) {
+          <div class="search-box">
+            <app-search-input
+              [placeholder]="searchPlaceholder"
+              (searchChange)="onSearch($event)"
+            ></app-search-input>
+          </div>
+        }
+
+        @if (showExport) {
+          <app-export-button
+            [filename]="exportFilename"
+            [title]="title"
+            [columns]="exportColumns"
+            [data]="value"
+          ></app-export-button>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- PrimeNG Table Body -->
+  @if (loading && value.length === 0) {
+    <div class="table-skeleton-wrap">
+      <app-loading-skeleton type="table" [rows]="rows"></app-loading-skeleton>
+    </div>
+  } @else {
+    <p-table
+      [columns]="columns"
+      [value]="value"
+      [lazy]="lazy"
+      (onLazyLoad)="onLazyLoad($event)"
+      [paginator]="paginator"
+      [rows]="rows"
+      [totalRecords]="totalRecords || value.length"
+      [rowsPerPageOptions]="rowsPerPageOptions"
+      [dataKey]="dataKey"
+      [size]="size"
+      [stripedRows]="stripedRows"
+      [responsiveLayout]="responsiveLayout"
+      [globalFilterFields]="filterFieldNames"
+      styleClass="p-datatable-gridlines custom-p-datatable"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          @for (col of columns; track col.field) {
+            <th
+              [pSortableColumn]="col.sortable ? col.field : undefined"
+              [style.width]="col.width"
+              [style.text-align]="col.align || 'left'"
+            >
+              <div class="header-cell" [style.justify-content]="col.align === 'right' ? 'flex-end' : (col.align === 'center' ? 'center' : 'flex-start')">
+                <span>{{ col.header }}</span>
+                @if (col.sortable) {
+                  <p-sortIcon [field]="col.field"></p-sortIcon>
+                }
+              </div>
+            </th>
+          }
+          @if (actionsTemplate) {
+            <th style="width: 100px; text-align: center;">Actions</th>
+          }
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-rowData>
+        <tr (click)="onRowClick(rowData)" class="clickable-row">
+          @for (col of columns; track col.field) {
+            <td [style.text-align]="col.align || 'left'">
+              @switch (col.type) {
+                @case ('date') {
+                  <span>{{ rowData[col.field] | dateFormat:'medium' }}</span>
+                }
+                @case ('currency') {
+                  <span class="currency-cell">{{ rowData[col.field] | appCurrency }}</span>
+                }
+                @case ('status') {
+                  <app-status-badge [status]="rowData[col.field]"></app-status-badge>
+                }
+                @case ('custom') {
+                  @if (customCellTemplate) {
+                    <ng-container
+                      *ngTemplateOutlet="customCellTemplate; context: { $implicit: rowData, column: col }"
+                    ></ng-container>
+                  } @else {
+                    <span>{{ rowData[col.field] ?? '-' }}</span>
+                  }
+                }
+                @default {
+                  <span>{{ rowData[col.field] ?? '-' }}</span>
+                }
+              }
+            </td>
+          }
+
+          @if (actionsTemplate) {
+            <td class="action-cell" (click)="$event.stopPropagation()">
+              <ng-container
+                *ngTemplateOutlet="actionsTemplate; context: { $implicit: rowData }"
+              ></ng-container>
+            </td>
+          }
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="columns.length + (actionsTemplate ? 1 : 0)" class="empty-table-cell">
+            <app-empty-state
+              [title]="emptyTitle"
+              [message]="emptyMessage"
+              [icon]="emptyIcon"
+            ></app-empty-state>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  }
+</div>

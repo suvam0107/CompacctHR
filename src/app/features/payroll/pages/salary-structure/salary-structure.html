@@ -1,0 +1,56 @@
+<div class="salary-structure-page">
+  <app-page-header
+    title="Salary Structure & Components"
+    subtitle="Detailed view of annual Cost-to-Company (CTC) and monthly salary breakup"
+  ></app-page-header>
+
+  @if (payrollService.isLoading() && !payrollService.salaryStructure()) {
+    <app-loading-skeleton type="card" [rows]="3"></app-loading-skeleton>
+  } @else if (payrollService.salaryStructure(); as struct) {
+    <div class="ctc-summary-card">
+      <div class="ctc-left">
+        <span class="ctc-label">Total Cost to Company (CTC)</span>
+        <h2 class="ctc-amount">{{ struct.ctc | appCurrency }} <span class="per-annum">/ annum</span></h2>
+      </div>
+      <div class="ctc-right">
+        <span class="effective-label">Effective From</span>
+        <span class="effective-date">{{ struct.effectiveFrom | dateFormat:'medium' }}</span>
+      </div>
+    </div>
+
+    <div class="components-card">
+      <h3 class="card-heading">Earnings & Deductions Breakdown</h3>
+
+      <div class="components-table-wrap">
+        <table class="components-table">
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Type</th>
+              <th>Frequency</th>
+              <th class="text-right">Annual Amount</th>
+              <th class="text-right">Monthly Equivalent</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (comp of struct.components; track comp.label) {
+              <tr [class.deduction-row]="comp.type === 'deduction'">
+                <td class="comp-label">{{ comp.label }}</td>
+                <td>
+                  <span class="type-tag" [class.type-earning]="comp.type === 'earning'" [class.type-deduction]="comp.type === 'deduction'">
+                    {{ comp.type | titlecase }}
+                  </span>
+                </td>
+                <td>{{ comp.isMonthly ? 'Monthly' : 'Annual' }}</td>
+                <td class="text-right comp-amt">{{ comp.amount | appCurrency }}</td>
+                <td class="text-right comp-monthly">
+                  {{ comp.isMonthly ? (comp.amount / 12 | appCurrency) : '-' }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+</div>

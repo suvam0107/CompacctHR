@@ -1,0 +1,13 @@
+<div class="export-button-wrapper">
+  <p-button
+    [label]="label"
+    [icon]="icon"
+    iconPos="left"
+    [outlined]="true"
+    severity="secondary"
+    (onClick)="menu.toggle($event)"
+    size="small"
+    styleClass="export-trigger-btn"
+  ></p-button>
+  <p-menu #menu [model]="menuItems" [popup]="true" styleClass="custom-export-menu"></p-menu>
+</div>

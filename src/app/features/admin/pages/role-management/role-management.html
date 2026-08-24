@@ -1,0 +1,14 @@
+<div class="role-management-page">
+  <app-page-header
+    title="Roles & Permissions"
+    subtitle="Configure RBAC access policies and permission assignments"
+  ></app-page-header>
+
+  <app-data-table
+    [columns]="columns"
+    [value]="adminService.roles()"
+    [loading]="adminService.isLoading()"
+    exportFilename="compacct_admin_roles"
+    title="System Roles"
+  ></app-data-table>
+</div>

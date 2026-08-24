@@ -1,0 +1,33 @@
+<div class="employee-card" (click)="onCardClick()">
+  <div class="card-header">
+    <app-avatar [name]="employee.name" [imageUrl]="employee.avatarUrl" size="lg"></app-avatar>
+    <div class="header-details">
+      <h4 class="emp-name">{{ employee.name }}</h4>
+      <span class="emp-code">{{ employee.employeeCode }}</span>
+    </div>
+    <div class="header-status">
+      <app-status-badge [status]="employee.status"></app-status-badge>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="info-row">
+      <i class="pi pi-briefcase info-icon"></i>
+      <span class="info-text">{{ employee.designationName }}</span>
+    </div>
+    <div class="info-row">
+      <i class="pi pi-building info-icon"></i>
+      <span class="info-text">{{ employee.departmentName }}</span>
+    </div>
+    <div class="info-row">
+      <i class="pi pi-envelope info-icon"></i>
+      <span class="info-text">{{ employee.email }}</span>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <a [routerLink]="['/employees', employee.id]" class="view-btn" (click)="$event.stopPropagation()">
+      View 360° Profile <i class="pi pi-arrow-right"></i>
+    </a>
+  </div>
+</div>

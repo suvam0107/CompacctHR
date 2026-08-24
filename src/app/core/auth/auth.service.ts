@@ -48,16 +48,8 @@ export class AuthService {
         return of(sessionRes.data);
       }),
       tap(() => {
-        // Trigger warm-up API calls concurrently in background
-        forkJoin([
-          this.lookupCache.warmUp().pipe(catchError(() => of(false))),
-          this.notifService.prefetchCount().pipe(catchError(() => of(0))),
-          this.dashboardService.prefetchSummary().pipe(catchError(() => of(false))),
-          this.leaveService.prefetchBalance().pipe(catchError(() => of(false)))
-        ]).subscribe();
-
-        // Navigate directly to dashboard
-        this.router.navigate(['/dashboard']);
+        // Route to /sync for post-login warm-up screen
+        this.router.navigate(['/sync']);
       })
     );
   }

@@ -1,0 +1,112 @@
+<div class="employee-form-page">
+  <app-page-header
+    [title]="isEditMode() ? 'Edit Employee Profile' : 'Add New Employee'"
+    [subtitle]="isEditMode() ? 'Update employee personal, job and compensation details' : 'Register a new employee record into the ERP system'"
+  >
+    <div actions class="header-actions">
+      <a routerLink="/employees">
+        <p-button label="Cancel" icon="pi pi-times" [outlined]="true" severity="secondary" size="small"></p-button>
+      </a>
+    </div>
+  </app-page-header>
+
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="form-card">
+    @if (errorMessage()) {
+      <div class="error-banner">
+        <i class="pi pi-exclamation-circle"></i>
+        <span>{{ errorMessage() }}</span>
+      </div>
+    }
+
+    <!-- Personal Info Section -->
+    <div class="form-section">
+      <h3 class="section-title"><i class="pi pi-user"></i> Personal Information</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="employeeCode">Employee Code *</label>
+          <input id="employeeCode" type="text" pInputText formControlName="employeeCode" placeholder="e.g. EMP-016" class="w-full" />
+        </div>
+
+        <div class="form-group">
+          <label for="name">Full Name *</label>
+          <input id="name" type="text" pInputText formControlName="name" placeholder="John Doe" class="w-full" />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Corporate Email *</label>
+          <input id="email" type="email" pInputText formControlName="email" placeholder="john.doe@compacct.in" class="w-full" />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number *</label>
+          <input id="phone" type="text" pInputText formControlName="phone" placeholder="+91 98765 43210" class="w-full" />
+        </div>
+
+        <div class="form-group">
+          <label for="dob">Date of Birth *</label>
+          <p-datepicker id="dob" formControlName="dob" [showIcon]="true" iconDisplay="input" dateFormat="dd M yy" styleClass="w-full"></p-datepicker>
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Gender *</label>
+          <p-select id="gender" [options]="genderOptions" optionLabel="label" optionValue="value" formControlName="gender" styleClass="w-full"></p-select>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="address">Residential Address *</label>
+          <input id="address" type="text" pInputText formControlName="address" placeholder="Flat, Street, City, State, PIN" class="w-full" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Job & Employment Details Section -->
+    <div class="form-section">
+      <h3 class="section-title"><i class="pi pi-briefcase"></i> Job & Position</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="departmentId">Department *</label>
+          <p-select id="departmentId" [options]="departmentOptions()" optionLabel="name" optionValue="id" formControlName="departmentId" placeholder="Select Department" styleClass="w-full"></p-select>
+        </div>
+
+        <div class="form-group">
+          <label for="designationId">Designation *</label>
+          <p-select id="designationId" [options]="designationOptions()" optionLabel="title" optionValue="id" formControlName="designationId" placeholder="Select Designation" styleClass="w-full"></p-select>
+        </div>
+
+        <div class="form-group">
+          <label for="joinDate">Date of Joining *</label>
+          <p-datepicker id="joinDate" formControlName="joinDate" [showIcon]="true" iconDisplay="input" dateFormat="dd M yy" styleClass="w-full"></p-datepicker>
+        </div>
+
+        <div class="form-group">
+          <label for="employmentType">Employment Type *</label>
+          <p-select id="employmentType" [options]="employmentTypeOptions" optionLabel="label" optionValue="value" formControlName="employmentType" styleClass="w-full"></p-select>
+        </div>
+
+        <div class="form-group">
+          <label for="status">Employment Status *</label>
+          <p-select id="status" [options]="statusOptions" optionLabel="label" optionValue="value" formControlName="status" styleClass="w-full"></p-select>
+        </div>
+
+        <div class="form-group">
+          <label for="ctc">Annual CTC (INR) *</label>
+          <input id="ctc" type="number" pInputText formControlName="ctc" placeholder="e.g. 750000" class="w-full" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Footer Actions -->
+    <div class="form-footer">
+      <a routerLink="/employees">
+        <p-button label="Cancel" [text]="true" severity="secondary" size="small"></p-button>
+      </a>
+      <p-button
+        type="submit"
+        [label]="isEditMode() ? 'Update Employee' : 'Save Employee'"
+        icon="pi pi-check"
+        [loading]="isSubmitting()"
+        size="small"
+      ></p-button>
+    </div>
+  </form>
+</div>

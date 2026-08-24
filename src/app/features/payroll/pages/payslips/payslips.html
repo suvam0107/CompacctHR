@@ -1,0 +1,24 @@
+<div class="payslips-page">
+  <app-page-header
+    title="Payslips & Compensation"
+    subtitle="View, verify and download monthly salary slips"
+  ></app-page-header>
+
+  <app-data-table
+    [columns]="columns"
+    [value]="payrollService.payslips()"
+    [loading]="payrollService.isLoading()"
+    exportFilename="compacct_payslips"
+    title="Generated Salary Statements"
+  >
+    <ng-template #actions let-item>
+      <p-button
+        icon="pi pi-download"
+        label="PDF"
+        size="small"
+        [outlined]="true"
+        (onClick)="downloadPayslip(item)"
+      ></p-button>
+    </ng-template>
+  </app-data-table>
+</div>

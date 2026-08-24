@@ -1,0 +1,214 @@
+<div class="employee-detail-page">
+  @if (employeeService.isLoading() && !employeeService.selectedEmployee()) {
+    <app-loading-skeleton type="card" [rows]="4"></app-loading-skeleton>
+  } @else if (employeeService.selectedEmployee(); as emp) {
+    <app-page-header
+      [title]="emp.personal.name"
+      [subtitle]="emp.personal.employeeCode + ' • ' + emp.employment.designationName + ' • ' + emp.employment.departmentName"
+    >
+      <div actions class="header-actions">
+        <a routerLink="/employees">
+          <p-button label="Back to Directory" icon="pi pi-arrow-left" [outlined]="true" size="small"></p-button>
+        </a>
+        <a
+          *appHasPermission="'employee:edit'"
+          [routerLink]="['/employees', emp.personal.id, 'edit']"
+        >
+          <p-button label="Edit Profile" icon="pi pi-user-edit" size="small"></p-button>
+        </a>
+      </div>
+    </app-page-header>
+
+    <!-- Profile Overview Card -->
+    <div class="profile-hero-card">
+      <div class="hero-left">
+        <app-avatar [name]="emp.personal.name" [imageUrl]="emp.personal.avatarUrl" size="xl"></app-avatar>
+        <div class="hero-info">
+          <div class="hero-title-row">
+            <h2 class="hero-name">{{ emp.personal.name }}</h2>
+            <app-status-badge [status]="emp.employment.status"></app-status-badge>
+          </div>
+          <p class="hero-role">{{ emp.employment.designationName }} • {{ emp.employment.departmentName }}</p>
+          <div class="hero-meta">
+            <span><i class="pi pi-envelope"></i> {{ emp.personal.email }}</span>
+            <span><i class="pi pi-phone"></i> {{ emp.personal.phone }}</span>
+            <span><i class="pi pi-calendar"></i> Joined {{ emp.employment.joinDate | dateFormat:'medium' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 360 Information Tabs -->
+    <div class="tabs-container">
+      <div class="tab-nav">
+        <button
+          type="button"
+          class="tab-btn"
+          [class.active]="activeTab() === 'personal'"
+          (click)="activeTab.set('personal')"
+        >
+          <i class="pi pi-user"></i> Personal Details
+        </button>
+        <button
+          type="button"
+          class="tab-btn"
+          [class.active]="activeTab() === 'employment'"
+          (click)="activeTab.set('employment')"
+        >
+          <i class="pi pi-briefcase"></i> Employment
+        </button>
+        <button
+          type="button"
+          class="tab-btn"
+          [class.active]="activeTab() === 'leave'"
+          (click)="activeTab.set('leave')"
+        >
+          <i class="pi pi-calendar-minus"></i> Leave Balances
+        </button>
+        <button
+          type="button"
+          class="tab-btn"
+          [class.active]="activeTab() === 'salary'"
+          (click)="activeTab.set('salary')"
+        >
+          <i class="pi pi-wallet"></i> Salary Info
+        </button>
+        <button
+          type="button"
+          class="tab-btn"
+          [class.active]="activeTab() === 'documents'"
+          (click)="activeTab.set('documents')"
+        >
+          <i class="pi pi-file"></i> Documents ({{ emp.documents.length }})
+        </button>
+      </div>
+
+      <div class="tab-content">
+        @switch (activeTab()) {
+          @case ('personal') {
+            <div class="info-grid">
+              <div class="info-cell">
+                <span class="cell-label">Employee Code</span>
+                <span class="cell-value">{{ emp.personal.employeeCode }}</span>
+              </div>
+              <div class="info-cell">
+                <span class="cell-label">Date of Birth</span>
+                <span class="cell-value">{{ emp.personal.dob | dateFormat:'medium' }}</span>
+              </div>
+              <div class="info-cell">
+                <span class="cell-label">Gender</span>
+                <span class="cell-value">{{ emp.personal.gender }}</span>
+              </div>
+              <div class="info-cell">
+                <span class="cell-label">Corporate Email</span>
+                <span class="cell-value">{{ emp.personal.email }}</span>
+              </div>
+              <div class="info-cell">
+                <span class="cell-label">Mobile Phone</span>
+                <span class="cell-value">{{ emp.personal.phone }}</span>
+              </div>
+              <div class="info-cell full-width">
+                <span class="cell-label">Residential Address</span>
+                <span class="cell-value">{{ emp.personal.address }}</span>
+              </div>
+            </div>
+          }
+
+          @case ('employment') {
+            <div class="info-grid">
+              <div class="info-cell">
+                <span class="cell-label">Department</span>
+                <span class="cell-value">{{ emp.employment.departmentName }}</span>
+              </div>
+              <div class="info-cell">
+                <span class="cell-label">Designation</span>
+                <span class="cell-value">{{ emp.employment.designationName }}</span>
+              </div>
+              <div class="info-cell">
+                <span class="cell-label">Employment Type</span>
+                <span class="cell-value">{{ emp.employment.employmentType }}</span>
+              </div>
+              <div class="info-cell">
+                <span class="cell-label">Reporting Manager</span>
+                <span class="cell-value">{{ emp.employment.reportingManagerName || 'None' }}</span>
+              </div>
+              <div class="info-cell">
+                <span class="cell-label">Date of Joining</span>
+                <span class="cell-value">{{ emp.employment.joinDate | dateFormat:'medium' }}</span>
+              </div>
+              <div class="info-cell">
+                <span class="cell-label">Employment Status</span>
+                <span class="cell-value"><app-status-badge [status]="emp.employment.status"></app-status-badge></span>
+              </div>
+            </div>
+          }
+
+          @case ('leave') {
+            <div class="balances-grid">
+              @for (b of emp.leaveBalances; track b.code) {
+                <div class="balance-card">
+                  <div class="balance-top">
+                    <span class="leave-name">{{ b.leaveTypeName }}</span>
+                    <span class="leave-code">{{ b.code }}</span>
+                  </div>
+                  <div class="balance-numbers">
+                    <span class="rem-count">{{ b.remaining }}</span>
+                    <span class="total-count">/ {{ b.total }} Days Left</span>
+                  </div>
+                  <div class="balance-footer">
+                    <span>Used: {{ b.used }} Days</span>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+
+          @case ('salary') {
+            <div class="info-grid">
+              <div class="info-cell">
+                <span class="cell-label">Annual CTC</span>
+                <span class="cell-value highlight">{{ emp.salaryInfo.ctc | appCurrency }}</span>
+              </div>
+              <div class="info-cell">
+                <span class="cell-label">Monthly Basic</span>
+                <span class="cell-value">{{ (emp.salaryInfo.basic / 12) | appCurrency }}</span>
+              </div>
+              <div class="info-cell">
+                <span class="cell-label">HRA (Annual)</span>
+                <span class="cell-value">{{ emp.salaryInfo.hra | appCurrency }}</span>
+              </div>
+              <div class="info-cell">
+                <span class="cell-label">Special Allowances</span>
+                <span class="cell-value">{{ emp.salaryInfo.allowances | appCurrency }}</span>
+              </div>
+              <div class="info-cell">
+                <span class="cell-label">Effective Revision Date</span>
+                <span class="cell-value">{{ emp.salaryInfo.effectiveFrom | dateFormat:'medium' }}</span>
+              </div>
+            </div>
+          }
+
+          @case ('documents') {
+            <div class="documents-list">
+              @for (doc of emp.documents; track doc.id) {
+                <div class="document-item">
+                  <div class="doc-left">
+                    <i class="pi pi-file-pdf doc-icon"></i>
+                    <div class="doc-meta">
+                      <span class="doc-type">{{ doc.type }}</span>
+                      <span class="doc-file">{{ doc.fileName }}</span>
+                    </div>
+                  </div>
+                  <div class="doc-right">
+                    <span class="doc-date">Uploaded: {{ doc.uploadedAt | dateFormat:'short' }}</span>
+                    <p-button icon="pi pi-download" [text]="true" size="small"></p-button>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        }
+      </div>
+    </div>
+  }
+</div>

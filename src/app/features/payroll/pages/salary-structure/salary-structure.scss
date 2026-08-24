@@ -1,0 +1,128 @@
+// src/app/features/payroll/pages/salary-structure/salary-structure.scss
+.salary-structure-page {
+  .ctc-summary-card {
+    background: var(--color-surface, #FFFFFF);
+    border: 1px solid var(--color-border, #E3E8EF);
+    border-radius: var(--radius-md, 8px);
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-sm, 0 1px 2px rgba(16, 24, 40, 0.06));
+
+    .ctc-left {
+      .ctc-label {
+        font-size: 0.8125rem;
+        font-weight: 500;
+        color: var(--color-text-muted, #6B7280);
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+
+      .ctc-amount {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--color-primary, #14539A);
+        margin: 0.25rem 0 0 0;
+
+        .per-annum {
+          font-size: 0.875rem;
+          font-weight: 400;
+          color: var(--color-text-muted, #6B7280);
+        }
+      }
+    }
+
+    .ctc-right {
+      text-align: right;
+
+      .effective-label {
+        font-size: 0.75rem;
+        color: var(--color-text-muted, #6B7280);
+        display: block;
+      }
+
+      .effective-date {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--color-text, #1F2937);
+      }
+    }
+  }
+
+  .components-card {
+    background: var(--color-surface, #FFFFFF);
+    border: 1px solid var(--color-border, #E3E8EF);
+    border-radius: var(--radius-md, 8px);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm, 0 1px 2px rgba(16, 24, 40, 0.06));
+
+    .card-heading {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-text, #1F2937);
+      margin: 0 0 1.25rem 0;
+    }
+
+    .components-table-wrap {
+      overflow-x: auto;
+
+      .components-table {
+        width: 100%;
+        border-collapse: collapse;
+
+        th, td {
+          padding: 0.75rem 1rem;
+          border-bottom: 1px solid var(--color-border, #E3E8EF);
+          font-size: 0.8125rem;
+        }
+
+        th {
+          background-color: var(--color-surface-alt, #F7F9FC);
+          color: var(--color-text, #1F2937);
+          font-weight: 600;
+          text-align: left;
+
+          &.text-right {
+            text-align: right;
+          }
+        }
+
+        td {
+          color: var(--color-text, #1F2937);
+
+          &.text-right {
+            text-align: right;
+          }
+
+          &.comp-label {
+            font-weight: 500;
+          }
+
+          &.comp-amt,
+          &.comp-monthly {
+            font-variant-numeric: tabular-nums;
+          }
+        }
+
+        .type-tag {
+          font-size: 0.6875rem;
+          font-weight: 600;
+          padding: 0.125rem 0.5rem;
+          border-radius: 4px;
+
+          &.type-earning {
+            background-color: #ECFDF5;
+            color: #065F46;
+          }
+
+          &.type-deduction {
+            background-color: #FEF2F2;
+            color: #991B1B;
+          }
+        }
+      }
+    }
+  }
+}

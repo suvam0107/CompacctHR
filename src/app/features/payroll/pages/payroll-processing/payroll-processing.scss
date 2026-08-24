@@ -1,0 +1,106 @@
+// src/app/features/payroll/pages/payroll-processing/payroll-processing.scss
+.payroll-processing-page {
+  .run-card {
+    background: var(--color-surface, #FFFFFF);
+    border: 1px solid var(--color-border, #E3E8EF);
+    border-radius: var(--radius-md, 8px);
+    padding: 1.5rem 2rem;
+    box-shadow: var(--shadow-sm, 0 1px 2px rgba(16, 24, 40, 0.06));
+    max-width: 720px;
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+
+      .header-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: var(--radius-sm, 4px);
+        background: var(--color-primary-tint, #EAF2FB);
+        color: var(--color-primary, #14539A);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+      }
+
+      .card-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--color-text, #1F2937);
+        margin: 0 0 0.25rem 0;
+      }
+
+      .card-desc {
+        font-size: 0.8125rem;
+        color: var(--color-text-muted, #6B7280);
+        margin: 0;
+      }
+    }
+
+    .success-banner {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.875rem 1rem;
+      background-color: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      border-radius: var(--radius-sm, 4px);
+      color: #065F46;
+      margin-bottom: 1.25rem;
+
+      .pi {
+        font-size: 1.25rem;
+        color: var(--color-success, #1E8E5A);
+      }
+    }
+
+    .error-banner {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      background-color: #FEF2F2;
+      border: 1px solid #FCA5A5;
+      border-radius: var(--radius-sm, 4px);
+      color: var(--color-danger, #C0362C);
+      font-size: 0.8125rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .run-form {
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.25rem;
+
+        .form-group {
+          display: flex;
+          flex-direction: column;
+          gap: 0.375rem;
+
+          label {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--color-text, #1F2937);
+          }
+
+          ::ng-deep .p-select {
+            height: 38px;
+            font-size: 0.875rem;
+          }
+        }
+      }
+
+      .form-footer {
+        display: flex;
+        justify-content: flex-end;
+        padding-top: 1.5rem;
+        margin-top: 1.5rem;
+        border-top: 1px solid var(--color-border, #E3E8EF);
+      }
+    }
+  }
+}

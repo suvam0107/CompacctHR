@@ -1,0 +1,25 @@
+<div class="date-range-container">
+  @if (showPresets) {
+    <p-select
+      [options]="presets"
+      optionLabel="label"
+      optionValue="value"
+      [(ngModel)]="selectedPreset"
+      (ngModelChange)="onPresetChange($event)"
+      placeholder="Preset"
+      styleClass="preset-select"
+    ></p-select>
+  }
+
+  <p-datepicker
+    [(ngModel)]="dates"
+    selectionMode="range"
+    [readonlyInput]="true"
+    [showIcon]="true"
+    iconDisplay="input"
+    [dateFormat]="dateFormat"
+    [placeholder]="placeholder"
+    (onSelect)="onDateSelect()"
+    styleClass="custom-datepicker"
+  ></p-datepicker>
+</div>

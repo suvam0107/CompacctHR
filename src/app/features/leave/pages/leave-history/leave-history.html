@@ -1,0 +1,20 @@
+<div class="leave-history-page">
+  <app-page-header
+    title="My Leave History"
+    subtitle="View all past and pending leave applications and status updates"
+  >
+    <div actions class="header-actions">
+      <a routerLink="/leave/apply">
+        <p-button label="Apply Leave" icon="pi pi-plus" size="small"></p-button>
+      </a>
+    </div>
+  </app-page-header>
+
+  <app-data-table
+    [columns]="columns"
+    [value]="leaveService.history()"
+    [loading]="leaveService.isLoading()"
+    exportFilename="compacct_my_leave_history"
+    title="Leave Records"
+  ></app-data-table>
+</div>

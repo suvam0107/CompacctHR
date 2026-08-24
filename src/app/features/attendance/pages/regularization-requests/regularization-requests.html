@@ -1,0 +1,59 @@
+<div class="regularization-page">
+  <app-page-header
+    title="Attendance Regularization"
+    subtitle="Submit and review attendance correction and miss-punch requests"
+  >
+    <div actions class="header-actions">
+      <p-button
+        label="Request Regularization"
+        icon="pi pi-plus"
+        size="small"
+        (onClick)="openApplyModal()"
+      ></p-button>
+    </div>
+  </app-page-header>
+
+  <app-data-table
+    [columns]="columns"
+    [value]="attendanceService.regularizationList()"
+    [loading]="attendanceService.isLoading()"
+    exportFilename="attendance_regularization_requests"
+    title="Correction Requests"
+  ></app-data-table>
+
+  <!-- Apply Regularization Dialog -->
+  <p-dialog
+    header="Request Attendance Regularization"
+    [visible]="showApplyDialog()"
+    (visibleChange)="showApplyDialog.set($event)"
+    [modal]="true"
+    [style]="{ width: '480px' }"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <form [formGroup]="regForm" (ngSubmit)="onSubmitRegularization()" class="dialog-form">
+      <div class="form-group">
+        <label for="regDate">Attendance Date *</label>
+        <p-datepicker id="regDate" formControlName="date" [showIcon]="true" iconDisplay="input" dateFormat="dd M yy" styleClass="w-full"></p-datepicker>
+      </div>
+
+      <div class="form-group">
+        <label for="requestedStatus">Correction Requested *</label>
+        <p-select id="requestedStatus" [options]="statusOptions" optionLabel="label" optionValue="value" formControlName="requestedStatus" styleClass="w-full"></p-select>
+      </div>
+
+      <div class="form-group">
+        <label for="reason">Reason / Justification *</label>
+        <input id="reason" type="text" pInputText formControlName="reason" placeholder="e.g. Biometric reader was unresponsive" class="w-full" />
+        @if (regForm.get('reason')?.invalid && regForm.get('reason')?.touched) {
+          <span class="error-text">Please provide a valid reason (min 5 characters)</span>
+        }
+      </div>
+
+      <div class="dialog-footer">
+        <p-button label="Cancel" [text]="true" severity="secondary" size="small" (onClick)="showApplyDialog.set(false)"></p-button>
+        <p-button type="submit" label="Submit Request" icon="pi pi-send" [loading]="isSubmitting()" size="small"></p-button>
+      </div>
+    </form>
+  </p-dialog>
+</div>

@@ -1,0 +1,55 @@
+<div class="filter-bar-container">
+  <div class="filter-controls">
+    <div class="filter-search">
+      <app-search-input
+        placeholder="Search by name, code, email..."
+        [value]="searchTerm()"
+        (searchChange)="onSearch($event)"
+      ></app-search-input>
+    </div>
+
+    <div class="filter-dropdowns">
+      <p-select
+        [options]="departmentOptions()"
+        optionLabel="name"
+        optionValue="id"
+        [showClear]="true"
+        placeholder="All Departments"
+        [ngModel]="selectedDepartmentId()"
+        (ngModelChange)="onDepartmentChange($event)"
+        styleClass="filter-select"
+      ></p-select>
+
+      <p-select
+        [options]="designationOptions()"
+        optionLabel="title"
+        optionValue="id"
+        [showClear]="true"
+        placeholder="All Designations"
+        [ngModel]="selectedDesignationId()"
+        (ngModelChange)="onDesignationChange($event)"
+        styleClass="filter-select"
+      ></p-select>
+
+      <p-select
+        [options]="statusOptions"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Status"
+        [ngModel]="selectedStatus()"
+        (ngModelChange)="onStatusChange($event)"
+        styleClass="filter-select status-select"
+      ></p-select>
+
+      <p-button
+        icon="pi pi-filter-slash"
+        [outlined]="true"
+        severity="secondary"
+        pTooltip="Reset Filters"
+        (onClick)="onReset()"
+        size="small"
+        styleClass="reset-btn"
+      ></p-button>
+    </div>
+  </div>
+</div>

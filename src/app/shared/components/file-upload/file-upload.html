@@ -1,0 +1,54 @@
+<div class="file-upload-wrapper">
+  <div
+    class="drop-zone"
+    [class.drag-over]="isDragging()"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
+    (click)="fileInput.click()"
+  >
+    <input
+      #fileInput
+      type="file"
+      class="hidden-file-input"
+      [accept]="accept"
+      [multiple]="multiple"
+      (change)="onFileChange($event)"
+    />
+
+    <div class="drop-content">
+      <div class="icon-circle">
+        <i class="pi pi-cloud-upload upload-icon"></i>
+      </div>
+      <span class="upload-title">{{ label }}</span>
+      <span class="upload-hint">{{ hint }}</span>
+      <span class="upload-accept">Accepted formats: {{ accept }}</span>
+    </div>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="error-msg">
+      <i class="pi pi-exclamation-circle"></i>
+      <span>{{ errorMessage() }}</span>
+    </div>
+  }
+
+  @if (files().length > 0) {
+    <div class="file-list">
+      @for (file of files(); track file.name) {
+        <div class="file-item">
+          <div class="file-info">
+            <i class="pi pi-file file-type-icon"></i>
+            <div class="file-meta">
+              <span class="file-name">{{ file.name }}</span>
+              <span class="file-size">{{ file.size | fileSize }}</span>
+            </div>
+          </div>
+          <button type="button" class="remove-btn" (click)="removeFile(file, $event)" aria-label="Remove file">
+            <i class="pi pi-trash"></i>
+          </button>
+        </div>
+      }
+    </div>
+  }
+</div>

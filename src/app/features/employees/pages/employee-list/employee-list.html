@@ -1,0 +1,72 @@
+<div class="employee-list-page">
+  <app-page-header
+    title="Employee Directory"
+    subtitle="Manage company staff, assignments, and 360° employee records"
+  >
+    <div actions class="header-actions">
+      <div class="view-toggle">
+        <button
+          type="button"
+          class="toggle-btn"
+          [class.active]="viewMode() === 'table'"
+          (click)="toggleViewMode('table')"
+          aria-label="Table view"
+        >
+          <i class="pi pi-list"></i>
+        </button>
+        <button
+          type="button"
+          class="toggle-btn"
+          [class.active]="viewMode() === 'grid'"
+          (click)="toggleViewMode('grid')"
+          aria-label="Grid view"
+        >
+          <i class="pi pi-th-large"></i>
+        </button>
+      </div>
+
+      <a
+        *appHasPermission="'employee:create'"
+        routerLink="/employees/new"
+        class="create-btn-link"
+      >
+        <p-button
+          label="Add Employee"
+          icon="pi pi-plus"
+          size="small"
+        ></p-button>
+      </a>
+    </div>
+  </app-page-header>
+
+  <app-employee-filter-bar
+    (filterChange)="onFilterChange($event)"
+  ></app-employee-filter-bar>
+
+  @if (viewMode() === 'table') {
+    <app-data-table
+      [columns]="columns"
+      [value]="employeeService.employees()"
+      [totalRecords]="employeeService.totalCount()"
+      [loading]="employeeService.isLoading()"
+      exportFilename="compacct_employees"
+      title="Staff Records"
+      (rowClick)="onRowClick($event)"
+    >
+      <ng-template #actions let-emp>
+        <a [routerLink]="['/employees', emp.id]" class="table-action-link">
+          <p-button icon="pi pi-chevron-right" [text]="true" size="small"></p-button>
+        </a>
+      </ng-template>
+    </app-data-table>
+  } @else {
+    <div class="employee-grid">
+      @for (emp of employeeService.employees(); track emp.id) {
+        <app-employee-card
+          [employee]="emp"
+          (viewDetail)="onRowClick($event)"
+        ></app-employee-card>
+      }
+    </div>
+  }
+</div>

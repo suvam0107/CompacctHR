@@ -1,0 +1,63 @@
+<div class="sync-container">
+  <div class="sync-card">
+    <div class="sync-header">
+      <div class="brand-badge">
+        <i class="pi pi-bolt brand-icon"></i>
+      </div>
+      <h2 class="sync-title">Getting Your Workspace Ready</h2>
+      <p class="sync-subtitle">Preparing your dashboard and syncing module preferences...</p>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-info">
+        <span class="progress-label">Overall Progress</span>
+        <span class="progress-percent">{{ syncStore.overallProgress() }}%</span>
+      </div>
+      <p-progressbar [value]="syncStore.overallProgress()" [showValue]="false" class="custom-progress"></p-progressbar>
+    </div>
+
+    <div class="tasks-list">
+      @for (task of syncStore.tasks(); track task.id) {
+        <div class="task-item" [class.task-done]="task.status === 'done'" [class.task-error]="task.status === 'error'" [class.task-running]="task.status === 'running'">
+          <div class="task-icon-wrapper">
+            @if (task.status === 'done') {
+              <i class="pi pi-check-circle task-icon done"></i>
+            } @else if (task.status === 'error') {
+              <i class="pi pi-times-circle task-icon error"></i>
+            } @else if (task.status === 'running') {
+              <i class="pi pi-spin pi-spinner task-icon running"></i>
+            } @else {
+              <i class="pi pi-circle task-icon pending"></i>
+            }
+          </div>
+          <div class="task-content">
+            <span class="task-label">{{ task.label }}</span>
+            @if (task.error) {
+              <span class="task-error-text">{{ task.error }}</span>
+            }
+          </div>
+          <div class="task-badge">
+            @if (task.critical) {
+              <span class="critical-tag">Required</span>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    @if (syncStore.hasCriticalFailure()) {
+      <div class="error-alert">
+        <i class="pi pi-exclamation-triangle alert-icon"></i>
+        <div class="alert-content">
+          <span class="alert-title">Warm-up Failed</span>
+          <p class="alert-desc">{{ syncStore.criticalError() || 'A required initialization task failed to load.' }}</p>
+        </div>
+      </div>
+
+      <div class="actions-section">
+        <p-button label="Retry Initialization" icon="pi pi-refresh" (onClick)="onRetry()" severity="primary"></p-button>
+        <p-button label="Back to Login" icon="pi pi-arrow-left" (onClick)="onBackToLogin()" [text]="true"></p-button>
+      </div>
+    }
+  </div>
+</div>

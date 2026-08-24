@@ -1,0 +1,16 @@
+<div
+  class="avatar-wrapper"
+  [ngClass]="['size-' + size, 'shape-' + shape]"
+  [style.background-color]="imageUrl && !imageError() ? 'transparent' : avatarBg()"
+  [attr.aria-label]="name"
+>
+  @if (imageUrl && !imageError()) {
+    <img [src]="imageUrl" [alt]="name" class="avatar-img" (error)="onImageError()" />
+  } @else {
+    <span class="avatar-initials">{{ name | initials }}</span>
+  }
+
+  @if (status) {
+    <span class="status-indicator" [ngClass]="'status-' + status"></span>
+  }
+</div>

@@ -1,0 +1,46 @@
+// src/app/features/attendance/pages/regularization-requests/regularization-requests.scss
+.regularization-page {
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+.dialog-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-top: 0.5rem;
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+
+    label {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--color-text, #1F2937);
+    }
+
+    .error-text {
+      font-size: 0.75rem;
+      color: var(--color-danger, #C0362C);
+    }
+
+    ::ng-deep .p-inputtext,
+    ::ng-deep .p-select,
+    ::ng-deep .p-datepicker {
+      height: 38px;
+      font-size: 0.875rem;
+    }
+  }
+
+  .dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+}

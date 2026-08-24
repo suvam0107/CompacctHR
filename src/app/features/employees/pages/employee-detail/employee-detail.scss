@@ -1,0 +1,259 @@
+// src/app/features/employees/pages/employee-detail/employee-detail.scss
+.employee-detail-page {
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .profile-hero-card {
+    background: var(--color-surface, #FFFFFF);
+    border: 1px solid var(--color-border, #E3E8EF);
+    border-radius: var(--radius-md, 8px);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm, 0 1px 2px rgba(16, 24, 40, 0.06));
+
+    .hero-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+
+      .hero-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.375rem;
+
+        .hero-title-row {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+
+          .hero-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-text, #1F2937);
+            margin: 0;
+          }
+        }
+
+        .hero-role {
+          font-size: 0.875rem;
+          color: var(--color-text-muted, #6B7280);
+          margin: 0;
+        }
+
+        .hero-meta {
+          display: flex;
+          align-items: center;
+          gap: 1.25rem;
+          margin-top: 0.25rem;
+          font-size: 0.8125rem;
+          color: var(--color-text-muted, #6B7280);
+
+          span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+
+            .pi {
+              color: var(--color-primary, #14539A);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .tabs-container {
+    background: var(--color-surface, #FFFFFF);
+    border: 1px solid var(--color-border, #E3E8EF);
+    border-radius: var(--radius-md, 8px);
+    overflow: hidden;
+
+    .tab-nav {
+      display: flex;
+      background: var(--color-surface-alt, #F7F9FC);
+      border-bottom: 1px solid var(--color-border, #E3E8EF);
+      padding: 0 0.5rem;
+      gap: 0.25rem;
+      overflow-x: auto;
+
+      .tab-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.875rem 1.25rem;
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid transparent;
+        color: var(--color-text-muted, #6B7280);
+        font-size: 0.875rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.15s ease-out;
+        white-space: nowrap;
+
+        &:hover {
+          color: var(--color-text, #1F2937);
+        }
+
+        &.active {
+          color: var(--color-primary, #14539A);
+          border-bottom-color: var(--color-primary, #14539A);
+          background: var(--color-surface, #FFFFFF);
+          font-weight: 600;
+        }
+      }
+    }
+
+    .tab-content {
+      padding: 1.5rem;
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.25rem;
+
+        .info-cell {
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+
+          &.full-width {
+            grid-column: 1 / -1;
+          }
+
+          .cell-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--color-text-muted, #6B7280);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+          }
+
+          .cell-value {
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--color-text, #1F2937);
+
+            &.highlight {
+              font-weight: 600;
+              color: var(--color-primary, #14539A);
+            }
+          }
+        }
+      }
+
+      .balances-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+
+        .balance-card {
+          border: 1px solid var(--color-border, #E3E8EF);
+          border-radius: var(--radius-sm, 4px);
+          padding: 1rem;
+          background: var(--color-surface-alt, #F7F9FC);
+
+          .balance-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+
+            .leave-name {
+              font-size: 0.8125rem;
+              font-weight: 600;
+              color: var(--color-text, #1F2937);
+            }
+
+            .leave-code {
+              font-size: 0.6875rem;
+              font-weight: 600;
+              color: var(--color-primary, #14539A);
+              background: var(--color-primary-tint, #EAF2FB);
+              padding: 0.125rem 0.375rem;
+              border-radius: 4px;
+            }
+          }
+
+          .balance-numbers {
+            margin-bottom: 0.5rem;
+
+            .rem-count {
+              font-size: 1.5rem;
+              font-weight: 700;
+              color: var(--color-primary, #14539A);
+            }
+
+            .total-count {
+              font-size: 0.8125rem;
+              color: var(--color-text-muted, #6B7280);
+              margin-left: 0.375rem;
+            }
+          }
+
+          .balance-footer {
+            font-size: 0.75rem;
+            color: var(--color-text-muted, #6B7280);
+          }
+        }
+      }
+
+      .documents-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+
+        .document-item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0.75rem 1rem;
+          border: 1px solid var(--color-border, #E3E8EF);
+          border-radius: var(--radius-sm, 4px);
+          background: var(--color-surface, #FFFFFF);
+
+          .doc-left {
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+
+            .doc-icon {
+              font-size: 1.5rem;
+              color: var(--color-danger, #C0362C);
+            }
+
+            .doc-meta {
+              display: flex;
+              flex-direction: column;
+
+              .doc-type {
+                font-size: 0.875rem;
+                font-weight: 600;
+                color: var(--color-text, #1F2937);
+              }
+
+              .doc-file {
+                font-size: 0.75rem;
+                color: var(--color-text-muted, #6B7280);
+              }
+            }
+          }
+
+          .doc-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+
+            .doc-date {
+              font-size: 0.75rem;
+              color: var(--color-text-muted, #6B7280);
+            }
+          }
+        }
+      }
+    }
+  }
+}

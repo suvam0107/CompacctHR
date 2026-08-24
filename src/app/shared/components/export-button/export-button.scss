@@ -1,0 +1,19 @@
+// src/app/shared/components/export-button/export-button.scss
+.export-button-wrapper {
+  display: inline-block;
+
+  ::ng-deep .export-trigger-btn {
+    height: 36px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-text, #1F2937);
+    border-color: var(--color-border, #E3E8EF);
+    background-color: var(--color-surface, #FFFFFF);
+
+    &:hover {
+      background-color: var(--color-surface-alt, #F7F9FC);
+      border-color: var(--color-border, #E3E8EF);
+      color: var(--color-primary, #14539A);
+    }
+  }
+}

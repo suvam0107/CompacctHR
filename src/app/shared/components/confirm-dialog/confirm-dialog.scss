@@ -1,0 +1,23 @@
+// src/app/shared/components/confirm-dialog/confirm-dialog.scss
+::ng-deep .custom-confirm-dialog {
+  .p-dialog-header {
+    padding: 1.25rem 1.5rem 0.75rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text, #1F2937);
+  }
+
+  .p-dialog-content {
+    padding: 0 1.5rem 1.5rem;
+    color: var(--color-text-muted, #6B7280);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .p-dialog-footer {
+    padding: 0.75rem 1.5rem 1.25rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+}

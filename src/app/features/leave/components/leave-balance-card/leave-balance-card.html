@@ -1,0 +1,26 @@
+<div class="balance-card">
+  <div class="card-top">
+    <div class="type-info">
+      <h4 class="type-name">{{ balance.leaveTypeName }}</h4>
+      <span class="type-code">{{ balance.code }}</span>
+    </div>
+    <div class="remaining-badge">
+      <span class="rem-val">{{ balance.remaining }}</span>
+      <span class="rem-unit">Days</span>
+    </div>
+  </div>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-track">
+      <div
+        class="progress-fill"
+        [style.width.%]="balance.total > 0 ? (balance.used / balance.total) * 100 : 0"
+      ></div>
+    </div>
+  </div>
+
+  <div class="card-bottom">
+    <span>Used: {{ balance.used }} Days</span>
+    <span>Total Quota: {{ balance.total }} Days</span>
+  </div>
+</div>

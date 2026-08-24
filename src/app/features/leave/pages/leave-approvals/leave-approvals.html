@@ -1,0 +1,79 @@
+<div class="leave-approvals-page">
+  <app-page-header
+    title="Leave Approvals"
+    subtitle="Review and process time-off requests submitted by team members"
+  ></app-page-header>
+
+  <app-data-table
+    [columns]="columns"
+    [value]="leaveService.approvals()"
+    [loading]="leaveService.isLoading()"
+    exportFilename="compacct_pending_leave_approvals"
+    title="Pending Approvals"
+  >
+    <ng-template #actions let-item>
+      <div class="approval-actions">
+        <p-button
+          icon="pi pi-check"
+          severity="success"
+          size="small"
+          [rounded]="true"
+          pTooltip="Approve Request"
+          (onClick)="openApprovalModal(item, 'approve')"
+        ></p-button>
+        <p-button
+          icon="pi pi-times"
+          severity="danger"
+          size="small"
+          [rounded]="true"
+          pTooltip="Reject Request"
+          (onClick)="openApprovalModal(item, 'reject')"
+        ></p-button>
+      </div>
+    </ng-template>
+  </app-data-table>
+
+  <!-- Approval / Rejection Confirmation Modal -->
+  <p-dialog
+    [header]="actionType() === 'approve' ? 'Approve Leave Request' : 'Reject Leave Request'"
+    [visible]="showActionDialog()"
+    (visibleChange)="showActionDialog.set($event)"
+    [modal]="true"
+    [style]="{ width: '440px' }"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    @if (selectedLeave(); as leave) {
+      <div class="action-dialog-body">
+        <p class="dialog-prompt">
+          Are you sure you want to <strong>{{ actionType() }}</strong> the leave request for
+          <strong>{{ leave.employeeName }}</strong> ({{ leave.days }} day(s) from {{ leave.fromDate }} to {{ leave.toDate }})?
+        </p>
+
+        <div class="form-group">
+          <label for="remarks">Approver Remarks (Optional)</label>
+          <input
+            id="remarks"
+            type="text"
+            pInputText
+            [ngModel]="remarks()"
+            (ngModelChange)="remarks.set($event)"
+            placeholder="e.g. Approved as discussed"
+            class="w-full"
+          />
+        </div>
+
+        <div class="dialog-footer">
+          <p-button label="Cancel" [text]="true" severity="secondary" size="small" (onClick)="showActionDialog.set(false)"></p-button>
+          <p-button
+            [label]="actionType() === 'approve' ? 'Confirm Approval' : 'Confirm Rejection'"
+            [severity]="actionType() === 'approve' ? 'success' : 'danger'"
+            [loading]="isProcessing()"
+            size="small"
+            (onClick)="confirmAction()"
+          ></p-button>
+        </div>
+      </div>
+    }
+  </p-dialog>
+</div>

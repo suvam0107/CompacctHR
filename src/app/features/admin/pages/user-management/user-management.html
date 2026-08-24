@@ -1,0 +1,26 @@
+<div class="user-management-page">
+  <app-page-header
+    title="User Account Management"
+    subtitle="Manage active ERP logins, system roles and permissions"
+  ></app-page-header>
+
+  <app-data-table
+    [columns]="columns"
+    [value]="adminService.users()"
+    [loading]="adminService.isLoading()"
+    exportFilename="compacct_admin_users"
+    title="Registered User Logins"
+  >
+    <ng-template #customCell let-row let-col="column">
+      @if (col.field === 'roles') {
+        <div class="roles-chips">
+          @for (r of row.roles; track r) {
+            <span class="role-chip">{{ r }}</span>
+          }
+        </div>
+      } @else if (col.field === 'isActive') {
+        <app-status-badge [status]="row.isActive ? 'Active' : 'Inactive'"></app-status-badge>
+      }
+    </ng-template>
+  </app-data-table>
+</div>
