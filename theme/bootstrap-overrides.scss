@@ -1,7 +1,6 @@
 // theme/bootstrap-overrides.scss
-// Scoped resets so Bootstrap layout classes don't interfere with PrimeNG component styling
+@use 'mixins' as *;
 
-// Reset anchor styles
 a {
   color: var(--color-primary);
   text-decoration: none;
@@ -9,24 +8,81 @@ a {
 
   &:hover {
     color: var(--color-primary-hover);
-    text-decoration: underline;
   }
 }
 
-// Ensure Bootstrap buttons/forms don't clash with PrimeNG
+// Use .text-link for prose links that need underlines
+.text-link {
+  text-decoration: underline;
+  text-decoration-color: var(--color-primary);
+  text-underline-offset: 2px;
+
+  &:hover {
+    text-decoration-color: var(--color-primary-hover);
+  }
+}
+
+// Prevent icon glyphs from inheriting text-decoration
+.pi,
+i[class*='pi-'],
+a .pi,
+a i,
+.p-button i,
+.p-button .pi,
+button .pi,
+button i {
+  text-decoration: none !important;
+}
+
 .btn {
   font-family: inherit;
 }
 
-// Override card default borders and backgrounds to match CompacctHR tokens
 .card {
-  border: 1px solid var(--color-border);
-  background-color: var(--color-surface);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
+  @include card-base;
 }
 
-// Reset container max-widths if needed for ERP full-width density
+.card-lg {
+  @include card-large;
+}
+
+.card-section-header {
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-border-subtle);
+  font-size: var(--fs-body-md);
+  font-weight: var(--fw-headline);
+  color: var(--color-text);
+  margin: 0;
+}
+
+.status-badge {
+  @include badge-pill;
+}
+
+.p-datatable,
+table {
+  th,
+  .p-datatable-column-header-content {
+    font-size: var(--fs-label-sm);
+    font-weight: var(--fw-label-sm);
+    letter-spacing: var(--ls-label-sm);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  td {
+    font-size: var(--fs-body-md);
+    line-height: var(--lh-body-md);
+  }
+}
+
+.p-button:active,
+.btn:active {
+  box-shadow: none !important;
+  transform: translateY(1px);
+  transition: transform 80ms ease-out, box-shadow 80ms ease-out;
+}
+
 .container-fluid {
   padding-left: var(--space-4);
   padding-right: var(--space-4);

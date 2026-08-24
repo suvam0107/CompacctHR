@@ -48,7 +48,17 @@ export class EmployeeList implements OnInit {
   }
 
   onFilterChange(params: EmployeeFilterParams): void {
-    this.employeeService.loadEmployees(params).subscribe();
+    const current = this.employeeService.filters();
+    // Only reload if something actually changed — prevents double-fires from
+    // the search debounce emitting alongside other filter signals
+    const changed =
+      params.search !== current.search ||
+      params.departmentId !== current.departmentId ||
+      params.designationId !== current.designationId ||
+      params.status !== current.status;
+    if (changed) {
+      this.employeeService.loadEmployees(params).subscribe();
+    }
   }
 
   onRowClick(employee: EmployeeListItem): void {

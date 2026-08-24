@@ -26,10 +26,10 @@
     <!-- Profile Header Card -->
     <div class="profile-card">
       <div class="card-left">
-        <app-avatar [name]="p.personal.name" [imageUrl]="p.personal.avatarUrl" size="xl"></app-avatar>
+        <app-avatar [name]="p.personal.name ?? p.personal.empName" [imageUrl]="p.personal.avatarUrl" size="xl"></app-avatar>
         <div class="user-meta">
           <div class="name-row">
-            <h2 class="user-name">{{ p.personal.name }}</h2>
+            <h2 class="user-name">{{ p.personal.name || p.personal.empName }}</h2>
             <app-status-badge [status]="p.employment.status"></app-status-badge>
           </div>
           <span class="user-role">{{ p.employment.designationName }} • {{ p.employment.departmentName }}</span>

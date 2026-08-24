@@ -39,15 +39,15 @@ textarea.ng-invalid.ng-touched,
 .p-datepicker.ng-invalid.ng-touched,
 .p-invalid,
 .is-invalid {
-  border-color: var(--color-danger, #C0362C) !important;
+  border-color: var(--color-danger, #ba1a1a) !important;
 
   &:focus {
-    box-shadow: 0 0 0 0.2rem rgba(192, 54, 44, 0.25) !important;
+    box-shadow: 0 0 0 0.2rem rgba(186, 26, 26, 0.25) !important;
   }
 }
 
 .form-error-msg {
-  color: var(--color-danger, #C0362C);
+  color: var(--color-danger, #ba1a1a);
   font-size: 0.775rem;
   margin-top: 4px;
   display: flex;
@@ -59,4 +59,82 @@ textarea.ng-invalid.ng-touched,
     font-size: 0.75rem;
   }
 }
+
+// ── PrimeNG Input Focus Ring (2px border + soft glow) ────────────────────
+// Applied globally so every PrimeNG form control gets the Sapphire focus state
+// without needing to touch each component's SCSS.
+
+.p-inputtext:focus,
+.p-inputtext:enabled:focus,
+.p-select:not(.p-disabled).p-focus,
+.p-multiselect:not(.p-disabled).p-focus,
+.p-datepicker:not(.p-disabled).p-focus,
+.p-textarea:not(.p-disabled):focus,
+.p-autocomplete:not(.p-disabled).p-focus .p-autocomplete-input,
+.p-password:not(.p-disabled):focus-within .p-inputtext {
+  outline: none !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 3px rgba(15, 82, 186, 0.15) !important;
+}
+
+// ── PrimeNG DataTable Compact Density (40–48px row height) ────────────────────
+// Target both the small-size variant and any table using [size]="'small'"
+.p-datatable.p-datatable-sm .p-datatable-tbody > tr > td,
+.p-datatable[ng-reflect-size='small'] .p-datatable-tbody > tr > td {
+  height: 44px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+// ── Modal / Dialog elevation (Level 3 — shadow-lg) ───────────────────────────
+.p-dialog {
+  box-shadow: var(--shadow-lg) !important;
+  border-radius: var(--radius-lg) !important;
+}
+
+.p-dialog .p-dialog-header {
+  border-bottom: 1px solid var(--color-border-subtle);
+  padding: var(--space-4) var(--space-6);
+}
+
+// ── Button contrast fixes — outlined & secondary must not look disabled ───────
+// PrimeNG's default outlined secondary buttons are too pale; boost them so they
+// look clearly interactive rather than dimmed/disabled.
+
+// Outlined primary buttons
+.p-button.p-button-outlined:not(.p-button-secondary):not(.p-button-danger):not(.p-button-success):not(.p-button-warning) {
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+
+  &:hover:not(:disabled) {
+    background: var(--color-primary-tint) !important;
+    border-color: var(--color-primary-hover) !important;
+    color: var(--color-primary-hover) !important;
+  }
+}
+
+// Outlined secondary buttons (cancel, Mark All as Read, filter dropdowns, etc.)
+.p-button.p-button-outlined.p-button-secondary,
+.p-button[severity="secondary"].p-button-outlined {
+  border-color: var(--color-border) !important;
+  color: var(--color-text) !important;
+  background: transparent !important;
+
+  &:hover:not(:disabled) {
+    background: var(--color-surface-container) !important;
+    border-color: var(--color-text-muted) !important;
+    color: var(--color-text) !important;
+  }
+}
+
+// Text / ghost buttons — ensure they're dark enough to read
+.p-button.p-button-text.p-button-secondary,
+.p-button[severity="secondary"].p-button-text {
+  color: var(--color-text) !important;
+
+  &:hover:not(:disabled) {
+    background: var(--color-surface-container) !important;
+  }
+}
+
 

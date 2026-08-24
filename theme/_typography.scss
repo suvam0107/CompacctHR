@@ -4,21 +4,82 @@
 html,
 body {
   font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-  font-size: 14px;
+  font-size: var(--fs-body-md); // 14px — ERP density default
   color: var(--color-text);
   background-color: var(--color-surface-alt);
-  line-height: 1.5;
+  line-height: var(--lh-body-md);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+// ── Heading scale (6-weight headline system) ────────────────────────
+h1 { font-size: var(--fs-headline-lg);  line-height: var(--lh-headline-lg);  font-weight: var(--fw-headline); }
+h2 { font-size: var(--fs-headline-md);  line-height: var(--lh-headline-md);  font-weight: var(--fw-headline); }
+h3 { font-size: var(--fs-headline-sm);  line-height: var(--lh-headline-sm);  font-weight: var(--fw-headline); }
+h4 { font-size: var(--fs-body-lg);      line-height: var(--lh-body-lg);      font-weight: var(--fw-headline); }
+h5 { font-size: var(--fs-body-md);      line-height: var(--lh-body-md);      font-weight: var(--fw-headline); }
+h6 { font-size: var(--fs-label-md);     line-height: var(--lh-label-md);     font-weight: var(--fw-headline); }
+
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
   color: var(--color-text);
-  font-weight: 600;
   margin-top: 0;
 }
 
 input, select, textarea, button {
   font-family: inherit;
 }
+
+// ── Typography utility classes ────────────────────────────────────────────────
+
+.text-display {
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  font-weight: var(--fw-display);
+  letter-spacing: var(--ls-display);
+}
+
+.text-headline-lg {
+  font-size: var(--fs-headline-lg);
+  line-height: var(--lh-headline-lg);
+  font-weight: var(--fw-headline);
+}
+
+.text-headline-md {
+  font-size: var(--fs-headline-md);
+  line-height: var(--lh-headline-md);
+  font-weight: var(--fw-headline);
+}
+
+.text-headline-sm {
+  font-size: var(--fs-headline-sm);
+  line-height: var(--lh-headline-sm);
+  font-weight: var(--fw-headline);
+}
+
+.text-body-lg {
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body-lg);
+  font-weight: var(--fw-body);
+}
+
+.text-body-md {
+  font-size: var(--fs-body-md);
+  line-height: var(--lh-body-md);
+  font-weight: var(--fw-body);
+}
+
+.text-label-md {
+  font-size: var(--fs-label-md);
+  line-height: var(--lh-label-md);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label-md);
+}
+
+.text-label-sm {
+  font-size: var(--fs-label-sm);
+  line-height: var(--lh-label-sm);
+  font-weight: var(--fw-label-sm);
+  letter-spacing: var(--ls-label-sm);
+}
+

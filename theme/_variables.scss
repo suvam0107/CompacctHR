@@ -1,38 +1,95 @@
 // theme/_variables.scss
 :root {
-  // Brand blues
-  --color-primary: #14539a;        // primary actions, active nav, links
-  --color-primary-hover: #0f3f76;
-  --color-primary-tint: #eaf2fb;   // selected row / hover background
-  --color-primary-light: #dce9f8;  // badges, chip backgrounds
+  // ─── Brand Blues (Enterprise Modern — Sapphire Blue palette) ──────
+  --color-primary: #0f52ba;          // Sapphire Blue — primary actions, active nav, links
+  --color-primary-hover: #003c90;    // Deep Navy — hover state
+  --color-primary-active: #001945;   // Pressed state
+  --color-primary-tint: #d9e2ff;     // selected row / highlight background
+  --color-primary-light: #b0c6ff;    // badges, chip backgrounds (primary-fixed-dim)
+  --color-primary-container: #d9e2ff; // Container backgrounds (primary-fixed)
 
-  // Neutrals
-  --color-surface: #ffffff;
-  --color-surface-alt: #f7f9fc;    // page background
-  --color-border: #e3e8ef;
-  --color-text: #1f2937;
-  --color-text-muted: #6b7280;
+  // ─── Secondary (Steel Blue — supporting UI elements) ─────────────────────
+  --color-secondary: #206393;
+  --color-secondary-hover: #004a75;
+  --color-secondary-container: #90c9ff;
+  --color-on-secondary-container: #035584;
 
-  // Semantic (muted, not neon)
-  --color-success: #1e8e5a;
+  // ─── Neutrals ─────────────────────────────────────────────────────────────
+  --color-surface: #ffffff;           // Card / content background (Level 1)
+  --color-surface-alt: #f7f9fb;       // Page canvas background (Level 0)
+  --color-surface-container: #eceef0; // Subtle grouped backgrounds
+  --color-surface-container-high: #e6e8ea;
+  --color-border: #c3c6d5;            // Outline variant from design palette
+  --color-border-subtle: #e0e3e5;     // Softer divider / separator
+  --color-text: #191c1e;              // on-surface (near-black)
+  --color-text-muted: #434653;        // on-surface-variant
+
+  // ─── Semantic (muted — not neon) ─────────────────────────────────────────
+  --color-success: #10b981;           // success-green from design palette
+  --color-success-muted: #1e8e5a;
   --color-warning: #b7791f;
-  --color-danger: #c0362c;
-  --color-info: #2b6cb0;
+  --color-danger: #ba1a1a;            // error from design palette
+  --color-danger-container: #ffdad6;
+  --color-info: #206393;              // mapped to secondary blue
 
-  // Elevation
-  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
-  --shadow-md: 0 2px 8px rgba(16, 24, 40, 0.08);
+  // ─── Elevation (blue-tinted shadows) ─────────────────────
+  --shadow-sm:  0 1px 3px rgba(15, 82, 186, 0.08);   // Level 1 — cards
+  --shadow-md:  0 4px 16px rgba(15, 82, 186, 0.12);  // Level 2 — dropdowns / popovers
+  --shadow-lg:  0 8px 32px rgba(15, 82, 186, 0.16);  // Level 3 — modals / dialogs only
 
-  // Skeleton shimmer (LoadingSkeleton only — see §7 Motion)
+  // ─── Skeleton shimmer (LoadingSkeleton only) ──────────────────────────────
   --skeleton-base: #edf1f7;
   --skeleton-shimmer: #f9fbfd;
 
-  // Radius & spacing scale (used across shared components)
-  --radius-sm: 4px;
-  --radius-md: 8px;
+  // ─── Border Radius ────────────────────────────────────────────────────────
+  --radius-sm:   4px;    // small inputs, tight chips
+  --radius-md:   8px;    // standard buttons, inputs, small cards
+  --radius-lg:   12px;   // large panels, dashboard widgets
+  --radius-full: 9999px; // pill badges, avatars, status chips
+
+  // ─── Spacing scale (8px base unit) ────────────────────────────────────────
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
   --space-6: 24px;
+  --space-8: 32px;
+
+  // ─── Layout ───────────────────────────────────────────────────────────────
+  --sidebar-width: 260px;       // fixed sidebar — canonical width token
+  --sidebar-collapsed-width: 68px;
+  --header-height: 60px;
+
+  // ─── Typography Scale (Inter) ────────────────────────────────
+  // Font sizes
+  --fs-display:      36px;
+  --fs-headline-lg:  28px;
+  --fs-headline-md:  24px;
+  --fs-headline-sm:  20px;
+  --fs-body-lg:      16px;
+  --fs-body-md:      14px;   // default ERP density
+  --fs-label-md:     13px;
+  --fs-label-sm:     12px;
+
+  // Line heights
+  --lh-display:      44px;
+  --lh-headline-lg:  36px;
+  --lh-headline-md:  32px;
+  --lh-headline-sm:  28px;
+  --lh-body-lg:      24px;
+  --lh-body-md:      20px;
+  --lh-label-md:     18px;
+  --lh-label-sm:     16px;
+
+  // Font weights
+  --fw-display:      700;
+  --fw-headline:     600;
+  --fw-body:         400;
+  --fw-label:        500;
+  --fw-label-sm:     600;
+
+  // Letter spacing
+  --ls-display:      -0.02em;
+  --ls-label-md:      0.01em;
+  --ls-label-sm:      0.05em; // uppercase table headers
 }

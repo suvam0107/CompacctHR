@@ -30,7 +30,9 @@ one wins unless a human maintainer explicitly overrides it.
    the same folder.
 7. **Follow the theme tokens** in `theme/_variables.scss` — no hardcoded hex colors in
    component styles. If a needed color doesn't exist as a token, add it to `_variables.scss`
-   first (and justify it in the PR description), don't inline it.
+   first (and justify it in the PR description), don't inline it. The **canonical design
+   authority** is the Stitch project "Enterprise Modern" (ID `13407989877844294520`); any
+   visual decision not covered below should be traced back to that spec.
 8. **Standalone only, zoneless-safe**: no `NgModule`, no reliance on Zone.js-triggered
    change detection (use signals/`resource()`, not manual subscriptions that mutate state
    without a signal write).
@@ -111,15 +113,31 @@ wider than one feature.
 
 - **Owns**: `theme/**`, `styles.scss`, `public/logo/**`, the Bootstrap-CDN `<link>` and
   overrides, the PrimeNG preset (`primeng-preset.ts`).
+- **Canonical design reference**: Stitch project **"CompacctHR UI Modernization"**
+  ("Enterprise Modern" design system, ID `13407989877844294520`). Any visual question
+  not resolved by the token list below should be settled by reference to that project.
 - **Responsibilities**:
-  - Maintains the white/blue palette and typography scale; rejects/redirects any PR that
-    introduces off-palette colors, heavy motion, or a second icon/font system.
+  - Maintains the **Sapphire Blue / white** palette and typography scale; rejects/redirects
+    any PR that introduces off-palette colors, heavy motion, or a second icon/font system.
   - Keeps PrimeNG's semantic tokens and this project's CSS variables in sync so both
     component systems render identically.
-  - Professionalism check: no gradients, no shadows beyond `--shadow-sm`/`--shadow-md`, no
-    animation beyond the 120–150ms hover/focus transitions and the `LoadingSkeleton`
-    shimmer sweep defined in `ARCHITECTURE.md` §7 — that shimmer is the one intentional
-    exception and should not be used as precedent to add motion elsewhere.
+  - **Approved elevation levels** (3-tier, per Stitch spec):
+    - Level 0 — page canvas: `--color-surface-alt` (#F7F9FB), no shadow.
+    - Level 1 — cards/content: `--shadow-sm` (`0 1px 3px rgba(15,82,186,0.08)`).
+    - Level 2 — dropdowns/popovers: `--shadow-md` (`0 4px 16px rgba(15,82,186,0.12)`).
+    - Level 3 — modals/dialogs only: `--shadow-lg` (`0 8px 32px rgba(15,82,186,0.16)`).
+  - **Approved additional tokens** (beyond the original base set):
+    - `--color-secondary: #206393` — supporting UI elements, secondary buttons, data viz.
+    - `--color-primary-container: #D9E2FF` — container/highlight backgrounds.
+    - `--radius-lg: 12px` — large dashboard panels and main content cards.
+    - `--radius-full: 9999px` — pill-shaped status badges and avatar chips.
+    - `--sidebar-width: 260px` — canonical fixed sidebar layout token.
+    - `--shadow-lg` — **modal/dialog layer only**, not a general decoration elevation.
+    - Full typography scale (`--fs-*`, `--lh-*`, `--fw-*`, `--ls-*`) — see `_variables.scss`.
+  - Professionalism check: no gradients, no shadows beyond `--shadow-lg` (modal layer
+    only), no animation beyond the 120–150ms hover/focus transitions and the
+    `LoadingSkeleton` shimmer sweep defined in `ARCHITECTURE.md` §7 — that shimmer is the
+    one intentional exception and should not be used as precedent to add motion elsewhere.
 
 ### 2.5 Permissions/RBAC Agent
 
@@ -283,6 +301,11 @@ wider than one feature.
 - New routes/menu items without permission gating.
 - Off-palette colors, new fonts/icon sets, or animation beyond the hover/focus transitions
   and the `LoadingSkeleton` shimmer.
+- Shadows beyond `--shadow-lg` (which is permitted for the modal/dialog layer only).
+  Using `--shadow-lg` outside of `.p-dialog` / overlay contexts requires Theming/UI Agent
+  review.
+- Hardcoded hex colors that duplicate a token already defined in `_variables.scss` —
+  always use the token.
 - New state-management libraries.
 - Skipped or deleted tests to make CI pass.
 - Undocumented breaking changes to `APIRequest`/`APIResponse` or the permission model.

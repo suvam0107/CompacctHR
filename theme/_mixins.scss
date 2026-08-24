@@ -1,5 +1,7 @@
 // theme/_mixins.scss
-// Breakpoints & layout mixins
+// Breakpoints, layout, and Enterprise Modern component mixins
+
+// ── Layout helpers ────────────────────────────────────────────────────────────
 
 @mixin flex-center {
   display: flex;
@@ -13,7 +15,62 @@
   white-space: nowrap;
 }
 
+// ── Focus rings (2px Sapphire Blue border + soft outer glow) ─────────
+
 @mixin focus-ring {
-  outline: 2px solid var(--color-primary-light);
-  outline-offset: 2px;
+  outline: none;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 3px rgba(15, 82, 186, 0.15) !important;
+}
+
+// ── Input focus ring (used on PrimeNG inputs via global overrides) ────────────
+
+@mixin input-focus-ring {
+  outline: none;
+  border: 2px solid var(--color-primary) !important;
+  box-shadow: 0 0 0 3px rgba(15, 82, 186, 0.15) !important;
+  transition: border-color 120ms ease-out, box-shadow 120ms ease-out;
+}
+
+// ── Card elevation patterns (Level 1 / Level 2) ──────────────────────
+
+/// Standard card — white background, 8px radius, blue-tinted shadow
+@mixin card-base {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+
+  // Internal header separator when a direct child has a header class
+  > .card-header,
+  > .widget-header,
+  > .panel-header {
+    padding: var(--space-4) var(--space-6);
+    border-bottom: 1px solid var(--color-border-subtle);
+    font-size: var(--fs-body-md);
+    font-weight: var(--fw-headline);
+    color: var(--color-text);
+  }
+}
+
+/// Large panel card — 12px radius for dashboard widgets / main content panels
+@mixin card-large {
+  @include card-base;
+  border-radius: var(--radius-lg);
+}
+
+// ── Pill badge (StatusBadge, chips — full-pill radius) ────────────────────────
+
+@mixin badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  font-size: var(--fs-label-sm);
+  font-weight: var(--fw-label-sm);
+  line-height: var(--lh-label-sm);
+  letter-spacing: var(--ls-label-sm);
+  white-space: nowrap;
 }

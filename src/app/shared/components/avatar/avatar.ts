@@ -16,7 +16,7 @@ export type AvatarStatus = 'online' | 'offline' | 'busy' | 'away';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Avatar {
-  @Input() name: string = '';
+  @Input() name?: string = '';
   @Input() imageUrl?: string | null;
   @Input() size: AvatarSize = 'md';
   @Input() shape: AvatarShape = 'circle';

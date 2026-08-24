@@ -22,28 +22,26 @@
       }
 
       &.active {
-        background: var(--color-primary, #14539a);
-        border-color: var(--color-primary, #14539a);
+        background: var(--color-primary);
+        border-color: var(--color-primary);
         color: #ffffff;
         font-weight: 500;
 
         .count-badge {
-          background: rgba(255, 255, 255, 0.25);
-          color: #ffffff;
+          color: rgba(255, 255, 255, 0.85);
         }
       }
 
       .count-badge {
-        background: var(--color-border, #e3e8ef);
-        color: var(--color-text, #1f2937);
-        font-size: 0.725rem;
-        padding: 2px 6px;
-        border-radius: 10px;
+        // Number only — no background chip, just colored text
+        background: none;
+        color: var(--color-text-muted);
+        font-size: var(--fs-label-sm);
         font-weight: 600;
+        padding: 0;
 
         &.unread-badge {
-          background: var(--color-danger, #c0362c);
-          color: #ffffff;
+          color: var(--color-danger);
         }
       }
     }

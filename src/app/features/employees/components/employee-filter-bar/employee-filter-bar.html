@@ -22,7 +22,7 @@
 
       <p-select
         [options]="designationOptions()"
-        optionLabel="title"
+        optionLabel="name"
         optionValue="id"
         [showClear]="true"
         placeholder="All Designations"
@@ -42,10 +42,10 @@
       ></p-select>
 
       <p-button
+        label="Clear Filters"
         icon="pi pi-filter-slash"
         [outlined]="true"
         severity="secondary"
-        pTooltip="Reset Filters"
         (onClick)="onReset()"
         size="small"
         styleClass="reset-btn"

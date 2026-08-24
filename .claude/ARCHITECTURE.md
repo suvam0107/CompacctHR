@@ -663,65 +663,100 @@ sidebar component only ever renders `menuService.visibleMenu()`.
 
 ---
 
-## 7. Theming — White & Blue, Professional
+## 7. Theming — Sapphire Blue & White, Enterprise Modern
 
-The palette is intentionally restrained: two blues, white, and a neutral gray scale for
-text/borders, with muted semantic colors. No gradients, no glassmorphism, minimal motion —
-this is an internal ops tool, not a marketing site.
+The palette follows the **"Enterprise Modern"** design philosophy from the Stitch design
+system (project ID `13407989877844294520`): Sapphire Blue primary, clean white surfaces,
+blue-tinted shadows, and a full typography scale — clarity, efficiency, and trust for HR
+workflows. No gradients, no glassmorphism.
 
 ```scss
-// theme/_variables.scss
+// theme/_variables.scss  (canonical token reference)
 :root {
-  // Brand blues
-  --color-primary: #14539A;        // primary actions, active nav, links
-  --color-primary-hover: #0F3F76;
-  --color-primary-tint: #EAF2FB;   // selected row / hover background
-  --color-primary-light: #DCE9F8;  // badges, chip backgrounds
+  // Brand Blues
+  --color-primary:            #0F52BA;  // Sapphire Blue — primary actions, active nav
+  --color-primary-hover:      #003C90;  // Deep Navy — hover
+  --color-primary-active:     #001945;  // pressed state
+  --color-primary-tint:       #D9E2FF;  // selected row / highlight background
+  --color-primary-light:      #B0C6FF;  // badge backgrounds
+  --color-primary-container:  #D9E2FF;  // container/chip backgrounds
+
+  // Secondary (Steel Blue — supporting UI)
+  --color-secondary:          #206393;
+  --color-secondary-hover:    #004A75;
 
   // Neutrals
-  --color-surface: #FFFFFF;
-  --color-surface-alt: #F7F9FC;    // page background
-  --color-border: #E3E8EF;
-  --color-text: #1F2937;
-  --color-text-muted: #6B7280;
+  --color-surface:            #FFFFFF;  // card/content (Level 1)
+  --color-surface-alt:        #F7F9FB;  // page canvas (Level 0)
+  --color-border:             #C3C6D5;  // outline-variant
+  --color-border-subtle:      #E0E3E5;  // dividers/separators
+  --color-text:               #191C1E;  // on-surface
+  --color-text-muted:         #434653;  // on-surface-variant
 
-  // Semantic (muted, not neon)
-  --color-success: #1E8E5A;
-  --color-warning: #B7791F;
-  --color-danger:  #C0362C;
-  --color-info:    #2B6CB0;
+  // Semantic
+  --color-success:    #10B981;
+  --color-warning:    #B7791F;
+  --color-danger:     #BA1A1A;
 
-  // Elevation
-  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
-  --shadow-md: 0 2px 8px rgba(16, 24, 40, 0.08);
+  // Elevation (blue-tinted shadows — 3 levels)
+  --shadow-sm:  0 1px 3px rgba(15, 82, 186, 0.08);  // Level 1 — cards
+  --shadow-md:  0 4px 16px rgba(15, 82, 186, 0.12); // Level 2 — dropdowns/popovers
+  --shadow-lg:  0 8px 32px rgba(15, 82, 186, 0.16); // Level 3 — modals/dialogs ONLY
 
-  // Skeleton shimmer (LoadingSkeleton only — see §7 Motion)
-  --skeleton-base: #EDF1F7;
-  --skeleton-shimmer: #F9FBFD;
+  // Border Radius
+  --radius-sm:   4px;     // inputs, tight chips
+  --radius-md:   8px;     // buttons, inputs, small cards
+  --radius-lg:   12px;    // large panels, dashboard widgets
+  --radius-full: 9999px;  // pill badges, avatars
 
-  // Radius & spacing scale (used across shared components)
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px;
+  // Layout
+  --sidebar-width:          260px;
+  --sidebar-collapsed-width: 68px;
+  --header-height:           60px;
+
+  // Typography scale (Inter)
+  --fs-display:     36px;  --lh-display:     44px;  // --fw-display: 700, --ls-display: -0.02em
+  --fs-headline-lg: 28px;  --lh-headline-lg: 36px;
+  --fs-headline-md: 24px;  --lh-headline-md: 32px;
+  --fs-headline-sm: 20px;  --lh-headline-sm: 28px;
+  --fs-body-lg:     16px;  --lh-body-lg:     24px;  // forms / content pages
+  --fs-body-md:     14px;  --lh-body-md:     20px;  // default ERP density
+  --fs-label-md:    13px;  --lh-label-md:    18px;  // --ls-label-md: 0.01em
+  --fs-label-sm:    12px;  --lh-label-sm:    16px;  // table headers: uppercase, --ls-label-sm: 0.05em
 }
 ```
 
-- **Typography**: `Inter`, falling back to `"Segoe UI", system-ui, sans-serif` — a 14px base
-  for dense tables (ERP density over marketing-site whitespace), 16px for forms.
-- **PrimeNG**: the **Aura** preset is imported and overridden in `theme/primeng-preset.ts`
-  via `definePreset()`, mapping PrimeNG's semantic tokens (`primary.color`,
-  `surface.*`) onto the same CSS variables above, so PrimeNG and hand-rolled components stay
-  visually identical.
+**Elevation model (3 tiers)**:
+
+| Level | Usage | Token |
+|---|---|---|
+| 0 — Canvas | Page background | `--color-surface-alt` (no shadow) |
+| 1 — Content | Cards, stat-cards, panels | `--shadow-sm` (blue-tinted) |
+| 2 — Floating | Dropdowns, tooltips | `--shadow-md` |
+| 3 — Overlay | **Dialogs/modals only** | `--shadow-lg` |
+
+- **Typography**: `Inter` (300–700 weights), 14px ERP density base; 16px for form/content
+  pages. Utility classes `.text-display` → `.text-label-sm` in `_typography.scss` map
+  the scale. Table headers use `label-sm` (12px, 600w, uppercase, 0.05em spacing).
+- **PrimeNG**: the **Aura** preset is overridden in `theme/primeng-preset.ts` via
+  `definePreset()` mapping primary `#0F52BA` and a 9-stop surface scale matching the
+  Stitch palette, so PrimeNG and hand-rolled components render identically.
 - **Bootstrap CDN** utility classes are used purely for layout (`row`, `col-*`, `d-flex`,
-  `gap-*`); `theme/bootstrap-overrides.scss` strips Bootstrap's own color/button/card
-  opinions so it never fights PrimeNG visually.
+  `gap-*`); `theme/bootstrap-overrides.scss` overrides Bootstrap cards/table/button
+  opinions and adds `.card-lg`, `.status-badge`, and button press-in using the mixin
+  system in `_mixins.scss`.
+- **Mixins** (`theme/_mixins.scss`): `card-base`, `card-large`, `input-focus-ring`,
+  `badge-pill` — use these instead of writing raw CSS for those patterns.
+- **Sidebar active state**: 4px vertical Sapphire Blue bar on the left edge of the active
+  `nav-link` via CSS `::before` pseudo-element (see `layout/sidebar/sidebar.scss`).
 - **Motion**: transitions are limited to 120–150ms ease-out on hover/focus states and
   panel expand/collapse. No page-transition animations, no parallax. The one deliberate
   exception is `LoadingSkeleton`, which uses a left-to-right shimmer sweep
-  (`--skeleton-base` → `--skeleton-shimmer` → `--skeleton-base`, ~1.5s ease-in-out, looping)
-  instead of a static block — it's the only continuous animation permitted anywhere in the
-  app, and exists purely to signal active loading, not decoration.
-- **Density**: tables use PrimeNG's `[size]="'small'"` by default; forms use standard size.
+  (`--skeleton-base` → `--skeleton-shimmer` → `--skeleton-base`, ~1.5s ease-in-out,
+  looping) instead of a static block — it's the only continuous animation permitted
+  anywhere in the app, and exists purely to signal active loading, not decoration.
+- **Density**: tables use PrimeNG's `[size]="'small'"` by default with a 44px row height;
+  forms use standard size.
 
 ---
 
