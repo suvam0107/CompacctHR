@@ -137,4 +137,22 @@ textarea.ng-invalid.ng-touched,
   }
 }
 
+// ── DatePicker & Select Overlay Panel Rules ────────────────────────────────────
+// Ensures calendar panels and dropdown popups are never squashed by parent heights
+// and float cleanly above all container boundaries.
+.p-datepicker-panel,
+.p-datepicker-overlay,
+.p-datepicker-container,
+.p-select-overlay,
+.p-popover {
+  height: auto !important;
+  max-height: 380px !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+.p-datepicker-panel {
+  min-width: 290px;
+}
+
+
 

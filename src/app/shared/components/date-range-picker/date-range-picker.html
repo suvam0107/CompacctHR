@@ -7,18 +7,21 @@
       [(ngModel)]="selectedPreset"
       (ngModelChange)="onPresetChange($event)"
       placeholder="Preset"
+      appendTo="body"
       styleClass="preset-select"
     ></p-select>
   }
 
   <p-datepicker
     [(ngModel)]="dates"
+    (ngModelChange)="onDateSelect()"
     selectionMode="range"
     [readonlyInput]="true"
     [showIcon]="true"
     iconDisplay="input"
     [dateFormat]="dateFormat"
     [placeholder]="placeholder"
+    appendTo="body"
     (onSelect)="onDateSelect()"
     styleClass="custom-datepicker"
   ></p-datepicker>

@@ -17,6 +17,7 @@
         placeholder="All Departments"
         [ngModel]="selectedDepartmentId()"
         (ngModelChange)="onDepartmentChange($event)"
+        appendTo="body"
         styleClass="filter-select"
       ></p-select>
 
@@ -28,6 +29,7 @@
         placeholder="All Designations"
         [ngModel]="selectedDesignationId()"
         (ngModelChange)="onDesignationChange($event)"
+        appendTo="body"
         styleClass="filter-select"
       ></p-select>
 
@@ -38,6 +40,7 @@
         placeholder="Status"
         [ngModel]="selectedStatus()"
         (ngModelChange)="onStatusChange($event)"
+        appendTo="body"
         styleClass="filter-select status-select"
       ></p-select>
 

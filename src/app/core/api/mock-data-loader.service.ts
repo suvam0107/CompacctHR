@@ -43,6 +43,19 @@ export class MockDataLoaderService {
           items = items.filter(item => String(item['status'] || '').toLowerCase() === status);
         }
 
+        const startDate = typeof params['startDate'] === 'string' ? params['startDate'] : (typeof params['fromDate'] === 'string' ? params['fromDate'] : '');
+        const endDate = typeof params['endDate'] === 'string' ? params['endDate'] : (typeof params['toDate'] === 'string' ? params['toDate'] : '');
+
+        if (startDate || endDate) {
+          items = items.filter(item => {
+            const itemDateStr = String(item['date'] || item['appliedOn'] || item['joinDate'] || item['createdOn'] || '').slice(0, 10);
+            if (!itemDateStr) return true;
+            if (startDate && itemDateStr < startDate) return false;
+            if (endDate && itemDateStr > endDate) return false;
+            return true;
+          });
+        }
+
         return {
           ...res,
           data: items as unknown as T,

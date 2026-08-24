@@ -74,7 +74,7 @@ export class DateRangePicker implements OnInit, ControlValueAccessor {
 
   onDateSelect(): void {
     this.selectedPreset = 'custom';
-    if (this.dates && this.dates.length === 2 && this.dates[1]) {
+    if (this.dates && this.dates[0]) {
       this.notifyChange();
     }
   }

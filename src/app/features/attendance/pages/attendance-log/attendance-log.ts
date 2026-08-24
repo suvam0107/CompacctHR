@@ -31,11 +31,20 @@ export class AttendanceLog implements OnInit {
   }
 
   onRangeChange(range: DateRangeValue): void {
-    if (range.startDate && range.endDate) {
+    if (range.startDate) {
+      const startStr = this.formatDate(range.startDate);
+      const endStr = range.endDate ? this.formatDate(range.endDate) : startStr;
       this.attendanceService.loadAttendanceLogs({
-        startDate: range.startDate.toISOString().slice(0, 10),
-        endDate: range.endDate.toISOString().slice(0, 10)
+        startDate: startStr,
+        endDate: endStr
       }).subscribe();
     }
+  }
+
+  private formatDate(d: Date): string {
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 }
