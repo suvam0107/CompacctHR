@@ -744,76 +744,27 @@ this is an internal ops tool, not a marketing site.
    called once to fetch `{ user, roles, permissions, menuFlags }` in a single hierarchical
    response — a good example of why the **nested** endpoint exists: one round trip instead
    of four.
-7. The user is then routed to `/sync` (never straight to `/dashboard`) — see §9 — where the
-   rest of the app's warm-up data is fetched before the Shell renders.
+7. Immediately after login (or refresh-restore on app boot), `AUTH_ME` (nested SPC key) is
+   called once to fetch `{ user, roles, permissions, menuFlags }` in a single hierarchical
+   response, and background warm-up services populate lookup caches asynchronously while routing directly to `/dashboard`.
 8. CSRF: since the refresh flow relies on a cookie, Angular's built-in
    `withXsrfConfiguration()` (double-submit cookie/header pattern) is enabled on
    `provideHttpClient()`.
 
 ---
 
-## 9. Post-Login Sync Screen
+## 9. Dynamic Navigation & Page Header Architecture
 
-Between a successful login (or a session restored on app boot) and the user ever seeing the
-Shell/dashboard, the app runs a single **parallel warm-up pass** — every call the app is
-about to need anyway (reference/lookup data, dashboard summary, the user's leave balance,
-notification counts, etc.) — behind a dedicated `/sync` screen, so the first real page the
-user lands on is already populated instead of showing five separate spinners.
+### 9.1 Dynamic Route Header & Breadcrumbs
 
-### 9.1 Why this exists
+- The app shell listens to router `NavigationEnd` events to calculate the active menu hierarchy and current page title from `MENU_ITEMS`.
+- `AppShellStore.breadcrumbs` signal is updated automatically on navigation, providing instant dynamic title & breadcrumb updates across all views.
+- `PageHeader` standardizes single-line page titles across every module (subtitles are omitted across all pages for consistent ERP density).
 
-- `AUTH_ME` (step 6 above) already delivered identity, roles, permissions, and menu flags —
-  but feature pages still each need their own data. Firing those calls **on-demand, one page
-  at a time** means the user watches loading states while clicking around right after login.
-  Firing them **once, in parallel, up front** removes that.
-- It also gives us one obvious place to show a friendly "getting things ready" screen instead
-  of a blank shell.
+### 9.2 Notification System Architecture
 
-### 9.2 How it works
-
-- Route: top-level `/sync`, `canActivate: [authGuard]`, rendered **outside** the `Shell`
-  layout (its own minimal centered layout, same branding treatment as `auth-layout`).
-- `sync-task-registry.ts` is a flat list of warm-up tasks. Each task has a **user-facing
-  label only** — the spcKey, the stored procedure name, and the endpoint path are never
-  shown. Labels follow one of two fixed verbs: **"Fetching `<Name>`"** for data pulls,
-  **"Loading `<Name>`"** for reference/lookup data.
-
-```ts
-// core/sync/sync-task-registry.ts
-export interface SyncTask {
-  id: string;
-  label: string;              // "Fetching Employee Directory" — never a spcKey or SP name
-  critical: boolean;          // true = failure blocks entry to the app
-  run: () => Observable<unknown>;
-}
-
-export const SYNC_TASKS: SyncTask[] = [
-  { id: 'lookups',       label: 'Loading Reference Data',      critical: true,  run: () => inject(LookupCacheService).warmUp() },
-  { id: 'menu',          label: 'Loading Navigation',          critical: true,  run: () => inject(MenuService).warmUp() },
-  { id: 'dashboard',     label: 'Fetching Dashboard Summary',  critical: false, run: () => inject(DashboardService).prefetchSummary() },
-  { id: 'leave-balance', label: 'Fetching Leave Balance',      critical: false, run: () => inject(LeaveService).prefetchBalance() },
-  { id: 'notifications', label: 'Loading Notifications',       critical: false, run: () => inject(NotificationService).prefetchCount() },
-];
-```
-
-- `SyncService.run()` fires every task **concurrently** (`forkJoin`-style, not sequential),
-  updating a per-task status signal (`pending → done | error`) in `sync.store.ts` that the
-  `Sync` component renders as a checklist with a spinner/check per row plus an overall
-  progress bar (using the same `LoadingSkeleton` shimmer treatment where a row is still
-  pending — see §7).
-- **Non-critical** task failures are logged via `LoggerService` and otherwise ignored — that
-  page will simply fetch/retry its own data when visited. A **critical** task failing (e.g.
-  reference data or navigation itself) sends the user back to `/auth/login` with an error
-  toast, since the app genuinely can't render correctly without it.
-- Once every task settles, `SyncStore.isSynced` flips to `true` and the user is routed to
-  their original destination (or `/dashboard` by default).
-- `sync.guard.ts` is a `canActivate` guard on the `Shell` route: if `SyncStore.isSynced()`
-  is `false` — which is also true after a hard page refresh, since in-memory sync state
-  (like the access token) doesn't survive a reload — it redirects to `/sync?returnUrl=...`
-  rather than letting the user land mid-app with cold caches.
-- Feature agents register their own module's warm-up task (if any) in
-  `sync-task-registry.ts` the same way they append entries to `menu.ts` — see
-  `AGENTS.md` §5.2.
+- Full notifications module located at `features/notifications/` (`/notifications`).
+- Supports filtering (All, Unread, Important), marking items as read, "Mark All as Read", and direct navigation from the top shell notification bell badge.
 
 ---
 

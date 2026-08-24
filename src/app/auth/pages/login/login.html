@@ -48,7 +48,7 @@
 
     <!-- Submit Button -->
     <p-button type="submit" label="Sign In to Portal" icon="pi pi-sign-in" [loading]="isLoading()"
-      [disabled]="loginForm.invalid || isLoading()" styleClass="w-100 submit-btn" />
+      [disabled]="isLoading()" styleClass="w-100 submit-btn" />
   </form>
 
   <div class="login-support">

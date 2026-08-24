@@ -37,27 +37,26 @@ export async function exportToExcel<T extends Record<string, unknown>>(
     views: [{ state: 'frozen', xSplit: 0, ySplit: title ? 2 : 1 }]
   });
 
-  let currentRowIndex = 1;
+  // Set column keys and widths
+  worksheet.columns = columns.map(col => ({
+    key: col.key as string,
+    width: col.width || Math.max(col.header.length + 5, 15)
+  }));
 
   // Optional Document Title
   if (title) {
     const titleRow = worksheet.addRow([title]);
     titleRow.font = { name: 'Segoe UI', size: 14, bold: true, color: { argb: 'FF14539A' } };
     titleRow.height = 24;
-    worksheet.mergeCells(1, 1, 1, columns.length);
-    currentRowIndex++;
+    worksheet.mergeCells(1, 1, 1, Math.max(columns.length, 1));
   }
 
   // Header Row
-  worksheet.columns = columns.map(col => ({
-    header: col.header,
-    key: col.key as string,
-    width: col.width || Math.max(col.header.length + 5, 15)
-  }));
-
-  const headerRow = worksheet.getRow(currentRowIndex);
+  const headerRowValues = columns.map(c => c.header);
+  const headerRow = worksheet.addRow(headerRowValues);
   headerRow.height = 26;
-  headerRow.eachCell(cell => {
+
+  headerRow.eachCell((cell) => {
     cell.fill = {
       type: 'pattern',
       pattern: 'solid',
@@ -92,7 +91,6 @@ export async function exportToExcel<T extends Record<string, unknown>>(
     const row = worksheet.addRow(rowValues);
     row.height = 20;
 
-    // Alternate row zebra tint
     const isEven = index % 2 === 0;
     const bgArgb = isEven ? 'FFFFFFFF' : 'FFF7F9FC';
 
@@ -131,7 +129,7 @@ export async function exportToExcel<T extends Record<string, unknown>>(
     if (colDef?.width) {
       col.width = colDef.width;
     } else {
-      let maxLen = colDef?.header.length || 10;
+      let maxLen = colDef?.header?.length || 10;
       data.forEach(item => {
         const val = String(item[colDef.key as string] ?? '');
         if (val.length > maxLen) {

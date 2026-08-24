@@ -5,6 +5,7 @@ import {
   Output,
   EventEmitter,
   ContentChild,
+  ViewChild,
   TemplateRef,
   ChangeDetectionStrategy,
   OnChanges,
@@ -13,7 +14,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TableModule, TableLazyLoadEvent } from 'primeng/table';
+import { Table, TableModule, TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { SearchInput } from '../search-input/search-input';
 import { ExportButton, ExportColumn } from '../export-button/export-button';
@@ -88,6 +89,8 @@ export class DataTable<T extends Record<string, unknown> = Record<string, unknow
   @ContentChild('actions') actionsTemplate?: TemplateRef<unknown>;
   @ContentChild('toolbar') toolbarTemplate?: TemplateRef<unknown>;
 
+  @ViewChild('dt') dtTable?: Table;
+
   globalFilter = signal<string>('');
   filterFieldNames: string[] = [];
   exportColumns: ExportColumn[] = [];
@@ -111,7 +114,16 @@ export class DataTable<T extends Record<string, unknown> = Record<string, unknow
 
   onSearch(term: string): void {
     this.globalFilter.set(term);
+    if (this.dtTable) {
+      this.dtTable.filterGlobal(term, 'contains');
+    }
     this.search.emit(term);
+  }
+
+  getExportData(): T[] {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const filtered = (this.dtTable as any)?.filteredValue;
+    return (filtered && Array.isArray(filtered) && filtered.length > 0) ? filtered : this.value;
   }
 
   onRowClick(row: T): void {

@@ -13,6 +13,8 @@ import { HasPermissionDirective } from '../../../../shared/directives/has-permis
 import { AttendanceService } from '../../services/attendance.service';
 import { RegularizationRequest } from '../../models/attendance.model';
 
+import { MessageService } from 'primeng/api';
+
 @Component({
   selector: 'app-regularization-requests',
   standalone: true,
@@ -33,6 +35,7 @@ import { RegularizationRequest } from '../../models/attendance.model';
 export class RegularizationRequests implements OnInit {
   protected attendanceService = inject(AttendanceService);
   private fb = inject(FormBuilder);
+  private messageService = inject(MessageService, { optional: true });
 
   showApplyDialog = signal<boolean>(false);
   isSubmitting = signal<boolean>(false);
@@ -79,10 +82,18 @@ export class RegularizationRequests implements OnInit {
     }
 
     this.isSubmitting.set(true);
-    this.attendanceService.submitRegularization(this.regForm.value).subscribe(() => {
+    this.attendanceService.submitRegularization(this.regForm.value).subscribe(success => {
       this.isSubmitting.set(false);
       this.showApplyDialog.set(false);
-      this.attendanceService.loadRegularizationRequests().subscribe();
+      if (success) {
+        this.messageService?.add({
+          severity: 'success',
+          summary: 'Request Submitted',
+          detail: 'Your attendance regularization request has been submitted successfully.',
+          life: 4000
+        });
+        this.attendanceService.loadRegularizationRequests().subscribe();
+      }
     });
   }
 }

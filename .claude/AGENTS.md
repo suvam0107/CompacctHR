@@ -39,15 +39,17 @@ one wins unless a human maintainer explicitly overrides it.
 10. **Conventional commits**: `feat(employees): add bulk export to employee list`,
     `fix(auth): correct refresh-token race condition`, `docs(architecture): …`. Scope =
     the top-level folder touched (`employees`, `attendance`, `leave`, `payroll`, `auth`,
-    `core`, `shared`, `layout`, `theme`, `sync`, `mock-data`).
+    `core`, `shared`, `layout`, `theme`, `mock-data`, `notifications`).
 11. **Mock data stays mock data**: while `environment.useMockData` is on, fixtures under
     `src/assets/data/` are the only source of truth for local development — never hardcode
     sample data inline in a component/service to "get something on screen" instead of
     adding/using a proper fixture (see `ARCHITECTURE.md` §1.4).
 12. **Never surface a spcKey, SP name, or raw endpoint path in user-facing UI text** —
-    this applies everywhere, but especially to `sync-task-registry.ts` labels, which must
+    this applies everywhere, including labels and table headers, which must
     read as plain English (`"Fetching Employees"`, `"Loading Reference Data"`), never the
     underlying key (`EMP_GET_LIST`) or endpoint (`/api/nonnested`).
+13. **Form validation feedback**: Every reactive form MUST highlight unfilled/invalid controls (`.ng-invalid.ng-touched`, `[invalid]`) upon submission attempt (`form.markAllAsTouched()`), rendering explicit inline error messages under each invalid control.
+14. **Header Subtitles**: Page headers (`PageHeader`) display clean single-line page titles only; subtitles are omitted across all pages.
 
 ---
 
@@ -61,7 +63,7 @@ wider than one feature.
 ### 2.1 Feature Module Agent
 
 - **Owns**: `src/app/features/<module>/**` for one module at a time (e.g. Employee Agent,
-  Attendance Agent, Leave Agent, Payroll Agent) plus that module's `<module>.routes.ts`.
+  Attendance Agent, Leave Agent, Payroll Agent, Notifications Agent) plus that module's `<module>.routes.ts`.
 - **May touch with review**: `core/config/menu.ts` (adding its own module's entries only),
   `core/api/spc-registry.ts` (adding its own module's keys only).
 - **Must not touch**: `core/auth/**`, `core/api/api.service.ts`, `theme/**`,
@@ -71,9 +73,9 @@ wider than one feature.
     `pages/ components/ services/ models/` sub-structure from `ARCHITECTURE.md` §4.
   - Use `shared/components` for anything generic (tables, date range, dialogs) instead of
     reinventing them locally.
-  - Every new list view uses `DataTable` + server-side pagination via `meta`, not
+  - Every new list view uses `DataTable` + server-side/mock-query pagination via `meta`, not
     client-side slicing of a full dataset.
-  - Every destructive/approval action goes through `ConfirmDialog` and is permission-gated.
+  - Every destructive/approval action goes through `ConfirmDialog` or modal, triggers a PrimeNG `MessageService` toast notification, updates local/store state reactively, and is permission-gated.
   - Keep feature services thin: fetch via `APIService`, expose via `resource()`, no
     business logic that belongs in the stored procedure.
 
@@ -93,10 +95,8 @@ wider than one feature.
 
 - **Owns**: `src/app/core/**` (auth, api, permissions, state, logging, interceptors,
   `menu.ts` structure/interface itself — not its content, which features append to),
-  `core/sync/**` structure (`sync.ts`, `sync.service.ts`, `sync.store.ts`, `sync.guard.ts` —
-  not the *content* of `sync-task-registry.ts`, which features append to, same pattern as
-  `menu.ts`), `mock-data-loader.service.ts`, `app.config.ts`, `app.routes.ts`.
-- **Highest scrutiny module** — touches auth, tokens, and the SPC transport layer.
+  `mock-data-loader.service.ts`, `app.config.ts`, `app.routes.ts`, layout shell & dynamic route title/breadcrumb listener.
+- **Highest scrutiny module** — touches auth, tokens, dynamic page routing, and the SPC transport layer.
 - **Responsibilities**:
   - Any change to `api.service.ts`, `mock-data-loader.service.ts`, interceptors, or
     guards requires an explicit written rationale in the PR description and a
@@ -105,8 +105,7 @@ wider than one feature.
   - Owns the shape of `APIRequest`/`APIResponse` — changing it is a breaking change for
     every feature agent and must be announced, not silently done.
   - Owns `error-code-map.ts` — feature agents request new entries, this agent adds them.
-  - Reviews every `sync-task-registry.ts` label for the plain-English convention in §1.12
-    (never a spcKey, SP name, or endpoint path) and for correct `critical` flagging.
+  - Listens to route navigation events (`NavigationEnd`) to update top app header titles & breadcrumb trails dynamically.
 
 ### 2.4 Theming/UI Agent
 

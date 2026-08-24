@@ -48,8 +48,14 @@ export class AuthService {
         return of(sessionRes.data);
       }),
       tap(() => {
-        // Route to /sync for post-login warm-up screen
-        this.router.navigate(['/sync']);
+        // Trigger background prefetching for lookup & summary data
+        this.lookupCache.warmUp().subscribe();
+        this.notifService.prefetchCount().subscribe();
+        this.dashboardService.prefetchSummary().subscribe();
+        this.leaveService.prefetchBalance().subscribe();
+
+        // Route to home screen / dashboard
+        this.router.navigate(['/dashboard']);
       })
     );
   }

@@ -10,6 +10,8 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { PageHeader } from '../../../../shared/components/page-header/page-header';
 import { LookupCacheService } from '../../../../core/state/lookup-cache.service';
 import { EmployeeService } from '../../services/employee.service';
+import { zodFormValidator } from '../../../../shared/validators/zod-form.validator';
+import { employeePersonalSchema, employeeBankSchema } from '../../../../shared/validators/schemas/employee.schema';
 
 @Component({
   selector: 'app-employee-form',
@@ -65,7 +67,8 @@ export class EmployeeForm implements OnInit {
     employeeCode: ['', Validators.required],
     name: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-    phone: ['', Validators.required],
+    phone: ['', [Validators.required, zodFormValidator(employeePersonalSchema.shape.mobileNumber)]],
+    emergencyContact: ['', zodFormValidator(employeePersonalSchema.shape.emergencyContact)],
     dob: [null, Validators.required],
     gender: ['Male', Validators.required],
     address: ['', Validators.required],
@@ -74,7 +77,11 @@ export class EmployeeForm implements OnInit {
     joinDate: [new Date(), Validators.required],
     employmentType: ['Full-Time', Validators.required],
     status: ['Active', Validators.required],
-    ctc: [null, [Validators.required, Validators.min(0)]]
+    ctc: [null, [Validators.required, Validators.min(0)]],
+    panNo: ['', zodFormValidator(employeePersonalSchema.shape.panNo)],
+    bankName: [''],
+    bankAccountNo: [''],
+    ifscCode: ['', zodFormValidator(employeeBankSchema.shape.ifscCode)]
   });
 
   ngOnInit(): void {
@@ -95,6 +102,7 @@ export class EmployeeForm implements OnInit {
           name: emp.personal.name,
           email: emp.personal.email,
           phone: emp.personal.phone,
+          emergencyContact: emp.personal.emergencyContact,
           dob: emp.personal.dob ? new Date(emp.personal.dob) : null,
           gender: emp.personal.gender,
           address: emp.personal.address,
@@ -103,7 +111,11 @@ export class EmployeeForm implements OnInit {
           joinDate: emp.employment.joinDate ? new Date(emp.employment.joinDate) : null,
           employmentType: emp.employment.employmentType,
           status: emp.employment.status,
-          ctc: emp.salaryInfo?.ctc || 0
+          ctc: emp.salaryInfo?.ctc || 0,
+          panNo: emp.personal.panNo || '',
+          bankName: emp.bankInfo?.bankName || '',
+          bankAccountNo: emp.bankInfo?.bankAccountNo || '',
+          ifscCode: emp.bankInfo?.ifscCode || ''
         });
       }
     });

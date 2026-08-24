@@ -1,7 +1,6 @@
 <div class="leave-apply-page">
   <app-page-header
     title="Apply for Leave"
-    subtitle="Submit your time-off request and view available leave balances"
   >
     <div actions class="header-actions">
       <a routerLink="/leave/history">
@@ -44,12 +43,20 @@
 
         <div class="form-group">
           <label for="fromDate">From Date *</label>
-          <p-datepicker id="fromDate" formControlName="fromDate" [showIcon]="true" iconDisplay="input" dateFormat="dd M yy" styleClass="w-full"></p-datepicker>
+          <p-datepicker id="fromDate" formControlName="fromDate" [showIcon]="true" iconDisplay="input" dateFormat="dd M yy" styleClass="w-full"
+            [class.ng-invalid]="leaveForm.get('fromDate')?.invalid && leaveForm.get('fromDate')?.touched"></p-datepicker>
+          @if (leaveForm.get('fromDate')?.invalid && leaveForm.get('fromDate')?.touched) {
+            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> From Date is required</div>
+          }
         </div>
 
         <div class="form-group">
           <label for="toDate">To Date *</label>
-          <p-datepicker id="toDate" formControlName="toDate" [showIcon]="true" iconDisplay="input" dateFormat="dd M yy" styleClass="w-full"></p-datepicker>
+          <p-datepicker id="toDate" formControlName="toDate" [showIcon]="true" iconDisplay="input" dateFormat="dd M yy" styleClass="w-full"
+            [class.ng-invalid]="leaveForm.get('toDate')?.invalid && leaveForm.get('toDate')?.touched"></p-datepicker>
+          @if (leaveForm.get('toDate')?.invalid && leaveForm.get('toDate')?.touched) {
+            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> To Date is required</div>
+          }
         </div>
 
         <div class="form-group">
@@ -59,9 +66,10 @@
 
         <div class="form-group full-width">
           <label for="reason">Reason for Leave *</label>
-          <input id="reason" type="text" pInputText formControlName="reason" placeholder="Please provide specific details..." class="w-full" />
+          <input id="reason" type="text" pInputText formControlName="reason" placeholder="Please provide specific details..." class="w-full"
+            [class.ng-invalid]="leaveForm.get('reason')?.invalid && leaveForm.get('reason')?.touched" />
           @if (leaveForm.get('reason')?.invalid && leaveForm.get('reason')?.touched) {
-            <span class="error-text">Reason is required (min 5 characters)</span>
+            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Reason is required (at least 5 characters)</div>
           }
         </div>
       </div>

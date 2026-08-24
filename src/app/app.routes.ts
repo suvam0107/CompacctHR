@@ -1,7 +1,6 @@
 // src/app/app.routes.ts
 import { Routes } from '@angular/router';
 import { authGuard } from './core/auth/auth.guard';
-import { syncGuard } from './core/sync/sync.guard';
 import { permissionGuard } from './core/permissions/permission.guard';
 import { Shell } from './layout/shell/shell';
 
@@ -11,14 +10,9 @@ export const routes: Routes = [
     loadChildren: () => import('./auth/auth.routes').then(m => m.AUTH_ROUTES)
   },
   {
-    path: 'sync',
-    loadComponent: () => import('./core/sync/sync').then(m => m.Sync),
-    canActivate: [authGuard]
-  },
-  {
     path: '',
     component: Shell,
-    canActivate: [authGuard, syncGuard],
+    canActivate: [authGuard],
     children: [
       {
         path: '',
@@ -52,6 +46,10 @@ export const routes: Routes = [
       {
         path: 'profile',
         loadChildren: () => import('./features/profile/profile.routes').then(m => m.PROFILE_ROUTES)
+      },
+      {
+        path: 'notifications',
+        loadComponent: () => import('./features/notifications/notifications').then(m => m.Notifications)
       },
       {
         path: 'admin',

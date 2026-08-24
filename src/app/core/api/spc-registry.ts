@@ -17,6 +17,7 @@ export const SPC = {
 
   // Notifications
   NOTIF_GET_COUNT:             'NOTIF_GET_COUNT',           // non-nested: unread notifications count
+  NOTIF_GET_LIST:              'NOTIF_GET_LIST',            // non-nested: full notifications list
 
   // Dashboard module
   DASH_GET_SUMMARY:            'DASH_GET_SUMMARY',          // non-nested: KPI cards & attendance overview

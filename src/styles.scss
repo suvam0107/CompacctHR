@@ -29,3 +29,34 @@ select,
 textarea {
   transition: border-color 120ms ease-out, box-shadow 120ms ease-out, background-color 120ms ease-out;
 }
+
+/* Global Form Validation Error Highlights */
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched,
+.p-inputtext.ng-invalid.ng-touched,
+.p-select.ng-invalid.ng-touched,
+.p-datepicker.ng-invalid.ng-touched,
+.p-invalid,
+.is-invalid {
+  border-color: var(--color-danger, #C0362C) !important;
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(192, 54, 44, 0.25) !important;
+  }
+}
+
+.form-error-msg {
+  color: var(--color-danger, #C0362C);
+  font-size: 0.775rem;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+
+  i {
+    font-size: 0.75rem;
+  }
+}
+

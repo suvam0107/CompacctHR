@@ -18,7 +18,7 @@ export class APIService {
     meta?: RequestMeta
   ): Observable<APIResponse<T>> {
     if (environment.useMockData) {
-      return this.mock.loadNonNested<T>(spcKey);
+      return this.mock.loadNonNested<T>(spcKey, params);
     }
     return this.http.post<APIResponse<T>>(`${environment.apiBase}/nonnested`, { spcKey, params, meta });
   }

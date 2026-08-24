@@ -47,6 +47,7 @@ export class SearchInput implements OnInit, OnDestroy {
 
   onKeyDown(event: KeyboardEvent): void {
     if (event.key === 'Enter') {
+      event.preventDefault();
       this.searchSubmit.emit(this.searchTerm.trim());
     } else if (event.key === 'Escape') {
       this.clear();

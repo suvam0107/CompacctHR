@@ -10,6 +10,8 @@ import { DataTable, DataTableColumn } from '../../../../shared/components/data-t
 import { LeaveService } from '../../services/leave.service';
 import { LeaveApprovalItem } from '../../models/leave.model';
 
+import { MessageService } from 'primeng/api';
+
 @Component({
   selector: 'app-leave-approvals',
   standalone: true,
@@ -19,6 +21,7 @@ import { LeaveApprovalItem } from '../../models/leave.model';
 })
 export class LeaveApprovals implements OnInit {
   protected leaveService = inject(LeaveService);
+  private messageService = inject(MessageService, { optional: true });
 
   showActionDialog = signal<boolean>(false);
   actionType = signal<'approve' | 'reject'>('approve');
@@ -52,14 +55,22 @@ export class LeaveApprovals implements OnInit {
     if (!leave) return;
 
     this.isProcessing.set(true);
-    const req$ = this.actionType() === 'approve'
+    const action = this.actionType();
+    const req$ = action === 'approve'
       ? this.leaveService.approveLeave(leave.id, this.remarks())
       : this.leaveService.rejectLeave(leave.id, this.remarks());
 
-    req$.subscribe(() => {
+    req$.subscribe(success => {
       this.isProcessing.set(false);
       this.showActionDialog.set(false);
-      this.leaveService.loadApprovals().subscribe();
+      if (success) {
+        this.messageService?.add({
+          severity: action === 'approve' ? 'success' : 'info',
+          summary: action === 'approve' ? 'Leave Request Approved' : 'Leave Request Rejected',
+          detail: `Leave request for ${leave.employeeName} has been ${action === 'approve' ? 'approved' : 'rejected'} successfully.`,
+          life: 4000
+        });
+      }
     });
   }
 }

@@ -1,7 +1,6 @@
 <div class="employee-form-page">
   <app-page-header
     [title]="isEditMode() ? 'Edit Employee Profile' : 'Add New Employee'"
-    [subtitle]="isEditMode() ? 'Update employee personal, job and compensation details' : 'Register a new employee record into the ERP system'"
   >
     <div actions class="header-actions">
       <a routerLink="/employees">
@@ -24,27 +23,56 @@
       <div class="form-grid">
         <div class="form-group">
           <label for="employeeCode">Employee Code *</label>
-          <input id="employeeCode" type="text" pInputText formControlName="employeeCode" placeholder="e.g. EMP-016" class="w-full" />
+          <input id="employeeCode" type="text" pInputText formControlName="employeeCode" placeholder="e.g. EMP-016" class="w-full"
+            [class.ng-invalid]="employeeForm.get('employeeCode')?.invalid && employeeForm.get('employeeCode')?.touched" />
+          @if (employeeForm.get('employeeCode')?.invalid && employeeForm.get('employeeCode')?.touched) {
+            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Employee code is required</div>
+          }
         </div>
 
         <div class="form-group">
           <label for="name">Full Name *</label>
-          <input id="name" type="text" pInputText formControlName="name" placeholder="John Doe" class="w-full" />
+          <input id="name" type="text" pInputText formControlName="name" placeholder="John Doe" class="w-full"
+            [class.ng-invalid]="employeeForm.get('name')?.invalid && employeeForm.get('name')?.touched" />
+          @if (employeeForm.get('name')?.invalid && employeeForm.get('name')?.touched) {
+            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Full name is required</div>
+          }
         </div>
 
         <div class="form-group">
           <label for="email">Corporate Email *</label>
-          <input id="email" type="email" pInputText formControlName="email" placeholder="john.doe@compacct.in" class="w-full" />
+          <input id="email" type="email" pInputText formControlName="email" placeholder="john.doe@compacct.in" class="w-full"
+            [class.ng-invalid]="employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched" />
+          @if (employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched) {
+            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Valid corporate email is required</div>
+          }
         </div>
 
         <div class="form-group">
           <label for="phone">Phone Number *</label>
-          <input id="phone" type="text" pInputText formControlName="phone" placeholder="+91 98765 43210" class="w-full" />
+          <input id="phone" type="text" pInputText formControlName="phone" placeholder="10-digit mobile number" class="w-full"
+            [class.ng-invalid]="employeeForm.get('phone')?.invalid && employeeForm.get('phone')?.touched" />
+          @if (employeeForm.get('phone')?.invalid && employeeForm.get('phone')?.touched) {
+            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Valid 10-digit Indian mobile number required</div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="emergencyContact">Emergency Contact</label>
+          <input id="emergencyContact" type="text" pInputText formControlName="emergencyContact" placeholder="Emergency contact number" class="w-full"
+            [class.ng-invalid]="employeeForm.get('emergencyContact')?.invalid && employeeForm.get('emergencyContact')?.touched" />
+          @if (employeeForm.get('emergencyContact')?.invalid && employeeForm.get('emergencyContact')?.touched) {
+            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Valid 10-digit number required</div>
+          }
         </div>
 
         <div class="form-group">
           <label for="dob">Date of Birth *</label>
-          <p-datepicker id="dob" formControlName="dob" [showIcon]="true" iconDisplay="input" dateFormat="dd M yy" styleClass="w-full"></p-datepicker>
+          <p-datepicker id="dob" formControlName="dob" [showIcon]="true" iconDisplay="input" dateFormat="dd M yy" styleClass="w-full"
+            [class.ng-invalid]="employeeForm.get('dob')?.invalid && employeeForm.get('dob')?.touched"></p-datepicker>
+          @if (employeeForm.get('dob')?.invalid && employeeForm.get('dob')?.touched) {
+            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Date of birth is required</div>
+          }
         </div>
 
         <div class="form-group">
@@ -54,7 +82,11 @@
 
         <div class="form-group full-width">
           <label for="address">Residential Address *</label>
-          <input id="address" type="text" pInputText formControlName="address" placeholder="Flat, Street, City, State, PIN" class="w-full" />
+          <input id="address" type="text" pInputText formControlName="address" placeholder="Flat, Street, City, State, PIN" class="w-full"
+            [class.ng-invalid]="employeeForm.get('address')?.invalid && employeeForm.get('address')?.touched" />
+          @if (employeeForm.get('address')?.invalid && employeeForm.get('address')?.touched) {
+            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Residential address is required</div>
+          }
         </div>
       </div>
     </div>
@@ -65,17 +97,29 @@
       <div class="form-grid">
         <div class="form-group">
           <label for="departmentId">Department *</label>
-          <p-select id="departmentId" [options]="departmentOptions()" optionLabel="name" optionValue="id" formControlName="departmentId" placeholder="Select Department" styleClass="w-full"></p-select>
+          <p-select id="departmentId" [options]="departmentOptions()" optionLabel="name" optionValue="id" formControlName="departmentId" placeholder="Select Department" styleClass="w-full"
+            [class.ng-invalid]="employeeForm.get('departmentId')?.invalid && employeeForm.get('departmentId')?.touched"></p-select>
+          @if (employeeForm.get('departmentId')?.invalid && employeeForm.get('departmentId')?.touched) {
+            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Department selection is required</div>
+          }
         </div>
 
         <div class="form-group">
           <label for="designationId">Designation *</label>
-          <p-select id="designationId" [options]="designationOptions()" optionLabel="title" optionValue="id" formControlName="designationId" placeholder="Select Designation" styleClass="w-full"></p-select>
+          <p-select id="designationId" [options]="designationOptions()" optionLabel="title" optionValue="id" formControlName="designationId" placeholder="Select Designation" styleClass="w-full"
+            [class.ng-invalid]="employeeForm.get('designationId')?.invalid && employeeForm.get('designationId')?.touched"></p-select>
+          @if (employeeForm.get('designationId')?.invalid && employeeForm.get('designationId')?.touched) {
+            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Designation selection is required</div>
+          }
         </div>
 
         <div class="form-group">
           <label for="joinDate">Date of Joining *</label>
-          <p-datepicker id="joinDate" formControlName="joinDate" [showIcon]="true" iconDisplay="input" dateFormat="dd M yy" styleClass="w-full"></p-datepicker>
+          <p-datepicker id="joinDate" formControlName="joinDate" [showIcon]="true" iconDisplay="input" dateFormat="dd M yy" styleClass="w-full"
+            [class.ng-invalid]="employeeForm.get('joinDate')?.invalid && employeeForm.get('joinDate')?.touched"></p-datepicker>
+          @if (employeeForm.get('joinDate')?.invalid && employeeForm.get('joinDate')?.touched) {
+            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Date of joining is required</div>
+          }
         </div>
 
         <div class="form-group">
@@ -90,7 +134,45 @@
 
         <div class="form-group">
           <label for="ctc">Annual CTC (INR) *</label>
-          <input id="ctc" type="number" pInputText formControlName="ctc" placeholder="e.g. 750000" class="w-full" />
+          <input id="ctc" type="number" pInputText formControlName="ctc" placeholder="e.g. 750000" class="w-full"
+            [class.ng-invalid]="employeeForm.get('ctc')?.invalid && employeeForm.get('ctc')?.touched" />
+          @if (employeeForm.get('ctc')?.invalid && employeeForm.get('ctc')?.touched) {
+            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Valid non-negative CTC is required</div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Banking & Statutory Details Section -->
+    <div class="form-section">
+      <h3 class="section-title"><i class="pi pi-wallet"></i> Banking & Financial Details</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="panNo">PAN Number</label>
+          <input id="panNo" type="text" pInputText formControlName="panNo" placeholder="ABCDE1234F" class="w-full"
+            [class.ng-invalid]="employeeForm.get('panNo')?.invalid && employeeForm.get('panNo')?.touched" />
+          @if (employeeForm.get('panNo')?.invalid && employeeForm.get('panNo')?.touched) {
+            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Invalid PAN format (e.g. ABCDE1234F)</div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="bankName">Bank Name</label>
+          <input id="bankName" type="text" pInputText formControlName="bankName" placeholder="e.g. State Bank of India" class="w-full" />
+        </div>
+
+        <div class="form-group">
+          <label for="bankAccountNo">Account Number</label>
+          <input id="bankAccountNo" type="text" pInputText formControlName="bankAccountNo" placeholder="Account Number" class="w-full" />
+        </div>
+
+        <div class="form-group">
+          <label for="ifscCode">IFSC Code</label>
+          <input id="ifscCode" type="text" pInputText formControlName="ifscCode" placeholder="e.g. SBIN0001234" class="w-full"
+            [class.ng-invalid]="employeeForm.get('ifscCode')?.invalid && employeeForm.get('ifscCode')?.touched" />
+          @if (employeeForm.get('ifscCode')?.invalid && employeeForm.get('ifscCode')?.touched) {
+            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Invalid IFSC format (e.g. SBIN0001234)</div>
+          }
         </div>
       </div>
     </div>

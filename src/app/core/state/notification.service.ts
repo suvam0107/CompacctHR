@@ -9,13 +9,27 @@ export interface NotificationCountData {
   unreadCount: number;
 }
 
+export interface NotificationItem {
+  id: number;
+  title: string;
+  message: string;
+  timestamp: string;
+  read: boolean;
+  type?: string;
+  severity?: 'info' | 'warning' | 'success' | 'danger';
+}
+
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
   private api = inject(APIService);
   private logger = inject(LoggerService);
 
   private _unreadCount = signal<number>(0);
+  private _notifications = signal<NotificationItem[]>([]);
+  readonly isLoading = signal<boolean>(false);
+
   readonly unreadCount = this._unreadCount.asReadonly();
+  readonly notifications = this._notifications.asReadonly();
 
   prefetchCount(): Observable<boolean> {
     return this.api.callNonNested<NotificationCountData>(SPC.NOTIF_GET_COUNT).pipe(
@@ -31,6 +45,41 @@ export class NotificationService {
         return of(false);
       })
     );
+  }
+
+  loadNotifications(): Observable<NotificationItem[]> {
+    this.isLoading.set(true);
+    return this.api.callNonNested<NotificationItem[]>(SPC.NOTIF_GET_LIST).pipe(
+      tap(res => {
+        this.isLoading.set(false);
+        if (res.success && Array.isArray(res.data)) {
+          this._notifications.set(res.data);
+          const unread = res.data.filter(item => !item.read).length;
+          this._unreadCount.set(unread);
+        }
+      }),
+      map(res => (res.success && Array.isArray(res.data) ? res.data : [])),
+      catchError(err => {
+        this.isLoading.set(false);
+        this.logger.error('NotificationService: Failed to load notifications', err);
+        return of([]);
+      })
+    );
+  }
+
+  markAsRead(id: number): void {
+    this._notifications.update(items =>
+      items.map(item => (item.id === id ? { ...item, read: true } : item))
+    );
+    const unread = this._notifications().filter(item => !item.read).length;
+    this._unreadCount.set(unread);
+  }
+
+  markAllAsRead(): void {
+    this._notifications.update(items =>
+      items.map(item => ({ ...item, read: true }))
+    );
+    this._unreadCount.set(0);
   }
 
   setUnreadCount(count: number): void {

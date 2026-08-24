@@ -101,12 +101,26 @@ export class LeaveService {
 
   approveLeave(id: number, remarks?: string): Observable<boolean> {
     return this.api.callNonNested(SPC.LEAVE_APPROVE, { id, remarks }).pipe(
+      tap(res => {
+        if (res.success) {
+          this._approvals.update(items =>
+            items.map(item => item.id === id ? { ...item, status: 'Approved' } : item)
+          );
+        }
+      }),
       map(res => !!res.success)
     );
   }
 
   rejectLeave(id: number, remarks?: string): Observable<boolean> {
     return this.api.callNonNested(SPC.LEAVE_REJECT, { id, remarks }).pipe(
+      tap(res => {
+        if (res.success) {
+          this._approvals.update(items =>
+            items.map(item => item.id === id ? { ...item, status: 'Rejected' } : item)
+          );
+        }
+      }),
       map(res => !!res.success)
     );
   }

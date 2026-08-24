@@ -1,0 +1,42 @@
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "title": "Leave Request Pending Approval",
+      "message": "Rahul Sharma has submitted a Casual Leave request for 2 days (28 Aug - 29 Aug).",
+      "timestamp": "2026-08-24T14:30:00Z",
+      "read": false,
+      "type": "Leave",
+      "severity": "warning"
+    },
+    {
+      "id": 2,
+      "title": "Payslip Generated",
+      "message": "Your monthly salary payslip for July 2026 is now available for download.",
+      "timestamp": "2026-08-20T09:00:00Z",
+      "read": false,
+      "type": "Payroll",
+      "severity": "info"
+    },
+    {
+      "id": 3,
+      "title": "Attendance Regularization Approved",
+      "message": "Your attendance regularization request for 15 Aug has been approved by HR.",
+      "timestamp": "2026-08-16T11:15:00Z",
+      "read": true,
+      "type": "Attendance",
+      "severity": "success"
+    },
+    {
+      "id": 4,
+      "title": "Policy Update Notice",
+      "message": "The updated Remote Work & Overtime Policy for Q3 2026 has been published.",
+      "timestamp": "2026-08-10T16:00:00Z",
+      "read": true,
+      "type": "General",
+      "severity": "info"
+    }
+  ],
+  "totalCount": 4
+}

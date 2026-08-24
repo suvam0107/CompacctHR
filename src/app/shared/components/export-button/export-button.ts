@@ -52,7 +52,7 @@ export class ExportButton {
       const excelCols: ExcelColumn[] = this.columns.map(c => ({
         header: c.header,
         key: c.field,
-        width: typeof c.width === 'number' ? c.width : (c.width ? parseInt(c.width, 10) || 15 : 15)
+        width: typeof c.width === 'number' ? c.width : undefined
       }));
       await exportToExcel(excelCols, this.data, {
         filename: this.filename,
@@ -62,13 +62,13 @@ export class ExportButton {
     this.exportExcel.emit();
   }
 
-  private onExportPdf(): void {
+  private async onExportPdf(): Promise<void> {
     if (this.columns && this.data) {
       const pdfCols: PdfTableColumn[] = this.columns.map(c => ({
         header: c.header,
         key: c.field
       }));
-      exportToPdf(pdfCols, this.data, {
+      await exportToPdf(pdfCols, this.data, {
         filename: this.filename,
         title: this.title || this.filename
       });
