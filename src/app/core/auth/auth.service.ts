@@ -1,7 +1,8 @@
 // src/app/core/auth/auth.service.ts
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, switchMap, tap, of, throwError, forkJoin, catchError } from 'rxjs';
+import { Observable, switchMap, tap, map, of, throwError, forkJoin, catchError } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { APIService } from '../api/api.service';
 import { SPC } from '../api/spc-registry';
 import { AuthStore } from './auth.store';
