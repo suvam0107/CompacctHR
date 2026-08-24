@@ -7,6 +7,9 @@ export interface LeaveBalanceItem {
   total: number;
   used: number;
   remaining: number;
+  colourCode?: string;
+  applyDay?: number;
+  minDay?: number;
 }
 
 export interface LeaveBalanceData {
@@ -29,12 +32,14 @@ export interface LeaveHistoryItem {
   reviewedBy?: string | null;
   reviewedAt?: string | null;
   remarks?: string | null;
+  colourCode?: string;
 }
 
 export interface LeaveApprovalItem {
   id: number;
   employeeId: number;
   employeeName: string;
+  empCode?: string;
   leaveTypeId: number;
   leaveTypeName: string;
   leaveTypeCode: string;

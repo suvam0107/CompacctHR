@@ -4,14 +4,10 @@
     "personal": {
       "id": 1,
       "empCode": "EMP-001",
-      "employeeCode": "EMP-001",
       "firstName": "ADMIN",
       "midName": null,
       "lastName": "USER",
       "empName": "ADMIN USER",
-      "name": "ADMIN USER",
-      "gender": "Male",
-      "address": "123 Tech Park, Sector 5, Kolkata, WB - 700091",
       "dob": "1992-05-14",
       "fatherMotherName": "Sunil Kumar User",
       "spouseName": "Pooja User",
@@ -40,12 +36,8 @@
       "personalArea": "East",
       "isHod": true,
       "joiningDate": "2022-01-15",
-      "joinDate": "2022-01-15",
       "employementStatus": "Active",
-      "employmentType": "Full-Time",
       "status": "Active",
-      "reportingManagerId": 2,
-      "reportingManagerName": "Aayush Sharma",
       "resignOn": null,
       "releaseOn": null,
       "weeklyOff1": "Sunday",
@@ -75,14 +67,10 @@
       "pTaxDeduct": "Y"
     },
     "documents": [
-      { "id": 1, "type": "Aadhaar", "fileName": "aadhaar_card_masked.pdf", "uploadedAt": "2022-01-16T10:00:00Z", "url": "/assets/documents/aadhaar.pdf" },
-      { "id": 2, "type": "PAN", "fileName": "pan_card.pdf", "uploadedAt": "2022-01-16T10:05:00Z", "url": "/assets/documents/pan.pdf" },
-      { "id": 3, "type": "Offer Letter", "fileName": "offer_letter_signed.pdf", "uploadedAt": "2022-01-10T14:30:00Z", "url": "/assets/documents/offer.pdf" }
+      { "id": 1, "type": "Aadhaar", "fileName": "aadhaar_card_masked.pdf", "uploadedAt": "2022-01-16T10:00:00Z", "url": "/assets/documents/aadhaar.pdf" }
     ],
     "leaveBalances": [
-      { "leaveTypeId": 1, "leaveTypeName": "Casual Leave", "code": "CL", "total": 12, "used": 2, "remaining": 10 },
-      { "leaveTypeId": 2, "leaveTypeName": "Sick Leave", "code": "SL", "total": 10, "used": 1, "remaining": 9 },
-      { "leaveTypeId": 3, "leaveTypeName": "Earned Leave", "code": "EL", "total": 18, "used": 5, "remaining": 13 }
+      { "leaveTypeId": 1, "leaveTypeName": "Casual Leave", "code": "CL", "total": 12, "used": 2, "remaining": 10 }
     ],
     "salaryInfo": {
       "txnId": 101,
@@ -97,5 +85,5 @@
       "ctc": 960000
     }
   },
-  "message": "Employee 360 detail retrieved successfully"
+  "message": "User profile retrieved successfully"
 }

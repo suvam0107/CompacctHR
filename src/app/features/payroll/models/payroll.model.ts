@@ -10,30 +10,41 @@ export interface PayslipListItem {
   netPay: number;
   status: 'Processed' | 'Pending' | 'Draft';
   processedAt: string;
-}
-
-export interface SalaryComponentItem {
-  label: string;
-  type: 'earning' | 'deduction';
-  amount: number;
-  isMonthly: boolean;
+  hrYearId?: number;
+  hrYearName?: string;
 }
 
 export interface SalaryStructureNested {
   employee: {
     id: number;
+    userHash?: string;
     name: string;
+    empName: string;
     employeeCode: string;
     department: string;
     designation: string;
   };
-  ctc: number;
-  components: SalaryComponentItem[];
+  txnId: number;
   effectiveFrom: string;
+  basicSalary: number;
+  hra: number;
+  medicalAllowance: number;
+  specialAllowance: number;
+  educationalAllowance: number;
+  cityCompensationAllowance: number;
+  encashment: number;
+  ctc: number;
+  components: {
+    label: string;
+    type: 'earning' | 'deduction';
+    amount: number;
+    isMonthly: boolean;
+  }[];
 }
 
 export interface PayrollRunPayload {
   month: number;
   year: number;
+  hrYearId?: number;
   departmentId?: number | null;
 }

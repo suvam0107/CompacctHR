@@ -8,6 +8,8 @@ import { InputText } from 'primeng/inputtext';
 import { Password } from 'primeng/password';
 import { MessageService } from 'primeng/api';
 import { AuthService } from '../../../core/auth/auth.service';
+import { loginSchema } from '../../../shared/validators/schemas/auth.schema';
+import { zodFormValidator } from '../../../shared/validators/zod-form.validator';
 
 @Component({
   selector: 'app-login',
@@ -28,11 +30,11 @@ export class Login {
   readonly loginForm = new FormGroup({
     username: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(3)]
+      validators: [Validators.required, zodFormValidator(loginSchema.shape.userName)]
     }),
     password: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(6)]
+      validators: [Validators.required, zodFormValidator(loginSchema.shape.password)]
     })
   });
 

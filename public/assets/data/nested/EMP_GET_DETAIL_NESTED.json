@@ -75,14 +75,10 @@
       "pTaxDeduct": "Y"
     },
     "documents": [
-      { "id": 1, "type": "Aadhaar", "fileName": "aadhaar_card_masked.pdf", "uploadedAt": "2022-01-16T10:00:00Z", "url": "/assets/documents/aadhaar.pdf" },
-      { "id": 2, "type": "PAN", "fileName": "pan_card.pdf", "uploadedAt": "2022-01-16T10:05:00Z", "url": "/assets/documents/pan.pdf" },
-      { "id": 3, "type": "Offer Letter", "fileName": "offer_letter_signed.pdf", "uploadedAt": "2022-01-10T14:30:00Z", "url": "/assets/documents/offer.pdf" }
+      { "id": 1, "type": "Aadhaar", "fileName": "aadhaar_card_masked.pdf", "uploadedAt": "2022-01-16T10:00:00Z", "url": "/assets/documents/aadhaar.pdf" }
     ],
     "leaveBalances": [
-      { "leaveTypeId": 1, "leaveTypeName": "Casual Leave", "code": "CL", "total": 12, "used": 2, "remaining": 10 },
-      { "leaveTypeId": 2, "leaveTypeName": "Sick Leave", "code": "SL", "total": 10, "used": 1, "remaining": 9 },
-      { "leaveTypeId": 3, "leaveTypeName": "Earned Leave", "code": "EL", "total": 18, "used": 5, "remaining": 13 }
+      { "leaveTypeId": 1, "leaveTypeName": "Casual Leave", "code": "CL", "total": 12, "used": 2, "remaining": 10 }
     ],
     "salaryInfo": {
       "txnId": 101,

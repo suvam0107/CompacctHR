@@ -1,0 +1,35 @@
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "userHash": "usr_hash_admin_001_compacct",
+      "empCode": "EMP-001",
+      "employeeCode": "EMP-001",
+      "firstName": "ADMIN",
+      "midName": null,
+      "lastName": "USER",
+      "empName": "ADMIN USER",
+      "name": "ADMIN USER",
+      "email": "admin@compacct.in",
+      "mobileNumber": "9876543210",
+      "department": "Engineering",
+      "departmentId": 1,
+      "departmentName": "Engineering",
+      "designation": "Senior Software Engineer",
+      "designationId": 2,
+      "designationName": "Senior Software Engineer",
+      "grade": "Grade A",
+      "personalArea": "East",
+      "location": "Kolkata HO",
+      "state": "West Bengal",
+      "isHod": true,
+      "employementStatus": "Active",
+      "status": "Active",
+      "joinDate": "2022-01-15",
+      "avatarUrl": null
+    }
+  ],
+  "totalCount": 1,
+  "message": "Employee list retrieved successfully"
+}

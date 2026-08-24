@@ -199,7 +199,8 @@ export class MockDataLoaderService {
 | `dayjs` | Lightweight date manipulation/formatting (Bootstrap/PrimeNG both need consistent date parsing) |
 | `jwt-decode` | Decode access token client-side to read expiry/claims (never trust it for authorization — display/UX only) |
 | `dompurify` | Sanitize any HTML coming from DB-stored rich text (announcements, templates) before rendering |
-| `zod` | Runtime schema validation at the `APIService` boundary for critical write payloads, catching shape drift from stored procs early |
+| `zod` | Client-side form validation (`shared/validators/schemas/`) via `zodFormValidator` bridge and API write payload validation, ensuring strict contract enforcement against DB schemas |
+[diff_block_end]
 | `chart.js` | Peer dependency of PrimeNG `p-chart`, used on dashboard widgets |
 
 ### 2.5 Tooling
@@ -944,3 +945,34 @@ and presentational** — they receive inputs/signals and emit outputs; they neve
 - Module scope for v1 is Employee, Attendance, Leave, and Payroll (basics) per current
   decision; `features/` is structured so Recruitment, Performance, Onboarding, Assets, etc.
   can be added as sibling folders without touching existing modules.
+
+---
+
+## 19. Database Master Table Alignment & Zod Schema Architecture
+
+### 19.1 Master Table Schema Alignment (`HR.xlsx`)
+
+The application's mock fixtures and frontend models strictly align with the core database master tables defined in `HR.xlsx`:
+
+| DB Master Table | Primary Key | Key Frontend Entity & SPC Mapping |
+|---|---|---|
+| `ur_mst_user` | `user_id` (bigint), `user_hash` (varchar) | `User` interface (`userHash`), `AUTH_LOGIN`, `AUTH_ME` |
+| `mst_employee` | `emp_id` (bigint), `emp_code` (varchar) | `EmployeeListItem`, `EmployeeDetail360`, `EMP_GET_LIST`, `EMP_GET_DETAIL_NESTED` |
+| `mst_salary` | `txn_id` (int), `emp_id` (int) | `EmployeeSalaryInfo`, `SalaryStructureNested`, `PAY_GET_SALARY_STRUCTURE_NESTED` |
+| `mst_hr_atten_type` | `atten_type_id` (bigint) | `LookupAttendanceType`, `AttendanceLogItem`, `LOOKUP_GET_ALL`, `ATT_GET_LOG` |
+| `mst_holiday` | `holiday_id` (int) | `LookupHoliday`, `LOOKUP_GET_ALL`, `HOLIDAY_GET_LIST` |
+| `mst_hr_txn_year` | `hr_year_id` (int) | `LookupHrYear`, `LOOKUP_GET_ALL`, `HR_YEAR_GET_LIST` |
+
+### 19.2 Zod Client-Side Form Validation Architecture
+
+Client-side validation is enforced using **Zod schemas** coupled to Angular's reactive form system via a bridge utility:
+
+- **Schema definitions**: Located in `src/app/shared/validators/schemas/` (`auth.schema.ts`, `employee.schema.ts`, `leave.schema.ts`, `attendance.schema.ts`, `salary.schema.ts`, `profile.schema.ts`).
+- **Angular Bridge**: `zodFormValidator(schema)` in `src/app/shared/validators/zod-form.validator.ts` converts any Zod schema into an Angular `ValidatorFn`, populating form control errors with Zod error messages (`zodError`).
+- **Validation Rules**:
+  - `userName`: minimum length 5
+  - `password`: minimum length 8
+  - `mobileNumber` / `emergencyContact`: Indian 10-digit format (`/^[6-9]\d{9}$/`)
+  - `panNo`: Standard Indian PAN regex (`/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/`)
+  - `ifscCode`: Standard Indian IFSC regex (`/^[A-Z]{4}0[A-Z0-9]{6}$/`)
+

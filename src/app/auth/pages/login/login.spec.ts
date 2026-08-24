@@ -39,21 +39,21 @@ describe('Login Component', () => {
     expect(component.loginForm.controls.password.errors?.['required']).toBe(true);
   });
 
-  it('should validate minLength for username', () => {
+  it('should validate minLength for username via Zod (min 5)', () => {
     const username = component.loginForm.controls.username;
-    username.setValue('ab');
-    expect(username.errors?.['minlength']).toBeTruthy();
+    username.setValue('user');
+    expect(username.errors?.['zodError']).toBe('Username must be at least 5 characters');
 
     username.setValue('ADMIN');
     expect(username.errors).toBeNull();
   });
 
-  it('should validate minLength for password', () => {
+  it('should validate minLength for password via Zod (min 8)', () => {
     const password = component.loginForm.controls.password;
-    password.setValue('123');
-    expect(password.errors?.['minlength']).toBeTruthy();
+    password.setValue('secret');
+    expect(password.errors?.['zodError']).toBe('Password must be at least 8 characters');
 
-    password.setValue('secret123');
+    password.setValue('compacct123');
     expect(password.errors).toBeNull();
   });
 
@@ -65,18 +65,18 @@ describe('Login Component', () => {
   it('should call authService.login on valid form submission', () => {
     mockAuthService.login.mockReturnValue(
       of({
-        user: { id: 1, name: 'ADMIN', email: 'admin@compacct.in', roles: ['SuperAdmin'] },
+        user: { userHash: 'usr_hash_001', userName: 'admin', userDisplayName: 'ADMIN', name: 'ADMIN', email: 'admin@compacct.in', roles: ['SuperAdmin'] },
         permissions: [],
         menuFlags: {}
       })
     );
 
     component.loginForm.controls.username.setValue('ADMIN');
-    component.loginForm.controls.password.setValue('compacct');
+    component.loginForm.controls.password.setValue('compacct123');
 
     component.onSubmit();
 
-    expect(mockAuthService.login).toHaveBeenCalledWith('ADMIN', 'compacct');
+    expect(mockAuthService.login).toHaveBeenCalledWith('ADMIN', 'compacct123');
     expect(component.errorMessage()).toBeNull();
     expect(component.isLoading()).toBe(false);
   });

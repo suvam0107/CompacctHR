@@ -10,7 +10,10 @@ export const SPC = {
   AUTH_ME:                     'AUTH_GET_SESSION_NESTED',   // nested: returns user session, roles, permissions, menu flags
 
   // Core / Lookups
-  LOOKUP_GET_ALL:              'LOOKUP_GET_ALL',            // non-nested: departments, designations, leave types
+  LOOKUP_GET_ALL:              'LOOKUP_GET_ALL',            // non-nested: departments, designations, leave types, attendance types, holidays, hr years
+  HOLIDAY_GET_LIST:            'HOLIDAY_GET_LIST',          // non-nested: company holidays list
+  HR_YEAR_GET_LIST:            'HR_YEAR_GET_LIST',          // non-nested: HR financial transaction years list
+  ATTEN_TYPE_GET_LIST:         'ATTEN_TYPE_GET_LIST',       // non-nested: attendance types master list
 
   // Notifications
   NOTIF_GET_COUNT:             'NOTIF_GET_COUNT',           // non-nested: unread notifications count
@@ -56,5 +59,3 @@ export const SPC = {
 } as const;
 
 export type SpcKey = typeof SPC[keyof typeof SPC];
-
-

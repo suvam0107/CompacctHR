@@ -16,9 +16,63 @@
       { "id": 5, "name": "Sales Executive", "departmentId": 4 }
     ],
     "leaveTypes": [
-      { "id": 1, "code": "CL", "name": "Casual Leave", "defaultDays": 12 },
-      { "id": 2, "code": "SL", "name": "Sick Leave", "defaultDays": 10 },
-      { "id": 3, "code": "EL", "name": "Earned Leave", "defaultDays": 18 }
+      { "id": 1, "code": "CL", "name": "Casual Leave", "defaultDays": 12, "applyDay": 1, "minDay": 0.5, "colourCode": "#3B82F6", "slNo": 1, "attenCategory": "Leave", "attenTypeCalc": 0 },
+      { "id": 2, "code": "SL", "name": "Sick Leave", "defaultDays": 10, "applyDay": 0, "minDay": 0.5, "colourCode": "#EF4444", "slNo": 2, "attenCategory": "Leave", "attenTypeCalc": 0 },
+      { "id": 3, "code": "EL", "name": "Earned Leave", "defaultDays": 18, "applyDay": 3, "minDay": 1, "colourCode": "#10B981", "slNo": 3, "attenCategory": "Leave", "attenTypeCalc": 0 }
+    ],
+    "attendanceTypes": [
+      { "attenTypeId": 1, "attenType": "Present", "attenCategory": "Attendance", "shtDesc": "P", "attenTypeCalc": 1.0, "lsLeave": "N", "attendanceRequired": "Y", "leaveType": null, "applyDay": 0, "minDay": null, "colourCode": "#10B981", "slNo": 1 },
+      { "attenTypeId": 2, "attenType": "Absent", "attenCategory": "Attendance", "shtDesc": "A", "attenTypeCalc": 0.0, "lsLeave": "N", "attendanceRequired": "Y", "leaveType": null, "applyDay": 0, "minDay": null, "colourCode": "#EF4444", "slNo": 2 },
+      { "attenTypeId": 3, "attenType": "Late Arrival", "attenCategory": "Attendance", "shtDesc": "L", "attenTypeCalc": 1.0, "lsLeave": "N", "attendanceRequired": "Y", "leaveType": null, "applyDay": 0, "minDay": null, "colourCode": "#F59E0B", "slNo": 3 },
+      { "attenTypeId": 4, "attenType": "Half Day", "attenCategory": "Attendance", "shtDesc": "HD", "attenTypeCalc": 0.5, "lsLeave": "N", "attendanceRequired": "Y", "leaveType": null, "applyDay": 0, "minDay": null, "colourCode": "#6366F1", "slNo": 4 },
+      { "attenTypeId": 5, "attenType": "Casual Leave", "attenCategory": "Leave", "shtDesc": "CL", "attenTypeCalc": 0.0, "lsLeave": "Y", "attendanceRequired": "N", "leaveType": "CL", "applyDay": 1, "minDay": "0.5", "colourCode": "#3B82F6", "slNo": 5 },
+      { "attenTypeId": 6, "attenType": "Sick Leave", "attenCategory": "Leave", "shtDesc": "SL", "attenTypeCalc": 0.0, "lsLeave": "Y", "attendanceRequired": "N", "leaveType": "SL", "applyDay": 0, "minDay": "0.5", "colourCode": "#EC4899", "slNo": 6 },
+      { "attenTypeId": 7, "attenType": "Earned Leave", "attenCategory": "Leave", "shtDesc": "EL", "attenTypeCalc": 0.0, "lsLeave": "Y", "attendanceRequired": "N", "leaveType": "EL", "applyDay": 3, "minDay": "1.0", "colourCode": "#8B5CF6", "slNo": 7 },
+      { "attenTypeId": 8, "attenType": "Weekly Off", "attenCategory": "Off", "shtDesc": "WO", "attenTypeCalc": 1.0, "lsLeave": "N", "attendanceRequired": "N", "leaveType": null, "applyDay": 0, "minDay": null, "colourCode": "#9CA3AF", "slNo": 8 },
+      { "attenTypeId": 9, "attenType": "Holiday", "attenCategory": "Off", "shtDesc": "HO", "attenTypeCalc": 1.0, "lsLeave": "N", "attendanceRequired": "N", "leaveType": null, "applyDay": 0, "minDay": null, "colourCode": "#14B8A6", "slNo": 9 }
+    ],
+    "holidays": [
+      { "holidayId": 1, "hrYearId": 1, "holidayDate": "2026-01-26", "locationId": 1, "purpose": "Republic Day", "attenTypeId": 9 },
+      { "holidayId": 2, "hrYearId": 1, "holidayDate": "2026-08-15", "locationId": 1, "purpose": "Independence Day", "attenTypeId": 9 },
+      { "holidayId": 3, "hrYearId": 1, "holidayDate": "2026-10-02", "locationId": 1, "purpose": "Gandhi Jayanti", "attenTypeId": 9 },
+      { "holidayId": 4, "hrYearId": 1, "holidayDate": "2026-10-20", "locationId": 1, "purpose": "Durga Puja", "attenTypeId": 9 },
+      { "holidayId": 5, "hrYearId": 1, "holidayDate": "2026-11-08", "locationId": 1, "purpose": "Diwali", "attenTypeId": 9 },
+      { "holidayId": 6, "hrYearId": 1, "holidayDate": "2026-12-25", "locationId": 1, "purpose": "Christmas Day", "attenTypeId": 9 }
+    ],
+    "hrYears": [
+      { "hrYearId": 1, "hrYearName": "FY 2026-27", "hrYearStart": "2026-04-01T00:00:00Z", "hrYearEnd": "2027-03-31T23:59:59Z", "monthStartDay": "2026-04-01", "monthEndDay": "2026-04-30" },
+      { "hrYearId": 2, "hrYearName": "FY 2025-26", "hrYearStart": "2025-04-01T00:00:00Z", "hrYearEnd": "2026-03-31T23:59:59Z", "monthStartDay": "2025-04-01", "monthEndDay": "2025-04-30" }
+    ],
+    "locations": [
+      { "id": 1, "name": "Kolkata HO", "code": "KOL" },
+      { "id": 2, "name": "Mumbai Branch", "code": "MUM" },
+      { "id": 3, "name": "Delhi Branch", "code": "DEL" }
+    ],
+    "grades": [
+      { "id": 1, "name": "Grade A", "code": "GRA" },
+      { "id": 2, "name": "Grade B", "code": "GRB" },
+      { "id": 3, "name": "Grade C", "code": "GRC" }
+    ],
+    "personalAreas": [
+      { "id": 1, "name": "East", "code": "EAST" },
+      { "id": 2, "name": "West", "code": "WEST" },
+      { "id": 3, "name": "North", "code": "NORTH" }
+    ],
+    "employmentTypes": [
+      { "id": 1, "name": "Full-Time" },
+      { "id": 2, "name": "Part-Time" },
+      { "id": 3, "name": "Contractor" }
+    ],
+    "genders": [
+      { "id": 1, "name": "Male" },
+      { "id": 2, "name": "Female" },
+      { "id": 3, "name": "Other" }
+    ],
+    "documentTypes": [
+      { "id": 1, "name": "Aadhaar" },
+      { "id": 2, "name": "PAN" },
+      { "id": 3, "name": "Offer Letter" },
+      { "id": 4, "name": "Resignation Letter" }
     ]
   },
   "message": "Lookups retrieved successfully"

@@ -2,8 +2,11 @@
   "success": true,
   "data": {
     "user": {
-      "id": 1,
-      "name": "ADMIN",
+      "userHash": "usr_hash_admin_001_compacct",
+      "userName": "admin",
+      "userDisplayName": "System Administrator",
+      "userPhone": "+91 9876543210",
+      "name": "System Administrator",
       "email": "admin@compacct.in",
       "roles": ["SuperAdmin", "HRAdmin"],
       "avatarUrl": null

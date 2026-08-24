@@ -1,7 +1,10 @@
 // src/app/core/auth/models/user.model.ts
 
 export interface User {
-  id: number;
+  userHash: string;
+  userName: string;
+  userDisplayName: string;
+  userPhone?: string | null;
   name: string;
   email: string;
   roles: string[];

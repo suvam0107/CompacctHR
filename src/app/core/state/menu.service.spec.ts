@@ -19,7 +19,7 @@ describe('MenuService', () => {
 
   it('should include dashboard for any user', () => {
     authStore.setSession(
-      { id: 1, name: 'Employee', email: 'emp@compacct.in', roles: ['Employee'] },
+      { userHash: 'usr_001', userName: 'emp', userDisplayName: 'Employee', name: 'Employee', email: 'emp@compacct.in', roles: ['Employee'] },
       []
     );
 
@@ -30,7 +30,7 @@ describe('MenuService', () => {
 
   it('should show employee menu only when user has employee:view permission', () => {
     authStore.setSession(
-      { id: 1, name: 'Employee', email: 'emp@compacct.in', roles: ['Employee'] },
+      { userHash: 'usr_001', userName: 'emp', userDisplayName: 'Employee', name: 'Employee', email: 'emp@compacct.in', roles: ['Employee'] },
       ['employee:view']
     );
 
@@ -38,7 +38,7 @@ describe('MenuService', () => {
     expect(visible.some(i => i.id === 'employees')).toBe(true);
 
     authStore.setSession(
-      { id: 1, name: 'Employee', email: 'emp@compacct.in', roles: ['Employee'] },
+      { userHash: 'usr_001', userName: 'emp', userDisplayName: 'Employee', name: 'Employee', email: 'emp@compacct.in', roles: ['Employee'] },
       []
     );
 
@@ -48,7 +48,7 @@ describe('MenuService', () => {
 
   it('should show admin section only for SuperAdmin role', () => {
     authStore.setSession(
-      { id: 1, name: 'Admin', email: 'admin@compacct.in', roles: ['SuperAdmin'] },
+      { userHash: 'usr_admin', userName: 'admin', userDisplayName: 'Admin', name: 'Admin', email: 'admin@compacct.in', roles: ['SuperAdmin'] },
       ['employee:view']
     );
 

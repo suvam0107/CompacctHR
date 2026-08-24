@@ -7,7 +7,7 @@ This document tracks the current progress, completed milestones, active contract
 ## 1. Project Overview & Current Milestone
 
 - **Project:** CompacctHR (Enterprise Human Resource Management System)
-- **Current Milestone:** **Milestone 2 — Post-Login Sync Layer, Authenticated Shell, & Dashboard Completed**
+- **Current Milestone:** **Milestone 3 — Data Overhaul & Zod Client-Side Form Validation Completed**
 - **Mode:** Development with Mock Data (`environment.useMockData = true`)
 
 ---
@@ -48,7 +48,9 @@ src/app/
 ├── shared/
 │   ├── components/           [COMPLETED] StatCard, LoadingSkeleton (shimmer animation), PageHeader, StatusBadge, EmptyState
 │   ├── directives/           [COMPLETED] HasPermissionDirective
-│   └── pipes/                [COMPLETED] InitialsPipe, DateFormatPipe
+│   ├── pipes/                [COMPLETED] InitialsPipe, DateFormatPipe
+│   ├── validators/           [COMPLETED] Zod schemas (auth, employee, leave, attendance, salary, profile) & zodFormValidator bridge
+│   └── models/               [COMPLETED] Lookup models (LookupDepartment, LookupAttendanceType, LookupHoliday, LookupHrYear...)
 └── features/
     ├── dashboard/            [COMPLETED] DashboardHome, AttendanceWidget, LeaveWidget, AnnouncementsWidget, DashboardService, LeaveService
     ├── employees/            [PENDING]
