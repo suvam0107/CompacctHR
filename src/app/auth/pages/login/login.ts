@@ -1,12 +1,11 @@
 // src/app/auth/pages/login/login.ts
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { Button } from 'primeng/button';
 import { InputText } from 'primeng/inputtext';
 import { Password } from 'primeng/password';
-import { Checkbox } from 'primeng/checkbox';
 import { MessageService } from 'primeng/api';
 import { AuthService } from '../../../core/auth/auth.service';
 
@@ -14,11 +13,9 @@ import { AuthService } from '../../../core/auth/auth.service';
   selector: 'app-login',
   imports: [
     ReactiveFormsModule,
-    RouterLink,
     Button,
     InputText,
-    Password,
-    Checkbox
+    Password
   ],
   templateUrl: './login.html',
   styleUrl: './login.scss'
@@ -31,13 +28,12 @@ export class Login {
   readonly loginForm = new FormGroup({
     username: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.email]
+      validators: [Validators.required, Validators.minLength(3)]
     }),
     password: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(6)]
-    }),
-    rememberMe: new FormControl(false, { nonNullable: true })
+    })
   });
 
   readonly isLoading = signal<boolean>(false);

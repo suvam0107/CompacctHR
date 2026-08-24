@@ -34,8 +34,7 @@ src/app/
 │   ├── auth/                 [COMPLETED] AuthService, AuthStore (Signals), authGuard, auth models
 │   ├── interceptors/         [COMPLETED] loadingInterceptor, errorInterceptor
 │   ├── logging/              [COMPLETED] LoggerService (log, debug, info, warn, error)
-│   ├── state/                [COMPLETED] AppShellStore, LookupCacheService, MenuService, NotificationService
-│   └── sync/                 [COMPLETED] Sync component, sync.service, sync.store, sync.guard, sync-task-registry
+│   └── state/                [COMPLETED] AppShellStore, LookupCacheService, MenuService, NotificationService
 ├── layout/
 │   ├── auth-layout/          [COMPLETED] Split hero branding + form outlet layout
 │   ├── shell/                [COMPLETED] Authenticated app shell layout (independent scrolling, global progress bar)
@@ -44,10 +43,8 @@ src/app/
 │   ├── breadcrumb/           [COMPLETED] Dynamic route breadcrumbs with light contrast on blue header
 │   └── footer/               [COMPLETED] Enterprise copyright footer
 ├── auth/
-│   ├── auth.routes.ts        [COMPLETED] /auth/login and /auth/forgot-password routes
-│   ├── pages/login/          [COMPLETED] Reactive form login with validation & signal state
-│   ├── pages/forgot-password/[COMPLETED] Password recovery stub
-│   └── services/             [COMPLETED] PasswordResetService stub
+│   ├── auth.routes.ts        [COMPLETED] /auth/login route
+│   └── pages/login/          [COMPLETED] Reactive form login with validation & signal state (User: ADMIN / compacct)
 ├── shared/
 │   ├── components/           [COMPLETED] StatCard, LoadingSkeleton (shimmer animation), PageHeader, StatusBadge, EmptyState
 │   ├── directives/           [COMPLETED] HasPermissionDirective

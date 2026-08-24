@@ -3,7 +3,7 @@
   <div class="d-flex align-items-center gap-3">
     <button
       type="button"
-      class="sidebar-toggle-btn btn btn-link p-1"
+      class="sidebar-toggle-btn"
       (click)="toggleSidebar()"
       [attr.aria-label]="sidebarCollapsed() ? 'Expand sidebar' : 'Collapse sidebar'"
     >
@@ -39,9 +39,9 @@
             <span class="avatar-initials">{{ user()?.name | initials }}</span>
           }
         </div>
-        <div class="user-info d-none d-lg-block text-start">
+        <div class="user-info text-start">
           <div class="user-name">{{ user()?.name }}</div>
-          <div class="user-role">{{ user()?.roles?.[0] || 'User' }}</div>
+          <div class="user-role d-none d-sm-block">{{ user()?.roles?.[0] || 'User' }}</div>
         </div>
         <i class="pi pi-chevron-down ms-1 text-muted" style="font-size: 0.75rem;"></i>
       </button>

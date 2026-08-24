@@ -39,12 +39,12 @@ describe('Login Component', () => {
     expect(component.loginForm.controls.password.errors?.['required']).toBe(true);
   });
 
-  it('should validate email format for username', () => {
+  it('should validate minLength for username', () => {
     const username = component.loginForm.controls.username;
-    username.setValue('invalid-email');
-    expect(username.errors?.['email']).toBeTruthy();
+    username.setValue('ab');
+    expect(username.errors?.['minlength']).toBeTruthy();
 
-    username.setValue('valid@compacct.in');
+    username.setValue('ADMIN');
     expect(username.errors).toBeNull();
   });
 
@@ -65,18 +65,18 @@ describe('Login Component', () => {
   it('should call authService.login on valid form submission', () => {
     mockAuthService.login.mockReturnValue(
       of({
-        user: { id: 1, name: 'Test User', email: 'test@compacct.in', roles: ['Employee'] },
+        user: { id: 1, name: 'ADMIN', email: 'admin@compacct.in', roles: ['SuperAdmin'] },
         permissions: [],
         menuFlags: {}
       })
     );
 
-    component.loginForm.controls.username.setValue('test@compacct.in');
-    component.loginForm.controls.password.setValue('password123');
+    component.loginForm.controls.username.setValue('ADMIN');
+    component.loginForm.controls.password.setValue('compacct');
 
     component.onSubmit();
 
-    expect(mockAuthService.login).toHaveBeenCalledWith('test@compacct.in', 'password123');
+    expect(mockAuthService.login).toHaveBeenCalledWith('ADMIN', 'compacct');
     expect(component.errorMessage()).toBeNull();
     expect(component.isLoading()).toBe(false);
   });
@@ -86,7 +86,7 @@ describe('Login Component', () => {
       throwError(() => new Error('Invalid username or password.'))
     );
 
-    component.loginForm.controls.username.setValue('test@compacct.in');
+    component.loginForm.controls.username.setValue('ADMIN');
     component.loginForm.controls.password.setValue('wrongpassword');
 
     component.onSubmit();

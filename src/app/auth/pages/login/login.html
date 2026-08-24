@@ -1,90 +1,54 @@
 <div class="login-card">
   <div class="login-header">
     <h2>Sign in to CompacctHR</h2>
-    <p class="subtitle">Enter your corporate credentials to access the employee portal</p>
   </div>
 
   @if (errorMessage()) {
-    <div class="alert-banner" role="alert">
-      <i class="pi pi-exclamation-circle alert-icon"></i>
-      <span class="alert-message">{{ errorMessage() }}</span>
-    </div>
+  <div class="alert-banner" role="alert">
+    <i class="pi pi-exclamation-circle alert-icon"></i>
+    <span class="alert-message">{{ errorMessage() }}</span>
+  </div>
   }
 
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
-    <!-- Corporate Email / Username -->
+    <!-- Username -->
     <div class="form-group">
-      <label for="username" class="form-label">Corporate Email Address</label>
-      <input
-        pInputText
-        id="username"
-        type="email"
-        formControlName="username"
-        placeholder="e.g. user@compacct.in"
-        class="w-100"
+      <label for="username" class="form-label">Username</label>
+      <input pInputText id="username" type="text" formControlName="username" placeholder="e.g. user123" class="w-100"
         [class.ng-invalid]="loginForm.controls.username.invalid && loginForm.controls.username.touched"
-        autocomplete="username"
-      />
+        autocomplete="username" />
       @if (loginForm.controls.username.invalid && loginForm.controls.username.touched) {
-        <small class="field-error">
-          @if (loginForm.controls.username.errors?.['required']) {
-            Email address is required.
-          } @else if (loginForm.controls.username.errors?.['email']) {
-            Please enter a valid email address format.
-          }
-        </small>
+      <small class="field-error">
+        @if (loginForm.controls.username.errors?.['required']) {
+        Username is required.
+        } @else if (loginForm.controls.username.errors?.['minlength']) {
+        Username must be at least 3 characters.
+        }
+      </small>
       }
     </div>
 
     <!-- Password -->
     <div class="form-group">
-      <div class="password-label-row">
-        <label for="password" class="form-label">Password</label>
-        <a routerLink="/auth/forgot-password" class="forgot-link" tabindex="0">Forgot password?</a>
-      </div>
-      <p-password
-        inputId="password"
-        formControlName="password"
-        [feedback]="false"
-        [toggleMask]="true"
-        placeholder="••••••••"
-        styleClass="w-100"
-        inputStyleClass="w-100"
+      <label for="password" class="form-label">Password</label>
+      <p-password inputId="password" formControlName="password" [feedback]="false" [toggleMask]="true"
+        placeholder="••••••••" styleClass="w-100" inputStyleClass="w-100"
         [class.ng-invalid]="loginForm.controls.password.invalid && loginForm.controls.password.touched"
-        autocomplete="current-password"
-      />
+        autocomplete="current-password" />
       @if (loginForm.controls.password.invalid && loginForm.controls.password.touched) {
-        <small class="field-error">
-          @if (loginForm.controls.password.errors?.['required']) {
-            Password is required.
-          } @else if (loginForm.controls.password.errors?.['minlength']) {
-            Password must contain at least 6 characters.
-          }
-        </small>
+      <small class="field-error">
+        @if (loginForm.controls.password.errors?.['required']) {
+        Password is required.
+        } @else if (loginForm.controls.password.errors?.['minlength']) {
+        Password must contain at least 6 characters.
+        }
+      </small>
       }
     </div>
 
-    <!-- Remember Me -->
-    <div class="remember-row">
-      <div class="remember-checkbox">
-        <p-checkbox
-          formControlName="rememberMe"
-          [binary]="true"
-          inputId="rememberMe"
-        />
-        <label for="rememberMe" class="remember-label">Keep me signed in</label>
-      </div>
-    </div>
-
     <!-- Submit Button -->
-    <p-button
-      type="submit"
-      label="Sign In to Portal"
-      icon="pi pi-sign-in"
-      [loading]="isLoading()"
-      [disabled]="loginForm.invalid || isLoading()"
-      styleClass="w-100 submit-btn"
-    />
+    <p-button type="submit" label="Sign In to Portal" icon="pi pi-sign-in" [loading]="isLoading()"
+      [disabled]="loginForm.invalid || isLoading()" styleClass="w-100 submit-btn" />
   </form>
 
   <div class="login-support">

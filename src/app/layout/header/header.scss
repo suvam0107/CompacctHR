@@ -13,12 +13,27 @@
 
 .sidebar-toggle-btn {
   color: #ffffff;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   line-height: 1;
   text-decoration: none;
-  padding: 6px;
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: var(--radius-sm);
   transition: background-color 120ms ease-out;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
 
   &:hover {
     color: #ffffff;
@@ -101,6 +116,10 @@
   font-weight: 600;
   color: #ffffff;
   line-height: 1.2;
+  white-space: nowrap;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .user-role {

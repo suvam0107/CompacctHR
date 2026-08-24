@@ -3,9 +3,9 @@
   "data": {
     "user": {
       "id": 1,
-      "name": "Aayush Sharma",
-      "email": "aayush@compacct.in",
-      "roles": ["HRAdmin"],
+      "name": "ADMIN",
+      "email": "admin@compacct.in",
+      "roles": ["SuperAdmin", "HRAdmin"],
       "avatarUrl": null
     },
     "permissions": [
