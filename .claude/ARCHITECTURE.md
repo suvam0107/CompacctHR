@@ -965,3 +965,29 @@ Client-side validation is enforced using **Zod schemas** coupled to Angular's re
   - `panNo`: Standard Indian PAN regex (`/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/`)
   - `ifscCode`: Standard Indian IFSC regex (`/^[A-Z]{4}0[A-Z0-9]{6}$/`)
 
+---
+
+## 20. Auto-Update & Deployment Recovery Engine Architecture
+
+To ensure seamless long-session ERP stability and prevent stale client bundle failures across deployments, CompacctHR incorporates an automated version tracking and lazy chunk recovery system:
+
+### 20.1 Version Build Automation (`version.json`)
+- **Prebuild Hook**: `scripts/generate-version.js` runs automatically on `prestart` and `prebuild` npm tasks.
+- **Output Artifact**: `public/version.json` containing `{ version, commitHash, buildTime }`.
+
+### 20.2 Background Polling & Signal State (`VersionUpdateService`)
+- **Location**: `src/app/core/version/version-update.service.ts`.
+- **State Management**: Uses Angular Signals (`currentVersion`, `latestVersion`, `updateAvailable`, `showBanner`).
+- **Polling Loop**: Periodically requests `/version.json?t=<timestamp>` every 15 minutes and on router navigation (throttled).
+- **Silent Fetching**: Employs `SKIP_LOADING_INDICATOR` `HttpContext` token on `HttpClient.get()` calls to ensure background version checks do not trigger the global top loading indicator (`loadingInterceptor`).
+
+### 20.3 Deployment Recovery (`ChunkErrorHandler`)
+- **Location**: `src/app/core/version/chunk-error.handler.ts`.
+- **ErrorHandler Registration**: Provided via `app.config.ts`.
+- **Chunk Recovery**: Intercepts uncaught `ChunkLoadError` exceptions (thrown when a user attempts to load a lazy-loaded route chunk that was replaced/removed during a server deployment) and automatically triggers a version check and cache reload rather than allowing the SPA to fail silently.
+
+### 20.4 Notification UX & Footer Integration
+- **Floating Banner**: `VersionUpdateBanner` rendered at root layout shell when `showBanner()` is `true`, offering **Update Now** and **Later** (1-hour snooze) controls adhering to Sapphire Blue tokens (`ARCHITECTURE.md`).
+- **Footer Indicator**: `Footer` component dynamically displays current version and Git commit hash, rendering an interactive **Update Available (vX.X.X)** badge when a newer version is available on the server.
+
+

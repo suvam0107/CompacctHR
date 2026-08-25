@@ -3,7 +3,20 @@
   <div class="footer-copyright">
     <span>© {{ currentYear }} <strong>CompacctHR</strong>. All rights reserved.</span>
   </div>
-  <div class="footer-meta">
-    <span>Version 1.0.0</span>
+  <div class="footer-meta d-flex align-items-center gap-2">
+    <span>v{{ versionService.currentVersion().version }}</span>
+    @if (versionService.currentVersion().commitHash) {
+      <span class="text-muted">({{ versionService.currentVersion().commitHash }})</span>
+    }
+    @if (versionService.updateAvailable()) {
+      <button 
+        type="button" 
+        class="badge bg-primary text-white border-0 cursor-pointer d-flex align-items-center gap-1 py-1 px-2 rounded-pill ms-2"
+        (click)="updateApp()"
+        title="New version available! Click to update.">
+        <i class="pi pi-arrow-circle-up"></i>
+        <span>Update Available (v{{ versionService.latestVersion()?.version }})</span>
+      </button>
+    }
   </div>
 </footer>

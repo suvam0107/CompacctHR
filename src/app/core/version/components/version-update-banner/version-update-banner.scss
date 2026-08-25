@@ -1,0 +1,44 @@
+/* src/app/core/version/components/version-update-banner/version-update-banner.scss */
+.version-update-banner {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1100;
+  background-color: var(--color-surface, #ffffff);
+  border-color: var(--color-border-subtle, #e0e3e5) !important;
+  box-shadow: 0 8px 32px rgba(15, 82, 186, 0.18) !important;
+  max-width: 520px;
+  animation: slideInUp 0.3s ease-out;
+
+  .banner-icon-badge {
+    width: 42px;
+    height: 42px;
+    background-color: var(--color-primary-tint, #d9e2ff);
+    flex-shrink: 0;
+
+    i {
+      color: var(--color-primary, #0f52ba) !important;
+    }
+  }
+
+  .btn-primary {
+    background-color: var(--color-primary, #0f52ba);
+    border-color: var(--color-primary, #0f52ba);
+
+    &:hover {
+      background-color: var(--color-primary-hover, #003c90);
+      border-color: var(--color-primary-hover, #003c90);
+    }
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

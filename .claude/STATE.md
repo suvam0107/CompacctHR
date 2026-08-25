@@ -7,8 +7,8 @@ This document tracks the current progress, completed milestones, active contract
 ## 1. Project Overview & Current Milestone
 
 - **Project:** CompacctHR (Enterprise Human Resource Management System)
-- **Current Milestone:** **Milestone 6 — Typography & Font Pack Upgrade: Plus Jakarta Sans & Enhanced ERP Density**
-- **Previous Milestone:** Milestone 5 — UI Modernization: Stitch "Enterprise Modern" Design System Applied
+- **Current Milestone:** **Milestone 7 — Auto-Update Version Engine & Equal Height Dashboard Cards**
+- **Previous Milestone:** Milestone 6 — Typography & Font Pack Upgrade: Plus Jakarta Sans & Enhanced ERP Density
 - **Mode:** Development with Mock Data (`environment.useMockData = true`)
 
 ---
@@ -21,9 +21,10 @@ This document tracks the current progress, completed milestones, active contract
 | **PrimeNG** | `21.1.9` | Customized Aura preset via `@primeuix/themes` (`theme/primeng-preset.ts`) |
 | **TypeScript** | `~5.9.3` | Strict mode enabled |
 | **Styling** | SCSS + CSS Variables | Google Font: **Plus Jakarta Sans**, Design tokens in `theme/_variables.scss`, Bootstrap 5.3.3 (CSS CDN only) |
-| **Testing** | Vitest (`v4.1.11`) | Native Angular unit test builder |
+| **Testing** | Vitest (`v4.0.8` / `@angular/build:unit-test`) | Native Angular unit test runner (`npx ng test`) |
 | **Icons** | PrimeIcons (`^8.0.0`) | Primary glyph library |
 | **Exports** | `exceljs` & `pdfmake` | Custom auto-width Excel exports & landscape PDF with company logo header |
+| **Build Scripts** | Node.js (`generate-version.js`) | Prestart/prebuild script auto-generating `public/version.json` |
 
 ---
 
@@ -36,43 +37,40 @@ src/app/
 │   ├── auth/                 [COMPLETED] AuthService (direct /dashboard navigation & prefetching), AuthStore, authGuard
 │   ├── interceptors/         [COMPLETED] loadingInterceptor, errorInterceptor
 │   ├── logging/              [COMPLETED] LoggerService (log, debug, info, warn, error)
-│   └── state/                [COMPLETED] AppShellStore, LookupCacheService, MenuService, NotificationService
+│   ├── state/                [COMPLETED] AppShellStore, LookupCacheService, MenuService, NotificationService
+│   └── version/              [COMPLETED — Milestone 7] Version Engine & Recovery System:
+│                             • VersionUpdateService (Signal state, background polling, snooze capability)
+│                             • ChunkErrorHandler (Global ErrorHandler recovering from broken lazy JS chunks after deploy)
+│                             • VersionUpdateBanner (Sapphire Blue floating user update notification card)
+│                             • VersionInfo model interface
 ├── layout/
 │   ├── auth-layout/          [COMPLETED] Split hero branding + form outlet layout
-│   ├── shell/                [COMPLETED] NavigationEnd router listener for dynamic breadcrumbs & titles
+│   ├── shell/                [COMPLETED] NavigationEnd router listener for dynamic breadcrumbs & titles, version banner outlet
 │   ├── header/               [COMPLETED] Top navbar with dynamic title, notification bell link
 │   ├── sidebar/              [COMPLETED] Collapsible blue sidebar, accordion navigation; 4px Sapphire active indicator, 260px width token
 │   ├── breadcrumb/           [COMPLETED] Dynamic route breadcrumbs with active route mapping
-│   └── footer/               [COMPLETED] Enterprise copyright footer
+│   └── footer/               [COMPLETED] Dynamic app version & commit hash display + interactive Update Available badge
 ├── auth/
-│   ├── auth.routes.ts        [COMPLETED] /auth/login route (removed /forgot-password)
+│   ├── auth.routes.ts        [COMPLETED] /auth/login route
 │   └── pages/login/          [COMPLETED] Reactive form login with validation & signal state
 ├── shared/
-│   ├── components/           [COMPLETED] DataTable (with #dt global filter & export), ExportButton, SearchInput, PageHeader (no subtitle), LoadingSkeleton, StatusBadge, EmptyState
+│   ├── components/           [COMPLETED] StatCard (height: 100% flex column for equal card height), DataTable, ExportButton, SearchInput, PageHeader, LoadingSkeleton, StatusBadge, EmptyState
 │   ├── utils/                [COMPLETED] excel-export.util (auto column width), pdf-export.util (landscape layout, logo header, copyright footer)
 │   ├── directives/           [COMPLETED] HasPermissionDirective
 │   ├── pipes/                [COMPLETED] InitialsPipe, DateFormatPipe, CurrencyPipe
 │   └── validators/           [COMPLETED] Zod schemas & zodFormValidator bridge with inline error message support
 └── features/
-    ├── dashboard/            [COMPLETED] DashboardHome, AttendanceWidget, LeaveWidget, AnnouncementsWidget
+    ├── dashboard/            [COMPLETED] DashboardHome (top row stat cards aligned to equal height), AttendanceWidget, LeaveWidget, AnnouncementsWidget
     ├── employees/            [COMPLETED] EmployeeList, EmployeeDetail, EmployeeForm (PAN, IFSC, Bank, Emergency Contact)
-    ├── attendance/           [COMPLETED] AttendanceLog, AttendanceCalendar, RegularizationRequests (with Toast feedback)
-    ├── leave/                [COMPLETED] LeaveApply, LeaveHistory, LeaveApprovals (with Toast feedback & reactive state update)
-    ├── payroll/              [COMPLETED] Payslips, SalaryStructure, PayrollProcessing (with Toast feedback)
-    ├── profile/              [COMPLETED] MyProfile (PAN, IFSC, Bank details)
+    ├── attendance/           [COMPLETED] AttendanceLog, AttendanceCalendar, RegularizationRequests
+    ├── leave/                [COMPLETED] LeaveApply, LeaveHistory, LeaveApprovals
+    ├── payroll/              [COMPLETED] Payslips, SalaryStructure, PayrollProcessing
+    ├── profile/              [COMPLETED] MyProfile
     ├── admin/                [COMPLETED] UserManagement, RoleManagement, SystemSettings
     └── notifications/        [COMPLETED] Notifications page with Unread/Important filter pills & mark as read
 
-theme/                        [COMPLETED — Milestone 6] Typography & Design Tokens:
-                              • Google Font: Plus Jakarta Sans (300, 400, 500, 600, 700, 800)
-                              • Non-header sizes increased: body-lg (17px), body-md (15px), label-md (14px), label-sm (13px)
-                              • Headers (h1–h6) decoupled & preserved at original sizes
-                              • Export fonts (pdfmake/exceljs) preserved
-                              • Primary: Sapphire Blue #0F52BA
-                              • Blue-tinted shadows (3-tier elevation model)
-                              • PrimeNG preset: primary #0F52BA, 9-stop surface palette, input glow ring
+scripts/                      [COMPLETED — Milestone 7] generate-version.js (Prebuild version.json generator)
 ```
-
 
 ---
 
@@ -93,6 +91,5 @@ theme/                        [COMPLETED — Milestone 6] Typography & Design To
 
 ## 5. Verification & Test Suite Status
 
-- **Unit Tests:** `18 / 18` passing across 5 test suites (`app.spec.ts`, `login.spec.ts`, `menu.service.spec.ts`, `initials.pipe.spec.ts`, `date-format.pipe.spec.ts`)
-- **TypeScript Typecheck:** `npx tsc --noEmit` exits with **0 errors**.
-- **Production Build:** Verified clean bundle compilation.
+- **Unit Tests:** `27 / 27` passing across 7 test suites (`app.spec.ts`, `login.spec.ts`, `menu.service.spec.ts`, `initials.pipe.spec.ts`, `date-format.pipe.spec.ts`, `version-update.service.spec.ts`, `chunk-error.handler.spec.ts`) via `npx ng test --watch=false`.
+- **Production Build:** `npx ng build` completed with **0 errors**.

@@ -9,6 +9,7 @@ import { AppShellStore } from '../../core/state/app-shell.store';
 import { Header } from '../header/header';
 import { Sidebar } from '../sidebar/sidebar';
 import { Footer } from '../footer/footer';
+import { VersionUpdateBanner } from '../../core/version/components/version-update-banner/version-update-banner';
 import { MENU_ITEMS, MenuItem } from '../../core/config/menu';
 
 @Component({
@@ -21,7 +22,8 @@ import { MENU_ITEMS, MenuItem } from '../../core/config/menu';
     ProgressBarModule,
     Header,
     Sidebar,
-    Footer
+    Footer,
+    VersionUpdateBanner
   ],
   templateUrl: './shell.html',
   styleUrls: ['./shell.scss']

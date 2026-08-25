@@ -1,6 +1,7 @@
 // src/app/layout/footer/footer.ts
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { VersionUpdateService } from '../../core/version/version-update.service';
 
 @Component({
   selector: 'app-footer',
@@ -12,4 +13,9 @@ import { CommonModule } from '@angular/common';
 })
 export class Footer {
   readonly currentYear = new Date().getFullYear();
+  readonly versionService = inject(VersionUpdateService);
+
+  updateApp(): void {
+    this.versionService.applyUpdate();
+  }
 }

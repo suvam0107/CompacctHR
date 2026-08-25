@@ -1,0 +1,31 @@
+<!-- src/app/core/version/components/version-update-banner/version-update-banner.html -->
+@if (versionService.showBanner()) {
+  <div class="version-update-banner p-3 border rounded-3 shadow-lg d-flex align-items-center justify-content-between gap-3">
+    <div class="d-flex align-items-center gap-3">
+      <div class="banner-icon-badge rounded-circle d-flex align-items-center justify-content-center">
+        <i class="pi pi-cloud-download text-primary fs-5"></i>
+      </div>
+      <div class="banner-text">
+        <h6 class="mb-0 fw-semibold text-dark">System Update Available</h6>
+        <p class="mb-0 text-muted fs-6">
+          A new version <strong>v{{ versionService.latestVersion()?.version }}</strong> is available. Update now to load the latest changes.
+        </p>
+      </div>
+    </div>
+    <div class="d-flex align-items-center gap-2 flex-shrink-0">
+      <button 
+        type="button" 
+        class="btn btn-sm btn-outline-secondary px-3" 
+        (click)="snooze()">
+        Later
+      </button>
+      <button 
+        type="button" 
+        class="btn btn-sm btn-primary px-3 d-flex align-items-center gap-2" 
+        (click)="update()">
+        <i class="pi pi-refresh"></i>
+        <span>Update Now</span>
+      </button>
+    </div>
+  </div>
+}

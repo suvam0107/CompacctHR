@@ -15,14 +15,14 @@
   <div class="row g-3 mb-4">
     @if (isDashboardLoading() && !summary()) {
       @for (i of [1, 2, 3, 4]; track i) {
-        <div class="col-12 col-sm-6 col-xl-3">
-          <app-loading-skeleton type="card"></app-loading-skeleton>
+        <div class="col-12 col-sm-6 col-xl-3 d-flex">
+          <app-loading-skeleton class="w-100 h-100" type="card"></app-loading-skeleton>
         </div>
       }
     } @else if (summary()) {
       <!-- Stat 1: Total Employees -->
-      <div class="col-12 col-sm-6 col-xl-3">
-        <app-stat-card
+      <div class="col-12 col-sm-6 col-xl-3 d-flex">
+        <app-stat-card class="w-100"
           label="Total Employees"
           [value]="summary()!.stats.totalEmployees.value"
           icon="pi pi-users"
@@ -33,8 +33,8 @@
       </div>
 
       <!-- Stat 2: Present Today -->
-      <div class="col-12 col-sm-6 col-xl-3">
-        <app-stat-card
+      <div class="col-12 col-sm-6 col-xl-3 d-flex">
+        <app-stat-card class="w-100"
           label="Present Today"
           [value]="summary()!.stats.presentToday.value"
           icon="pi pi-check-circle"
@@ -46,8 +46,8 @@
       </div>
 
       <!-- Stat 3: On Leave Today -->
-      <div class="col-12 col-sm-6 col-xl-3">
-        <app-stat-card
+      <div class="col-12 col-sm-6 col-xl-3 d-flex">
+        <app-stat-card class="w-100"
           label="On Leave Today"
           [value]="summary()!.stats.onLeaveToday.value"
           icon="pi pi-calendar-times"
@@ -58,8 +58,8 @@
       </div>
 
       <!-- Stat 4: Open Positions -->
-      <div class="col-12 col-sm-6 col-xl-3">
-        <app-stat-card
+      <div class="col-12 col-sm-6 col-xl-3 d-flex">
+        <app-stat-card class="w-100"
           label="Open Positions"
           [value]="summary()!.stats.openPositions.value"
           icon="pi pi-briefcase"
