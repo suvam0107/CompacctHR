@@ -1,10 +1,10 @@
 // theme/_typography.scss
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 html,
 body {
-  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-  font-size: var(--fs-body-md); // 14px — ERP density default
+  font-family: 'Plus Jakarta Sans', 'Inter', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  font-size: var(--fs-body-md); // 15px — ERP density default
   color: var(--color-text);
   background-color: var(--color-surface-alt);
   line-height: var(--lh-body-md);
@@ -16,12 +16,12 @@ body {
 h1 { font-size: var(--fs-headline-lg);  line-height: var(--lh-headline-lg);  font-weight: var(--fw-headline); }
 h2 { font-size: var(--fs-headline-md);  line-height: var(--lh-headline-md);  font-weight: var(--fw-headline); }
 h3 { font-size: var(--fs-headline-sm);  line-height: var(--lh-headline-sm);  font-weight: var(--fw-headline); }
-h4 { font-size: var(--fs-body-lg);      line-height: var(--lh-body-lg);      font-weight: var(--fw-headline); }
-h5 { font-size: var(--fs-body-md);      line-height: var(--lh-body-md);      font-weight: var(--fw-headline); }
-h6 { font-size: var(--fs-label-md);     line-height: var(--lh-label-md);     font-weight: var(--fw-headline); }
+h4 { font-size: var(--fs-h4);           line-height: var(--lh-h4);           font-weight: var(--fw-headline); }
+h5 { font-size: var(--fs-h5);           line-height: var(--lh-h5);           font-weight: var(--fw-headline); }
+h6 { font-size: var(--fs-h6);           line-height: var(--lh-h6);           font-weight: var(--fw-headline); }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  font-family: 'Plus Jakarta Sans', 'Inter', 'Segoe UI', system-ui, sans-serif;
   color: var(--color-text);
   margin-top: 0;
 }

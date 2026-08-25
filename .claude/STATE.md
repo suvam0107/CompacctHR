@@ -7,8 +7,8 @@ This document tracks the current progress, completed milestones, active contract
 ## 1. Project Overview & Current Milestone
 
 - **Project:** CompacctHR (Enterprise Human Resource Management System)
-- **Current Milestone:** **Milestone 5 — UI Modernization: Stitch "Enterprise Modern" Design System Applied**
-- **Previous Milestone:** Milestone 4 — Core Refactoring, Dynamic Headers, Notifications & Table Export Overhaul Completed
+- **Current Milestone:** **Milestone 6 — Typography & Font Pack Upgrade: Plus Jakarta Sans & Enhanced ERP Density**
+- **Previous Milestone:** Milestone 5 — UI Modernization: Stitch "Enterprise Modern" Design System Applied
 - **Mode:** Development with Mock Data (`environment.useMockData = true`)
 
 ---
@@ -20,7 +20,7 @@ This document tracks the current progress, completed milestones, active contract
 | **Angular** | `21.2.21` | Standalone-only, Zoneless Change Detection (`provideZonelessChangeDetection()`) |
 | **PrimeNG** | `21.1.9` | Customized Aura preset via `@primeuix/themes` (`theme/primeng-preset.ts`) |
 | **TypeScript** | `~5.9.3` | Strict mode enabled |
-| **Styling** | SCSS + CSS Variables | Design tokens in `theme/_variables.scss`, Bootstrap 5.3.3 (CSS CDN only) |
+| **Styling** | SCSS + CSS Variables | Google Font: **Plus Jakarta Sans**, Design tokens in `theme/_variables.scss`, Bootstrap 5.3.3 (CSS CDN only) |
 | **Testing** | Vitest (`v4.1.11`) | Native Angular unit test builder |
 | **Icons** | PrimeIcons (`^8.0.0`) | Primary glyph library |
 | **Exports** | `exceljs` & `pdfmake` | Custom auto-width Excel exports & landscape PDF with company logo header |
@@ -63,18 +63,14 @@ src/app/
     ├── admin/                [COMPLETED] UserManagement, RoleManagement, SystemSettings
     └── notifications/        [COMPLETED] Notifications page with Unread/Important filter pills & mark as read
 
-theme/                        [COMPLETED — Milestone 5] Stitch "Enterprise Modern" applied:
-                              • Primary: Sapphire Blue #0F52BA (from #14539A)
+theme/                        [COMPLETED — Milestone 6] Typography & Design Tokens:
+                              • Google Font: Plus Jakarta Sans (300, 400, 500, 600, 700, 800)
+                              • Non-header sizes increased: body-lg (17px), body-md (15px), label-md (14px), label-sm (13px)
+                              • Headers (h1–h6) decoupled & preserved at original sizes
+                              • Export fonts (pdfmake/exceljs) preserved
+                              • Primary: Sapphire Blue #0F52BA
                               • Blue-tinted shadows (3-tier elevation model)
-                              • Full typography scale (display → label-sm) with utility classes
-                              • New tokens: --color-secondary, --radius-lg, --radius-full,
-                                --sidebar-width, --shadow-lg (modal-only), --color-primary-container
-                              • _mixins.scss: card-base, card-large, input-focus-ring, badge-pill
-                              • bootstrap-overrides.scss: .card-lg, .status-badge, table headers,
-                                button press-in, .card-section-header
                               • PrimeNG preset: primary #0F52BA, 9-stop surface palette, input glow ring
-                              • styles.scss: global PrimeNG focus-ring, compact 44px table rows, dialog shadow-lg
-                              • sidebar: 4px vertical Sapphire active indicator, --sidebar-width token
 ```
 
 

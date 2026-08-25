@@ -714,15 +714,18 @@ workflows. No gradients, no glassmorphism.
   --sidebar-collapsed-width: 68px;
   --header-height:           60px;
 
-  // Typography scale (Inter)
+  // Typography scale (Plus Jakarta Sans)
   --fs-display:     36px;  --lh-display:     44px;  // --fw-display: 700, --ls-display: -0.02em
   --fs-headline-lg: 28px;  --lh-headline-lg: 36px;
   --fs-headline-md: 24px;  --lh-headline-md: 32px;
   --fs-headline-sm: 20px;  --lh-headline-sm: 28px;
-  --fs-body-lg:     16px;  --lh-body-lg:     24px;  // forms / content pages
-  --fs-body-md:     14px;  --lh-body-md:     20px;  // default ERP density
-  --fs-label-md:    13px;  --lh-label-md:    18px;  // --ls-label-md: 0.01em
-  --fs-label-sm:    12px;  --lh-label-sm:    16px;  // table headers: uppercase, --ls-label-sm: 0.05em
+  --fs-h4:          16px;  --lh-h4:          24px;  // fixed header sizes
+  --fs-h5:          14px;  --lh-h5:          20px;
+  --fs-h6:          13px;  --lh-h6:          18px;
+  --fs-body-lg:     17px;  --lh-body-lg:     25px;  // forms / content pages (slightly increased)
+  --fs-body-md:     15px;  --lh-body-md:     22px;  // default ERP density (slightly increased)
+  --fs-label-md:    14px;  --lh-label-md:    20px;  // --ls-label-md: 0.01em
+  --fs-label-sm:    13px;  --lh-label-sm:    18px;  // table headers: uppercase, --ls-label-sm: 0.05em
 }
 ```
 
@@ -735,9 +738,9 @@ workflows. No gradients, no glassmorphism.
 | 2 — Floating | Dropdowns, tooltips | `--shadow-md` |
 | 3 — Overlay | **Dialogs/modals only** | `--shadow-lg` |
 
-- **Typography**: `Inter` (300–700 weights), 14px ERP density base; 16px for form/content
+- **Typography**: `Plus Jakarta Sans` (300–800 weights), 15px ERP density base; 17px for form/content
   pages. Utility classes `.text-display` → `.text-label-sm` in `_typography.scss` map
-  the scale. Table headers use `label-sm` (12px, 600w, uppercase, 0.05em spacing).
+  the scale. Table headers use `label-sm` (13px, 600w, uppercase, 0.05em spacing).
 - **PrimeNG**: the **Aura** preset is overridden in `theme/primeng-preset.ts` via
   `definePreset()` mapping primary `#0F52BA` and a 9-stop surface scale matching the
   Stitch palette, so PrimeNG and hand-rolled components render identically.

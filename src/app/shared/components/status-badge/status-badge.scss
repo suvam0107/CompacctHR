@@ -4,7 +4,7 @@
 .status-badge {
   padding: 3px 8px;
   border-radius: 9999px;
-  font-size: 0.75rem;
+  font-size: var(--fs-label-sm);
   font-weight: 600;
   line-height: 1;
 }
