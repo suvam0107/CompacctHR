@@ -21,7 +21,7 @@ export class UserManagement implements OnInit {
     { field: 'name', header: 'User Name', sortable: true },
     { field: 'email', header: 'Email Address', sortable: true },
     { field: 'roles', header: 'Assigned Roles', type: 'custom' },
-    { field: 'isActive', header: 'Status', width: '120px', type: 'custom', align: 'center' },
+    { field: 'isActive', header: 'Status', width: '120px', type: 'custom', align: 'center', filterable: true },
     { field: 'lastLogin', header: 'Last Login', width: '140px', type: 'date' }
   ];
 

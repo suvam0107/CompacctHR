@@ -1,13 +1,12 @@
+<!-- src/app/features/admin/pages/role-management/role-management.html -->
 <div class="role-management-page">
-  <app-page-header
-    title="Roles & Permissions"
-  ></app-page-header>
+  <app-page-header title="Roles & Permissions"></app-page-header>
 
   <app-data-table
     [columns]="columns"
     [value]="adminService.roles()"
     [loading]="adminService.isLoading()"
     exportFilename="compacct_admin_roles"
-    title="System Roles"
+    title="Roles & Permissions"
   ></app-data-table>
 </div>

@@ -9,10 +9,6 @@ export const LEAVE_ROUTES: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'apply',
-    loadComponent: () => import('./pages/leave-apply/leave-apply').then(m => m.LeaveApply)
-  },
-  {
     path: 'history',
     loadComponent: () => import('./pages/leave-history/leave-history').then(m => m.LeaveHistory)
   },

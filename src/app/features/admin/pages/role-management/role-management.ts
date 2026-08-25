@@ -17,7 +17,7 @@ export class RoleManagement implements OnInit {
   protected adminService = inject(AdminService);
 
   columns: DataTableColumn[] = [
-    { field: 'code', header: 'Role Code', width: '150px', sortable: true },
+    { field: 'code', header: 'Role Code', width: '150px', sortable: true, filterable: true },
     { field: 'name', header: 'Role Name', width: '200px', sortable: true },
     { field: 'description', header: 'Access Description' },
     { field: 'permissionCount', header: 'Granted Permissions', width: '160px', align: 'center', sortable: true }

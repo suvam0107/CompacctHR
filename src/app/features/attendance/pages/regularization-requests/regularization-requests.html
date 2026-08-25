@@ -1,24 +1,52 @@
+<!-- src/app/features/attendance/pages/regularization-requests/regularization-requests.html -->
 <div class="regularization-page">
-  <app-page-header
-    title="Attendance Regularization"
-  >
-    <div actions class="header-actions">
-      <p-button
-        label="Request Regularization"
-        icon="pi pi-plus"
-        size="small"
-        (onClick)="openApplyModal()"
-      ></p-button>
-    </div>
-  </app-page-header>
+  <app-page-header title="Attendance Regularization"></app-page-header>
 
   <app-data-table
     [columns]="columns"
     [value]="attendanceService.regularizationList()"
     [loading]="attendanceService.isLoading()"
     exportFilename="attendance_regularization_requests"
-    title="Correction Requests"
-  ></app-data-table>
+    title="Attendance Regularization Requests"
+  >
+    <!-- Right Table Header Action Button -->
+    <ng-template #headerActions>
+      <p-button
+        label="Request Regularization"
+        icon="pi pi-plus"
+        size="small"
+        (onClick)="openApplyModal()"
+      ></p-button>
+    </ng-template>
+
+    <!-- Row Actions: Approve / Reject -->
+    <ng-template #actions let-item>
+      <div class="approval-actions d-flex gap-1 justify-content-center">
+        @if (item.status === 'Pending') {
+          <p-button
+            icon="pi pi-check"
+            severity="success"
+            size="small"
+            [rounded]="true"
+            pTooltip="Approve Regularization"
+            tooltipPosition="top"
+            (onClick)="openApprovalModal(item, 'approve')"
+          ></p-button>
+          <p-button
+            icon="pi pi-times"
+            severity="danger"
+            size="small"
+            [rounded]="true"
+            pTooltip="Reject Regularization"
+            tooltipPosition="top"
+            (onClick)="openApprovalModal(item, 'reject')"
+          ></p-button>
+        } @else {
+          <span class="text-muted small">-</span>
+        }
+      </div>
+    </ng-template>
+  </app-data-table>
 
   <!-- Apply Regularization Dialog -->
   <p-dialog
@@ -31,28 +59,73 @@
     [resizable]="false"
   >
     <form [formGroup]="regForm" (ngSubmit)="onSubmitRegularization()" class="dialog-form">
-      <div class="form-group">
-        <label for="regDate">Attendance Date *</label>
+      <div class="form-group mb-3">
+        <label for="regDate" class="form-label fw-semibold text-sm">Attendance Date *</label>
         <p-datepicker id="regDate" formControlName="date" [showIcon]="true" iconDisplay="input" dateFormat="dd M yy" appendTo="body" styleClass="w-full"></p-datepicker>
       </div>
 
-      <div class="form-group">
-        <label for="requestedStatus">Correction Requested *</label>
+      <div class="form-group mb-3">
+        <label for="requestedStatus" class="form-label fw-semibold text-sm">Correction Requested *</label>
         <p-select id="requestedStatus" [options]="statusOptions" optionLabel="label" optionValue="value" formControlName="requestedStatus" appendTo="body" styleClass="w-full"></p-select>
       </div>
 
-      <div class="form-group">
-        <label for="reason">Reason / Justification *</label>
+      <div class="form-group mb-3">
+        <label for="reason" class="form-label fw-semibold text-sm">Reason / Justification *</label>
         <input id="reason" type="text" pInputText formControlName="reason" placeholder="e.g. Biometric reader was unresponsive" class="w-full" />
         @if (regForm.get('reason')?.invalid && regForm.get('reason')?.touched) {
-          <span class="error-text">Please provide a valid reason (min 5 characters)</span>
+          <span class="error-text text-danger text-xs mt-1 d-block">Please provide a valid reason (min 5 characters)</span>
         }
       </div>
 
-      <div class="dialog-footer">
+      <div class="dialog-footer d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
         <p-button label="Cancel" [text]="true" severity="secondary" size="small" (onClick)="showApplyDialog.set(false)"></p-button>
         <p-button type="submit" label="Submit Request" icon="pi pi-send" [loading]="isSubmitting()" size="small"></p-button>
       </div>
     </form>
+  </p-dialog>
+
+  <!-- Approval / Rejection Action Confirmation Modal -->
+  <p-dialog
+    [header]="actionType() === 'approve' ? 'Approve Regularization Request' : 'Reject Regularization Request'"
+    [visible]="showActionDialog()"
+    (visibleChange)="showActionDialog.set($event)"
+    [modal]="true"
+    [style]="{ width: '450px' }"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    @if (selectedRequest(); as req) {
+      <div class="action-dialog-body">
+        <p class="dialog-prompt mb-3 text-sm">
+          Are you sure you want to <strong>{{ actionType() }}</strong> the attendance regularization request for
+          <strong>{{ req.employeeName }}</strong> on <strong>{{ req.date | date:'dd MMM yyyy' }}</strong>
+          (Status change: {{ req.originalStatus }} &rarr; {{ req.requestedStatus }})?
+        </p>
+
+        <div class="form-group mb-3">
+          <label for="approverRemarks" class="form-label fw-semibold text-sm">Approver Remarks (Optional)</label>
+          <input
+            id="approverRemarks"
+            type="text"
+            pInputText
+            [ngModel]="approverRemarks()"
+            (ngModelChange)="approverRemarks.set($event)"
+            placeholder="e.g. Approved after biometric log verification"
+            class="w-full"
+          />
+        </div>
+
+        <div class="dialog-footer d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
+          <p-button label="Cancel" [text]="true" severity="secondary" size="small" (onClick)="showActionDialog.set(false)"></p-button>
+          <p-button
+            [label]="actionType() === 'approve' ? 'Confirm Approval' : 'Confirm Rejection'"
+            [severity]="actionType() === 'approve' ? 'success' : 'danger'"
+            [loading]="isProcessing()"
+            size="small"
+            (onClick)="confirmApprovalAction()"
+          ></p-button>
+        </div>
+      </div>
+    }
   </p-dialog>
 </div>

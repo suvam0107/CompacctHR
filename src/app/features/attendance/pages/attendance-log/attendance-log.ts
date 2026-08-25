@@ -3,13 +3,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageHeader } from '../../../../shared/components/page-header/page-header';
 import { DataTable, DataTableColumn } from '../../../../shared/components/data-table/data-table';
-import { DateRangePicker, DateRangeValue } from '../../../../shared/components/date-range-picker/date-range-picker';
+import { DateRangeValue } from '../../../../shared/components/date-range-picker/date-range-picker';
 import { AttendanceService } from '../../services/attendance.service';
 
 @Component({
   selector: 'app-attendance-log',
   standalone: true,
-  imports: [CommonModule, PageHeader, DataTable, DateRangePicker],
+  imports: [CommonModule, PageHeader, DataTable],
   templateUrl: './attendance-log.html',
   styleUrls: ['./attendance-log.scss']
 })
@@ -22,7 +22,21 @@ export class AttendanceLog implements OnInit {
     { field: 'checkIn', header: 'Check In', width: '120px' },
     { field: 'checkOut', header: 'Check Out', width: '120px' },
     { field: 'totalHours', header: 'Total Hours', width: '120px' },
-    { field: 'status', header: 'Status', width: '120px', type: 'status', align: 'center', sortable: true },
+    {
+      field: 'status',
+      header: 'Status',
+      width: '120px',
+      type: 'status',
+      align: 'center',
+      sortable: true,
+      filterable: true,
+      filterOptions: [
+        { label: 'Present', value: 'Present' },
+        { label: 'Absent', value: 'Absent' },
+        { label: 'Half Day', value: 'HalfDay' },
+        { label: 'On Duty', value: 'OnDuty' }
+      ]
+    },
     { field: 'remarks', header: 'Remarks' }
   ];
 

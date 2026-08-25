@@ -1,14 +1,13 @@
+<!-- src/app/features/payroll/pages/payslips/payslips.html -->
 <div class="payslips-page">
-  <app-page-header
-    title="Payslips & Compensation"
-  ></app-page-header>
+  <app-page-header title="Payslips & Compensation"></app-page-header>
 
   <app-data-table
     [columns]="columns"
     [value]="payrollService.payslips()"
     [loading]="payrollService.isLoading()"
     exportFilename="compacct_payslips"
-    title="Generated Salary Statements"
+    title="Payslips & Compensation"
   >
     <ng-template #actions let-item>
       <p-button

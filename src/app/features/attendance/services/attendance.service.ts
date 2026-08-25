@@ -96,4 +96,30 @@ export class AttendanceService {
       map(res => !!res.success)
     );
   }
+
+  approveRegularization(id: number, remarks?: string): Observable<boolean> {
+    return this.api.callNonNested(SPC.ATT_APPROVE_REGULARIZATION, { id, remarks }).pipe(
+      tap(res => {
+        if (res.success) {
+          this._regularizationList.update(items =>
+            items.map(item => item.id === id ? { ...item, status: 'Approved' } : item)
+          );
+        }
+      }),
+      map(res => !!res.success)
+    );
+  }
+
+  rejectRegularization(id: number, remarks?: string): Observable<boolean> {
+    return this.api.callNonNested(SPC.ATT_REJECT_REGULARIZATION, { id, remarks }).pipe(
+      tap(res => {
+        if (res.success) {
+          this._regularizationList.update(items =>
+            items.map(item => item.id === id ? { ...item, status: 'Rejected' } : item)
+          );
+        }
+      }),
+      map(res => !!res.success)
+    );
+  }
 }

@@ -19,11 +19,24 @@ export class Payslips implements OnInit {
   protected payrollService = inject(PayrollService);
 
   columns: DataTableColumn[] = [
-    { field: 'period', header: 'Pay Period', sortable: true },
+    { field: 'period', header: 'Pay Period', sortable: true, filterable: true },
     { field: 'grossPay', header: 'Gross Earnings', type: 'currency', align: 'right', sortable: true },
     { field: 'deductions', header: 'Deductions', type: 'currency', align: 'right', sortable: true },
     { field: 'netPay', header: 'Net Salary', type: 'currency', align: 'right', sortable: true },
-    { field: 'status', header: 'Status', width: '120px', type: 'status', align: 'center', sortable: true },
+    {
+      field: 'status',
+      header: 'Status',
+      width: '120px',
+      type: 'status',
+      align: 'center',
+      sortable: true,
+      filterable: true,
+      filterOptions: [
+        { label: 'Disbursed', value: 'Disbursed' },
+        { label: 'Processing', value: 'Processing' },
+        { label: 'Pending', value: 'Pending' }
+      ]
+    },
     { field: 'processedAt', header: 'Disbursed On', width: '130px', type: 'date' }
   ];
 

@@ -1,28 +1,63 @@
-<div class="date-range-container">
-  @if (showPresets) {
-    <p-select
-      [options]="presets"
-      optionLabel="label"
-      optionValue="value"
-      [(ngModel)]="selectedPreset"
-      (ngModelChange)="onPresetChange($event)"
-      placeholder="Preset"
-      appendTo="body"
-      styleClass="preset-select"
-    ></p-select>
+<!-- src/app/shared/components/date-range-picker/date-range-picker.html -->
+<div class="date-range-wrapper">
+  @if (label) {
+    <label class="date-range-top-label">{{ label }}</label>
   }
 
-  <p-datepicker
-    [(ngModel)]="dates"
-    (ngModelChange)="onDateSelect()"
-    selectionMode="range"
-    [readonlyInput]="true"
-    [showIcon]="true"
-    iconDisplay="input"
-    [dateFormat]="dateFormat"
-    [placeholder]="placeholder"
-    appendTo="body"
-    (onSelect)="onDateSelect()"
-    styleClass="custom-datepicker"
-  ></p-datepicker>
+  <div
+    class="date-range-input-trigger"
+    (click)="togglePopover($event)"
+    tabindex="0"
+    role="button"
+    aria-label="Select date range"
+  >
+    <i class="pi pi-calendar calendar-icon"></i>
+    <span class="range-display-text" [class.placeholder]="!hasSelection">
+      {{ formattedRangeText }}
+    </span>
+    @if (hasSelection) {
+      <button
+        type="button"
+        class="clear-range-btn"
+        (click)="clear($event)"
+        aria-label="Clear date range"
+        title="Clear dates"
+      >
+        <i class="pi pi-times"></i>
+      </button>
+    }
+  </div>
+
+  <p-popover #popover styleClass="dual-calendar-popover-panel">
+    <div class="dual-picker-container">
+      <!-- Left Presets Sidebar -->
+      @if (showPresets) {
+        <div class="presets-sidebar">
+          @for (preset of presets; track preset.value) {
+            <button
+              type="button"
+              class="preset-item-btn"
+              [class.active]="selectedPreset() === preset.value"
+              (click)="applyPreset(preset.value)"
+            >
+              {{ preset.label }}
+            </button>
+          }
+        </div>
+      }
+
+      <!-- Right Dual Calendar -->
+      <div class="calendar-section">
+        <p-datepicker
+          [(ngModel)]="calendarDates"
+          (onSelect)="onCalendarSelect()"
+          [inline]="true"
+          selectionMode="range"
+          [numberOfMonths]="2"
+          [showOtherMonths]="true"
+          styleClass="dual-month-inline-datepicker"
+        ></p-datepicker>
+      </div>
+    </div>
+  </p-popover>
 </div>

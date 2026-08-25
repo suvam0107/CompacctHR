@@ -34,6 +34,8 @@ export const SPC = {
   ATT_GET_CALENDAR:            'ATT_GET_CALENDAR',             // non-nested: calendar month view
   ATT_GET_REGULARIZATION_LIST: 'ATT_GET_REGULARIZATION_LIST',  // non-nested: regularization requests
   ATT_SUBMIT_REGULARIZATION:   'ATT_SUBMIT_REGULARIZATION',    // non-nested: write
+  ATT_APPROVE_REGULARIZATION:  'ATT_APPROVE_REGULARIZATION',   // non-nested: write
+  ATT_REJECT_REGULARIZATION:   'ATT_REJECT_REGULARIZATION',    // non-nested: write
 
   // Leave module
   LEAVE_GET_BALANCE:           'LEAVE_GET_BALANCE',            // non-nested: user leave balances

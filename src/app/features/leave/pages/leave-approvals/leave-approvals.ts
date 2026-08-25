@@ -4,18 +4,27 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
+import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule } from '@angular/forms';
 import { PageHeader } from '../../../../shared/components/page-header/page-header';
 import { DataTable, DataTableColumn } from '../../../../shared/components/data-table/data-table';
 import { LeaveService } from '../../services/leave.service';
 import { LeaveApprovalItem } from '../../models/leave.model';
-
 import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-leave-approvals',
   standalone: true,
-  imports: [CommonModule, FormsModule, ButtonModule, DialogModule, InputTextModule, PageHeader, DataTable],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ButtonModule,
+    DialogModule,
+    InputTextModule,
+    TooltipModule,
+    PageHeader,
+    DataTable
+  ],
   templateUrl: './leave-approvals.html',
   styleUrls: ['./leave-approvals.scss']
 })
@@ -31,12 +40,25 @@ export class LeaveApprovals implements OnInit {
 
   columns: DataTableColumn[] = [
     { field: 'employeeName', header: 'Employee', sortable: true },
-    { field: 'leaveTypeName', header: 'Type', width: '130px' },
+    { field: 'leaveTypeName', header: 'Type', width: '130px', filterable: true, sortable: true },
     { field: 'fromDate', header: 'From', width: '120px', type: 'date', sortable: true },
     { field: 'toDate', header: 'To', width: '120px', type: 'date', sortable: true },
-    { field: 'days', header: 'Days', width: '80px', align: 'center' },
+    { field: 'days', header: 'Days', width: '80px', align: 'center', sortable: true },
     { field: 'reason', header: 'Reason' },
-    { field: 'status', header: 'Status', width: '110px', type: 'status', align: 'center' }
+    {
+      field: 'status',
+      header: 'Status',
+      width: '120px',
+      type: 'status',
+      align: 'center',
+      sortable: true,
+      filterable: true,
+      filterOptions: [
+        { label: 'Pending', value: 'Pending' },
+        { label: 'Approved', value: 'Approved' },
+        { label: 'Rejected', value: 'Rejected' }
+      ]
+    }
   ];
 
   ngOnInit(): void {

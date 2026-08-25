@@ -1,43 +1,61 @@
+<!-- src/app/shared/components/data-table/data-table.html -->
 <div class="data-table-container">
   <!-- Table Header Bar -->
-  @if (title || showSearch || showExport || toolbarTemplate) {
-    <div class="table-topbar">
-      <div class="topbar-left">
-        @if (title) {
-          <div class="table-titles">
-            <h3 class="table-title">{{ title }}</h3>
-            @if (subtitle) {
-              <p class="table-subtitle">{{ subtitle }}</p>
-            }
-          </div>
-        }
-      </div>
+  <div class="table-topbar">
+    <!-- Left: Export button + Date-range picker -->
+    <div class="topbar-left">
+      @if (showExport && hasRecords()) {
+        <app-export-button
+          [filename]="exportFilename"
+          [title]="title || exportFilename"
+          [columns]="exportColumns"
+          [data]="getExportData()"
+        ></app-export-button>
+      }
 
-      <div class="topbar-right">
-        @if (toolbarTemplate) {
-          <ng-container *ngTemplateOutlet="toolbarTemplate"></ng-container>
-        }
-
-        @if (showSearch) {
-          <div class="search-box">
-            <app-search-input
-              [placeholder]="searchPlaceholder"
-              (searchChange)="onSearch($event)"
-            ></app-search-input>
-          </div>
-        }
-
-        @if (showExport) {
-          <app-export-button
-            [filename]="exportFilename"
-            [title]="title"
-            [columns]="exportColumns"
-            [data]="getExportData()"
-          ></app-export-button>
-        }
-      </div>
+      @if (showDateRange) {
+        <app-date-range-picker (rangeChange)="onDateRangeSelected($event)"></app-date-range-picker>
+      } @else if (dateRangeTemplate) {
+        <ng-container *ngTemplateOutlet="dateRangeTemplate"></ng-container>
+      }
     </div>
-  }
+
+    <!-- Right: Search + Clear Filters + Action Buttons -->
+    <div class="topbar-right">
+      @if (showSearch && hasRecords()) {
+        <div class="search-box">
+          <app-search-input
+            #searchInput
+            [placeholder]="searchPlaceholder"
+            (searchChange)="onSearch($event)"
+          ></app-search-input>
+        </div>
+      }
+
+      @if (isFiltered()) {
+        <p-button
+          label="Clear Filters"
+          icon="pi pi-filter-slash"
+          iconPos="left"
+          [outlined]="true"
+          severity="secondary"
+          size="small"
+          styleClass="clear-filters-btn"
+          (onClick)="clearAllFilters()"
+        ></p-button>
+      }
+
+      @if (headerActionsTemplate) {
+        <div class="header-action-slot">
+          <ng-container *ngTemplateOutlet="headerActionsTemplate"></ng-container>
+        </div>
+      } @else if (toolbarTemplate) {
+        <div class="header-action-slot">
+          <ng-container *ngTemplateOutlet="toolbarTemplate"></ng-container>
+        </div>
+      }
+    </div>
+  </div>
 
   <!-- PrimeNG Table Body -->
   @if (loading && value.length === 0) {
@@ -70,8 +88,34 @@
               [style.width]="col.width"
               [style.text-align]="col.align || 'left'"
             >
-              <div class="header-cell" [style.justify-content]="col.align === 'right' ? 'flex-end' : (col.align === 'center' ? 'center' : 'flex-start')">
-                <span>{{ col.header }}</span>
+              <div
+                class="header-cell"
+                [style.justify-content]="col.align === 'right' ? 'flex-end' : (col.align === 'center' ? 'center' : 'flex-start')"
+              >
+                <!-- 1. Filter Icon (exact same design and hover as sort icon) -->
+                @if (col.filterable) {
+                  <span
+                    class="col-filter-icon-wrap"
+                    [class.filter-active]="isColumnFiltered(col.field)"
+                    (click)="openColumnFilter($event, col, filterPopover)"
+                    pTooltip="Filter by {{ col.header }}"
+                    tooltipPosition="top"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Filter column"
+                  >
+                    <i
+                      class="pi"
+                      [class.pi-filter]="!isColumnFiltered(col.field)"
+                      [class.pi-filter-fill]="isColumnFiltered(col.field)"
+                    ></i>
+                  </span>
+                }
+
+                <!-- 2. Column Name -->
+                <span class="col-name">{{ col.header }}</span>
+
+                <!-- 3. Sort Icon (if sortable) -->
                 @if (col.sortable) {
                   <p-sortIcon [field]="col.field"></p-sortIcon>
                 }
@@ -79,7 +123,7 @@
             </th>
           }
           @if (actionsTemplate) {
-            <th style="width: 100px; text-align: center;">Actions</th>
+            <th style="width: 110px; text-align: center;">Actions</th>
           }
         </tr>
       </ng-template>
@@ -88,27 +132,37 @@
         <tr (click)="onRowClick(rowData)" class="clickable-row">
           @for (col of columns; track col.field) {
             <td [style.text-align]="col.align || 'left'">
-              @switch (col.type) {
-                @case ('date') {
-                  <span>{{ rowData[col.field] | dateFormat:'medium' }}</span>
-                }
-                @case ('currency') {
-                  <span class="currency-cell">{{ rowData[col.field] | appCurrency }}</span>
-                }
-                @case ('status') {
-                  <app-status-badge [status]="rowData[col.field]"></app-status-badge>
-                }
-                @case ('custom') {
-                  @if (customCellTemplate) {
-                    <ng-container
-                      *ngTemplateOutlet="customCellTemplate; context: { $implicit: rowData, column: col }"
-                    ></ng-container>
-                  } @else {
+              @if (col.link) {
+                <a
+                  class="table-link-cell"
+                  (click)="onLinkClick($event, rowData, col)"
+                  [title]="'View ' + (rowData[col.field] ?? '')"
+                >
+                  {{ rowData[col.field] ?? '-' }}
+                </a>
+              } @else {
+                @switch (col.type) {
+                  @case ('date') {
+                    <span>{{ rowData[col.field] | dateFormat:'medium' }}</span>
+                  }
+                  @case ('currency') {
+                    <span class="currency-cell">{{ rowData[col.field] | appCurrency }}</span>
+                  }
+                  @case ('status') {
+                    <app-status-badge [status]="rowData[col.field]"></app-status-badge>
+                  }
+                  @case ('custom') {
+                    @if (customCellTemplate) {
+                      <ng-container
+                        *ngTemplateOutlet="customCellTemplate; context: { $implicit: rowData, column: col }"
+                      ></ng-container>
+                    } @else {
+                      <span>{{ rowData[col.field] ?? '-' }}</span>
+                    }
+                  }
+                  @default {
                     <span>{{ rowData[col.field] ?? '-' }}</span>
                   }
-                }
-                @default {
-                  <span>{{ rowData[col.field] ?? '-' }}</span>
                 }
               }
             </td>
@@ -137,4 +191,57 @@
       </ng-template>
     </p-table>
   }
+
+  <!-- Column Filter Popover -->
+  <p-popover #filterPopover styleClass="col-filter-popover">
+    @if (activeFilterColumn(); as col) {
+      <div class="filter-popover-content">
+        <div class="popover-header">
+          <span class="popover-title">Filter {{ col.header }}</span>
+          @if (isColumnFiltered(col.field)) {
+            <button
+              type="button"
+              class="popover-clear-btn"
+              (click)="clearColumnFilter(col.field, filterPopover)"
+            >
+              Clear
+            </button>
+          }
+        </div>
+
+        <div class="popover-search">
+          <input
+            type="text"
+            pInputText
+            [ngModel]="filterSearchTerm()"
+            (ngModelChange)="filterSearchTerm.set($event)"
+            placeholder="Search options..."
+            class="popover-search-input"
+          />
+        </div>
+
+        <div class="options-list">
+          <div
+            class="option-item"
+            [class.selected]="!isColumnFiltered(col.field)"
+            (click)="clearColumnFilter(col.field, filterPopover)"
+          >
+            <i class="pi pi-check" [style.visibility]="!isColumnFiltered(col.field) ? 'visible' : 'hidden'"></i>
+            <span>(All)</span>
+          </div>
+
+          @for (opt of getColumnFilterOptions(col); track opt.value) {
+            <div
+              class="option-item"
+              [class.selected]="activeFilters()[col.field] === opt.value"
+              (click)="applyColumnFilter(col.field, opt.value, filterPopover)"
+            >
+              <i class="pi pi-check" [style.visibility]="activeFilters()[col.field] === opt.value ? 'visible' : 'hidden'"></i>
+              <span>{{ opt.label }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </p-popover>
 </div>

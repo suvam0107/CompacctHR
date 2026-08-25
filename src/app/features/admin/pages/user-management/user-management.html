@@ -1,20 +1,19 @@
+<!-- src/app/features/admin/pages/user-management/user-management.html -->
 <div class="user-management-page">
-  <app-page-header
-    title="User Account Management"
-  ></app-page-header>
+  <app-page-header title="User Account Management"></app-page-header>
 
   <app-data-table
     [columns]="columns"
     [value]="adminService.users()"
     [loading]="adminService.isLoading()"
     exportFilename="compacct_admin_users"
-    title="Registered User Logins"
+    title="User Account Management"
   >
     <ng-template #customCell let-row let-col="column">
       @if (col.field === 'roles') {
-        <div class="roles-chips">
+        <div class="roles-chips d-flex flex-wrap gap-1">
           @for (r of row.roles; track r) {
-            <span class="role-chip">{{ r }}</span>
+            <span class="role-chip badge bg-light text-dark border">{{ r }}</span>
           }
         </div>
       } @else if (col.field === 'isActive') {

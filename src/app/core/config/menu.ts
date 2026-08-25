@@ -52,15 +52,14 @@ export const MENU_ITEMS: MenuItem[] = [
     order: 4,
     permission: 'leave:view',
     children: [
-      { id: 'leave-apply', label: 'Apply Leave', icon: 'pi pi-plus', route: '/leave/apply', order: 1 },
-      { id: 'leave-history', label: 'My Leave History', icon: 'pi pi-history', route: '/leave/history', order: 2 },
+      { id: 'leave-history', label: 'My Leave History', icon: 'pi pi-history', route: '/leave/history', order: 1 },
       {
         id: 'leave-approvals',
         label: 'Approvals',
         icon: 'pi pi-check-square',
         route: '/leave/approvals',
         permission: 'leave:approve',
-        order: 3
+        order: 2
       }
     ]
   },

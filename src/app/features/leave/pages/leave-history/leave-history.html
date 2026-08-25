@@ -1,19 +1,88 @@
+<!-- src/app/features/leave/pages/leave-history/leave-history.html -->
 <div class="leave-history-page">
-  <app-page-header
-    title="My Leave History"
-  >
-    <div actions class="header-actions">
-      <a routerLink="/leave/apply">
-        <p-button label="Apply Leave" icon="pi pi-plus" size="small"></p-button>
-      </a>
-    </div>
-  </app-page-header>
+  <app-page-header title="My Leave History"></app-page-header>
 
   <app-data-table
     [columns]="columns"
     [value]="leaveService.history()"
     [loading]="leaveService.isLoading()"
     exportFilename="compacct_my_leave_history"
-    title="Leave Records"
-  ></app-data-table>
+    title="My Leave History"
+  >
+    <!-- Right Table Header Action Button -->
+    <ng-template #headerActions>
+      <p-button
+        label="Apply Leave"
+        icon="pi pi-plus"
+        size="small"
+        (onClick)="openApplyModal()"
+      ></p-button>
+    </ng-template>
+  </app-data-table>
+
+  <!-- Apply Leave Modal Dialog -->
+  <p-dialog
+    header="Apply for Leave"
+    [visible]="showApplyDialog()"
+    (visibleChange)="showApplyDialog.set($event)"
+    [modal]="true"
+    [style]="{ width: '640px' }"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <!-- Live Balances Bar -->
+    @if (leaveService.balances(); as balancesList) {
+      <div class="row g-2 mb-3">
+        @for (b of balancesList; track b.code) {
+          <div class="col-md-4">
+            <app-leave-balance-card [balance]="b"></app-leave-balance-card>
+          </div>
+        }
+      </div>
+    }
+
+    @if (errorMessage()) {
+      <div class="p-2 mb-3 bg-danger-subtle text-danger rounded text-sm d-flex align-items-center gap-2">
+        <i class="pi pi-exclamation-circle"></i>
+        <span>{{ errorMessage() }}</span>
+      </div>
+    }
+
+    <form [formGroup]="leaveForm" (ngSubmit)="onSubmitLeave()" class="dialog-form">
+      <div class="row g-3">
+        <div class="col-12">
+          <label for="leaveType" class="form-label fw-semibold text-sm">Leave Type *</label>
+          <p-select id="leaveType" [options]="leaveTypeOptions()" optionLabel="name" optionValue="id" formControlName="leaveTypeId" appendTo="body" styleClass="w-full"></p-select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="fromDate" class="form-label fw-semibold text-sm">From Date *</label>
+          <p-datepicker id="fromDate" formControlName="fromDate" [showIcon]="true" iconDisplay="input" dateFormat="dd M yy" appendTo="body" styleClass="w-full"></p-datepicker>
+        </div>
+
+        <div class="col-md-6">
+          <label for="toDate" class="form-label fw-semibold text-sm">To Date *</label>
+          <p-datepicker id="toDate" formControlName="toDate" [showIcon]="true" iconDisplay="input" dateFormat="dd M yy" appendTo="body" styleClass="w-full"></p-datepicker>
+        </div>
+
+        <div class="col-12">
+          <label for="reason" class="form-label fw-semibold text-sm">Reason for Leave *</label>
+          <input id="reason" type="text" pInputText formControlName="reason" placeholder="e.g. Family medical emergency" class="w-full" />
+          @if (leaveForm.get('reason')?.invalid && leaveForm.get('reason')?.touched) {
+            <span class="error-text text-danger text-xs mt-1 d-block">Reason is required (minimum 5 characters)</span>
+          }
+        </div>
+
+        <div class="col-12">
+          <label for="emergencyContact" class="form-label fw-semibold text-sm">Emergency Contact (Optional)</label>
+          <input id="emergencyContact" type="text" pInputText formControlName="emergencyContact" placeholder="e.g. 9876543210" class="w-full" />
+        </div>
+      </div>
+
+      <div class="dialog-footer d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
+        <p-button label="Cancel" [text]="true" severity="secondary" size="small" (onClick)="showApplyDialog.set(false)"></p-button>
+        <p-button type="submit" label="Submit Leave Application" icon="pi pi-send" [loading]="isSubmitting()" size="small"></p-button>
+      </div>
+    </form>
+  </p-dialog>
 </div>

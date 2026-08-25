@@ -1,17 +1,14 @@
+<!-- src/app/features/attendance/pages/attendance-log/attendance-log.html -->
 <div class="attendance-log-page">
-  <app-page-header
-    title="Daily Attendance Log"
-  >
-    <div actions class="header-actions">
-      <app-date-range-picker (rangeChange)="onRangeChange($event)"></app-date-range-picker>
-    </div>
-  </app-page-header>
+  <app-page-header title="Daily Attendance Log"></app-page-header>
 
   <app-data-table
     [columns]="columns"
     [value]="attendanceService.logs()"
     [loading]="attendanceService.isLoading()"
+    [showDateRange]="true"
+    (dateRangeChange)="onRangeChange($event)"
     exportFilename="compacct_attendance_log"
-    title="Attendance Records"
+    title="Daily Attendance Log"
   ></app-data-table>
 </div>

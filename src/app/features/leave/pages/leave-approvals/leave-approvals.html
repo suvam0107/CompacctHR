@@ -1,23 +1,23 @@
+<!-- src/app/features/leave/pages/leave-approvals/leave-approvals.html -->
 <div class="leave-approvals-page">
-  <app-page-header
-    title="Leave Approvals"
-  ></app-page-header>
+  <app-page-header title="Leave Approvals"></app-page-header>
 
   <app-data-table
     [columns]="columns"
     [value]="leaveService.approvals()"
     [loading]="leaveService.isLoading()"
     exportFilename="compacct_pending_leave_approvals"
-    title="Pending Approvals"
+    title="Leave Approvals"
   >
     <ng-template #actions let-item>
-      <div class="approval-actions">
+      <div class="approval-actions d-flex gap-1 justify-content-center">
         <p-button
           icon="pi pi-check"
           severity="success"
           size="small"
           [rounded]="true"
           pTooltip="Approve Request"
+          tooltipPosition="top"
           (onClick)="openApprovalModal(item, 'approve')"
         ></p-button>
         <p-button
@@ -26,6 +26,7 @@
           size="small"
           [rounded]="true"
           pTooltip="Reject Request"
+          tooltipPosition="top"
           (onClick)="openApprovalModal(item, 'reject')"
         ></p-button>
       </div>
@@ -38,19 +39,19 @@
     [visible]="showActionDialog()"
     (visibleChange)="showActionDialog.set($event)"
     [modal]="true"
-    [style]="{ width: '440px' }"
+    [style]="{ width: '450px' }"
     [draggable]="false"
     [resizable]="false"
   >
     @if (selectedLeave(); as leave) {
       <div class="action-dialog-body">
-        <p class="dialog-prompt">
+        <p class="dialog-prompt mb-3 text-sm">
           Are you sure you want to <strong>{{ actionType() }}</strong> the leave request for
           <strong>{{ leave.employeeName }}</strong> ({{ leave.days }} day(s) from {{ leave.fromDate }} to {{ leave.toDate }})?
         </p>
 
-        <div class="form-group">
-          <label for="remarks">Approver Remarks (Optional)</label>
+        <div class="form-group mb-3">
+          <label for="remarks" class="form-label fw-semibold text-sm">Approver Remarks (Optional)</label>
           <input
             id="remarks"
             type="text"
@@ -62,7 +63,7 @@
           />
         </div>
 
-        <div class="dialog-footer">
+        <div class="dialog-footer d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
           <p-button label="Cancel" [text]="true" severity="secondary" size="small" (onClick)="showActionDialog.set(false)"></p-button>
           <p-button
             [label]="actionType() === 'approve' ? 'Confirm Approval' : 'Confirm Rejection'"
