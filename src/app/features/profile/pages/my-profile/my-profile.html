@@ -2,22 +2,10 @@
   @if (profileService.isLoading() && !profileService.profile()) {
     <app-loading-skeleton type="card" [rows]="4"></app-loading-skeleton>
   } @else if (profileService.profile(); as p) {
-    <app-page-header
-      title="My Profile"
-    >
-      <div actions class="header-actions">
-        <p-button
-          [label]="isEditing() ? 'Cancel Edit' : 'Edit Contact Details'"
-          [icon]="isEditing() ? 'pi pi-times' : 'pi pi-user-edit'"
-          [outlined]="isEditing()"
-          size="small"
-          (onClick)="toggleEdit()"
-        ></p-button>
-      </div>
-    </app-page-header>
+    <app-page-header title="My Profile"></app-page-header>
 
     @if (saveSuccess()) {
-      <div class="success-banner">
+      <div class="status-banner status-banner--success mb-3">
         <i class="pi pi-check-circle"></i>
         <span>Your profile contact information has been updated successfully.</span>
       </div>
@@ -36,32 +24,131 @@
           <span class="user-code">Employee Code: {{ p.personal.employeeCode }}</span>
         </div>
       </div>
+      <div class="card-right">
+        <p-button
+          label="Edit Contact Details"
+          icon="pi pi-user-edit"
+          size="small"
+          (onClick)="toggleEdit()"
+        ></p-button>
+      </div>
     </div>
 
-    <!-- Edit Form / Display Sections -->
-    @if (isEditing()) {
-      <div class="edit-card">
-        <h3 class="card-title"><i class="pi pi-pencil"></i> Update Contact Details</h3>
-        <form [formGroup]="profileForm" (ngSubmit)="onSave()" class="edit-form">
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="phone">Phone Number *</label>
-              <input id="phone" type="text" pInputText formControlName="phone" class="w-full" />
-            </div>
 
-            <div class="form-group full-width">
-              <label for="address">Residential Address *</label>
-              <input id="address" type="text" pInputText formControlName="address" class="w-full" />
+    <!-- Edit Profile Modal Dialog -->
+    <p-dialog
+      header="Update Profile Details"
+      [visible]="isEditing()"
+      (visibleChange)="isEditing.set($event)"
+      [modal]="true"
+      [style]="{ width: 'min(660px, 95vw)' }"
+      [draggable]="false"
+      [resizable]="false"
+    >
+      <form [formGroup]="profileForm" (ngSubmit)="onSave()" class="dialog-form-body" novalidate>
+        <div class="row g-3">
+          <!-- Full Name -->
+          <div class="col-12 col-sm-6">
+            <div class="ff">
+              <label for="name" class="ff-label">Full Name <span class="required-mark">*</span></label>
+              <input id="name" type="text" pInputText formControlName="name" class="w-full" placeholder="Full Name" />
+              @if (profileForm.get('name')?.invalid && profileForm.get('name')?.touched) {
+                <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Name is required</div>
+              }
             </div>
           </div>
 
-          <div class="form-footer">
-            <p-button label="Cancel" [text]="true" severity="secondary" size="small" (onClick)="isEditing.set(false)"></p-button>
-            <p-button type="submit" label="Save Changes" icon="pi pi-check" [loading]="isSaving()" size="small"></p-button>
+          <!-- Official Email -->
+          <div class="col-12 col-sm-6">
+            <div class="ff">
+              <label for="email" class="ff-label">Corporate Email <span class="required-mark">*</span></label>
+              <input id="email" type="email" pInputText formControlName="email" class="w-full" placeholder="john.doe@company.com" />
+              @if (profileForm.get('email')?.invalid && profileForm.get('email')?.touched) {
+                <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Valid corporate email required</div>
+              }
+            </div>
           </div>
-        </form>
-      </div>
-    }
+
+          <!-- Phone Number -->
+          <div class="col-12 col-sm-6">
+            <div class="ff">
+              <label for="phone" class="ff-label">Phone Number <span class="required-mark">*</span></label>
+              <input id="phone" type="text" pInputText formControlName="phone" class="w-full" placeholder="10-digit mobile number" />
+              @if (profileForm.get('phone')?.invalid && profileForm.get('phone')?.touched) {
+                <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Phone number is required</div>
+              }
+            </div>
+          </div>
+
+          <!-- Emergency Contact -->
+          <div class="col-12 col-sm-6">
+            <div class="ff">
+              <label for="emergencyContact" class="ff-label">Emergency Contact <span class="optional-mark">(Optional)</span></label>
+              <input id="emergencyContact" type="text" pInputText formControlName="emergencyContact" class="w-full" placeholder="Emergency contact number" />
+            </div>
+          </div>
+
+          <!-- Gender -->
+          <div class="col-12 col-sm-6">
+            <div class="ff">
+              <label for="gender" class="ff-label">Gender</label>
+              <p-select id="gender" [options]="genderOptions" optionLabel="label" optionValue="value" formControlName="gender" appendTo="body" styleClass="w-full"></p-select>
+            </div>
+          </div>
+
+          <!-- PAN Number -->
+          <div class="col-12 col-sm-6">
+            <div class="ff">
+              <label for="panNo" class="ff-label">PAN Number</label>
+              <input id="panNo" type="text" pInputText formControlName="panNo" class="w-full" placeholder="ABCDE1234F" />
+            </div>
+          </div>
+
+          <!-- Residential Address (full width) -->
+          <div class="col-12">
+            <div class="ff">
+              <label for="address" class="ff-label">Residential Address <span class="required-mark">*</span></label>
+              <input id="address" type="text" pInputText formControlName="address" class="w-full" placeholder="Flat, Street, City, State, PIN" />
+              @if (profileForm.get('address')?.invalid && profileForm.get('address')?.touched) {
+                <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Address is required</div>
+              }
+            </div>
+          </div>
+
+          <!-- Bank Name -->
+          <div class="col-12 col-sm-4">
+            <div class="ff">
+              <label for="bankName" class="ff-label">Bank Name</label>
+              <input id="bankName" type="text" pInputText formControlName="bankName" class="w-full" placeholder="e.g. SBI" />
+            </div>
+          </div>
+
+          <!-- Account Number -->
+          <div class="col-12 col-sm-4">
+            <div class="ff">
+              <label for="bankAccountNo" class="ff-label">Account Number</label>
+              <input id="bankAccountNo" type="text" pInputText formControlName="bankAccountNo" class="w-full" placeholder="Account Number" />
+            </div>
+          </div>
+
+          <!-- IFSC Code -->
+          <div class="col-12 col-sm-4">
+            <div class="ff">
+              <label for="ifscCode" class="ff-label">IFSC Code</label>
+              <input id="ifscCode" type="text" pInputText formControlName="ifscCode" class="w-full" placeholder="SBIN0001234" />
+            </div>
+          </div>
+        </div>
+
+        <div class="dialog-footer-actions">
+          <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="isEditing.set(false)"></p-button>
+          <p-button type="submit" label="Save Changes" icon="pi pi-check" [loading]="isSaving()"></p-button>
+        </div>
+      </form>
+    </p-dialog>
+
+
+
 
     <!-- Detail Blocks Grid -->
     <div class="details-grid">

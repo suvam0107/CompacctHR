@@ -10,7 +10,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageService } from 'primeng/api';
 import { PageHeader } from '../../../../shared/components/page-header/page-header';
 import { DataTable, DataTableColumn } from '../../../../shared/components/data-table/data-table';
-import { LeaveBalanceCard } from '../../components/leave-balance-card/leave-balance-card';
 import { LookupCacheService } from '../../../../core/state/lookup-cache.service';
 import { LeaveService } from '../../services/leave.service';
 
@@ -26,8 +25,7 @@ import { LeaveService } from '../../services/leave.service';
     DatePickerModule,
     InputTextModule,
     PageHeader,
-    DataTable,
-    LeaveBalanceCard
+    DataTable
   ],
   templateUrl: './leave-history.html',
   styleUrls: ['./leave-history.scss']

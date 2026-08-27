@@ -12,7 +12,7 @@ nav {
 }
 
 .breadcrumb {
-  font-size: 0.875rem;
+  font-size: var(--fs-label-sm);
   padding: 0;
   margin: 0;
   background: transparent;
@@ -33,7 +33,7 @@ nav {
     }
 
     i.pi {
-      font-size: 1rem;
+      font-size: 0.95rem;
       line-height: 1;
       display: inline-flex;
       align-items: center;
@@ -41,18 +41,18 @@ nav {
     }
 
     a {
-      color: rgba(255, 255, 255, 0.75);
+      color: var(--color-primary);
       transition: color 120ms ease-out;
 
       &:hover {
-        color: #ffffff;
+        color: var(--color-primary-hover);
+        text-decoration: underline !important;
       }
     }
 
     &.active span {
-      color: #ffffff;
+      color: var(--color-text-muted);
       font-weight: 600;
-      font-size: 0.95rem;
     }
 
     + .breadcrumb-item::before {
@@ -60,9 +60,10 @@ nav {
       display: inline-flex;
       align-items: center;
       padding: 0 var(--space-2);
-      color: rgba(255, 255, 255, 0.4);
-      font-size: 0.875rem;
+      color: var(--color-border);
+      font-size: 0.8125rem;
       line-height: 1;
     }
   }
 }
+

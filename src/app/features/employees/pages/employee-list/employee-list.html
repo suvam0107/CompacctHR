@@ -2,113 +2,132 @@
 <div class="employee-list-page">
   <app-page-header title="Employee Directory"></app-page-header>
 
-  <app-data-table
-    [columns]="columns"
-    [value]="employeeService.employees()"
-    [totalRecords]="employeeService.totalCount()"
-    [loading]="employeeService.isLoading()"
-    exportFilename="compacct_employees"
-    title="Staff Directory"
-    (cellLinkClick)="onCellLinkClick($event)"
-  >
+  <app-data-table [columns]="columns" [value]="employeeService.employees()"
+    [totalRecords]="employeeService.totalCount()" [loading]="employeeService.isLoading()"
+    exportFilename="compacct_employees" title="Staff Directory" (cellLinkClick)="onCellLinkClick($event)">
     <!-- Right Table Header Action Button -->
     <ng-template #headerActions>
-      <p-button
-        *appHasPermission="'employee:create'"
-        label="Add Employee"
-        icon="pi pi-plus"
-        size="small"
-        (onClick)="openAddEmployeeModal()"
-      ></p-button>
+      <p-button *appHasPermission="'employee:create'" label="Add Employee" icon="pi pi-plus" size="large"
+        (onClick)="openAddEmployeeModal()"></p-button>
     </ng-template>
   </app-data-table>
 
   <!-- Add Employee Modal Dialog -->
-  <p-dialog
-    header="Add New Employee"
-    [visible]="showAddModal()"
-    (visibleChange)="showAddModal.set($event)"
-    [modal]="true"
-    [style]="{ width: '640px' }"
-    [draggable]="false"
-    [resizable]="false"
-  >
-    <form [formGroup]="addEmployeeForm" (ngSubmit)="onSubmitAddEmployee()" class="dialog-form">
+  <p-dialog header="Add New Employee" [visible]="showAddModal()" (visibleChange)="showAddModal.set($event)"
+    [modal]="true" [style]="{ width: 'min(680px, 95vw)' }" [draggable]="false" [resizable]="false">
+    <form [formGroup]="addEmployeeForm" (ngSubmit)="onSubmitAddEmployee()" class="dialog-form-body" novalidate>
       <div class="row g-3">
-        <!-- First Name & Last Name -->
-        <div class="col-md-6">
-          <label for="firstName" class="form-label fw-semibold text-sm">First Name *</label>
-          <input id="firstName" type="text" pInputText formControlName="firstName" placeholder="e.g. John" class="w-full" />
-          @if (addEmployeeForm.get('firstName')?.invalid && addEmployeeForm.get('firstName')?.touched) {
-            <span class="error-text text-danger text-xs mt-1 d-block">First name is required</span>
-          }
+        <!-- First Name -->
+        <div class="col-12 col-sm-6">
+          <div class="ff">
+            <label for="firstName" class="ff-label">First Name <span class="required-mark">*</span></label>
+            <input id="firstName" type="text" pInputText formControlName="firstName" placeholder="e.g. Priya"
+              class="w-full" />
+            @if (addEmployeeForm.get('firstName')?.invalid && addEmployeeForm.get('firstName')?.touched) {
+            <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> First name is required</div>
+            }
+          </div>
         </div>
 
-        <div class="col-md-6">
-          <label for="lastName" class="form-label fw-semibold text-sm">Last Name *</label>
-          <input id="lastName" type="text" pInputText formControlName="lastName" placeholder="e.g. Doe" class="w-full" />
-          @if (addEmployeeForm.get('lastName')?.invalid && addEmployeeForm.get('lastName')?.touched) {
-            <span class="error-text text-danger text-xs mt-1 d-block">Last name is required</span>
-          }
+        <!-- Last Name -->
+        <div class="col-12 col-sm-6">
+          <div class="ff">
+            <label for="lastName" class="ff-label">Last Name <span class="required-mark">*</span></label>
+            <input id="lastName" type="text" pInputText formControlName="lastName" placeholder="e.g. Sharma"
+              class="w-full" />
+            @if (addEmployeeForm.get('lastName')?.invalid && addEmployeeForm.get('lastName')?.touched) {
+            <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Last name is required</div>
+            }
+          </div>
         </div>
 
-        <!-- Emp Code & Email -->
-        <div class="col-md-6">
-          <label for="empCode" class="form-label fw-semibold text-sm">Employee Code *</label>
-          <input id="empCode" type="text" pInputText formControlName="employeeCode" placeholder="e.g. EMP005" class="w-full" />
-          @if (addEmployeeForm.get('employeeCode')?.invalid && addEmployeeForm.get('employeeCode')?.touched) {
-            <span class="error-text text-danger text-xs mt-1 d-block">Valid employee code is required</span>
-          }
+        <!-- Employee Code -->
+        <div class="col-12 col-sm-6">
+          <div class="ff">
+            <label for="empCode" class="ff-label">Employee Code <span class="required-mark">*</span></label>
+            <input id="empCode" type="text" pInputText formControlName="employeeCode" placeholder="e.g. EMP005"
+              class="w-full" />
+            @if (addEmployeeForm.get('employeeCode')?.invalid && addEmployeeForm.get('employeeCode')?.touched) {
+            <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Valid employee code is required</div>
+            }
+          </div>
         </div>
 
-        <div class="col-md-6">
-          <label for="email" class="form-label fw-semibold text-sm">Official Email *</label>
-          <input id="email" type="email" pInputText formControlName="email" placeholder="e.g. john.doe@company.com" class="w-full" />
-          @if (addEmployeeForm.get('email')?.invalid && addEmployeeForm.get('email')?.touched) {
-            <span class="error-text text-danger text-xs mt-1 d-block">Valid corporate email is required</span>
-          }
+        <!-- Official Email -->
+        <div class="col-12 col-sm-6">
+          <div class="ff">
+            <label for="email" class="ff-label">Official Email <span class="required-mark">*</span></label>
+            <input id="email" type="email" pInputText formControlName="email"
+              placeholder="e.g. priya.sharma@company.com" class="w-full" />
+            @if (addEmployeeForm.get('email')?.invalid && addEmployeeForm.get('email')?.touched) {
+            <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Valid corporate email is required</div>
+            }
+          </div>
         </div>
 
-        <!-- Phone & Joining Date -->
-        <div class="col-md-6">
-          <label for="mobile" class="form-label fw-semibold text-sm">Mobile Number *</label>
-          <input id="mobile" type="text" pInputText formControlName="mobileNumber" placeholder="e.g. 9876543210" class="w-full" />
-          @if (addEmployeeForm.get('mobileNumber')?.invalid && addEmployeeForm.get('mobileNumber')?.touched) {
-            <span class="error-text text-danger text-xs mt-1 d-block">10-digit mobile number required</span>
-          }
+        <!-- Mobile Number -->
+        <div class="col-12 col-sm-6">
+          <div class="ff">
+            <label for="mobile" class="ff-label">Mobile Number <span class="required-mark">*</span></label>
+            <input id="mobile" type="text" pInputText formControlName="mobileNumber" placeholder="e.g. 9876543210"
+              class="w-full" />
+            @if (addEmployeeForm.get('mobileNumber')?.invalid && addEmployeeForm.get('mobileNumber')?.touched) {
+            <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> 10-digit mobile number required</div>
+            }
+          </div>
         </div>
 
-        <div class="col-md-6">
-          <label for="joinDate" class="form-label fw-semibold text-sm">Joining Date *</label>
-          <p-datepicker id="joinDate" formControlName="joiningDate" [showIcon]="true" iconDisplay="input" dateFormat="dd M yy" appendTo="body" styleClass="w-full"></p-datepicker>
+        <!-- Joining Date -->
+        <div class="col-12 col-sm-6">
+          <div class="ff">
+            <label for="joinDate" class="ff-label">Joining Date <span class="required-mark">*</span></label>
+            <p-datepicker id="joinDate" formControlName="joiningDate" [showIcon]="true" iconDisplay="input"
+              dateFormat="dd M yy" appendTo="body" styleClass="w-full"></p-datepicker>
+          </div>
         </div>
 
-        <!-- Department & Designation -->
-        <div class="col-md-6">
-          <label for="department" class="form-label fw-semibold text-sm">Department *</label>
-          <p-select id="department" [options]="departmentOptions()" optionLabel="name" optionValue="id" formControlName="departmentId" placeholder="Select Department" appendTo="body" styleClass="w-full"></p-select>
+        <!-- Department -->
+        <div class="col-12 col-sm-6">
+          <div class="ff">
+            <label for="department" class="ff-label">Department <span class="required-mark">*</span></label>
+            <p-select id="department" [options]="departmentOptions()" optionLabel="name" optionValue="id"
+              formControlName="departmentId" placeholder="Select Department" appendTo="body"
+              styleClass="w-full"></p-select>
+          </div>
         </div>
 
-        <div class="col-md-6">
-          <label for="designation" class="form-label fw-semibold text-sm">Designation *</label>
-          <p-select id="designation" [options]="designationOptions()" optionLabel="name" optionValue="id" formControlName="designationId" placeholder="Select Designation" appendTo="body" styleClass="w-full"></p-select>
+        <!-- Designation -->
+        <div class="col-12 col-sm-6">
+          <div class="ff">
+            <label for="designation" class="ff-label">Designation <span class="required-mark">*</span></label>
+            <p-select id="designation" [options]="designationOptions()" optionLabel="name" optionValue="id"
+              formControlName="designationId" placeholder="Select Designation" appendTo="body"
+              styleClass="w-full"></p-select>
+          </div>
         </div>
 
-        <!-- Employment Type & Status -->
-        <div class="col-md-6">
-          <label for="empType" class="form-label fw-semibold text-sm">Employment Type *</label>
-          <p-select id="empType" [options]="employmentTypeOptions" optionLabel="label" optionValue="value" formControlName="employmentType" appendTo="body" styleClass="w-full"></p-select>
+        <!-- Employment Type -->
+        <div class="col-12 col-sm-6">
+          <div class="ff">
+            <label for="empType" class="ff-label">Employment Type <span class="required-mark">*</span></label>
+            <p-select id="empType" [options]="employmentTypeOptions" optionLabel="label" optionValue="value"
+              formControlName="employmentType" appendTo="body" styleClass="w-full"></p-select>
+          </div>
         </div>
 
-        <div class="col-md-6">
-          <label for="empStatus" class="form-label fw-semibold text-sm">Status *</label>
-          <p-select id="empStatus" [options]="statusOptions" optionLabel="label" optionValue="value" formControlName="status" appendTo="body" styleClass="w-full"></p-select>
+        <!-- Status -->
+        <div class="col-12 col-sm-6">
+          <div class="ff">
+            <label for="empStatus" class="ff-label">Status <span class="required-mark">*</span></label>
+            <p-select id="empStatus" [options]="statusOptions" optionLabel="label" optionValue="value"
+              formControlName="status" appendTo="body" styleClass="w-full"></p-select>
+          </div>
         </div>
       </div>
 
-      <div class="dialog-footer d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
-        <p-button label="Cancel" [text]="true" severity="secondary" size="small" (onClick)="showAddModal.set(false)"></p-button>
-        <p-button type="submit" label="Save Employee" icon="pi pi-check" [loading]="isSubmitting()" size="small"></p-button>
+      <div class="dialog-footer-actions">
+        <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="showAddModal.set(false)"></p-button>
+        <p-button type="submit" label="Save Employee" icon="pi pi-check" [loading]="isSubmitting()"></p-button>
       </div>
     </form>
   </p-dialog>

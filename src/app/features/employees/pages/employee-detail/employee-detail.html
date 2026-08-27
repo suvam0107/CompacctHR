@@ -5,19 +5,119 @@
     <app-page-header
       [title]="emp.personal.name"
       [subtitle]="emp.personal.employeeCode + ' • ' + emp.employment.designationName + ' • ' + emp.employment.departmentName"
+    ></app-page-header>
+
+    <!-- Edit Profile Modal Dialog -->
+    <p-dialog
+      header="Edit Employee Profile"
+      [visible]="showEditModal()"
+      (visibleChange)="showEditModal.set($event)"
+      [modal]="true"
+      [style]="{ width: 'min(680px, 95vw)' }"
+      [draggable]="false"
+      [resizable]="false"
     >
-      <div actions class="header-actions">
-        <a routerLink="/employees">
-          <p-button label="Back to Directory" icon="pi pi-arrow-left" [outlined]="true" size="small"></p-button>
-        </a>
-        <a
-          *appHasPermission="'employee:edit'"
-          [routerLink]="['/employees', emp.personal.id, 'edit']"
-        >
-          <p-button label="Edit Profile" icon="pi pi-user-edit" size="small"></p-button>
-        </a>
-      </div>
-    </app-page-header>
+      <form [formGroup]="editForm" (ngSubmit)="onSaveEdit()" class="dialog-form-body" novalidate>
+        <div class="row g-3">
+          <!-- Full Name -->
+          <div class="col-12 col-sm-6">
+            <div class="ff">
+              <label for="empName" class="ff-label">Full Name <span class="required-mark">*</span></label>
+              <input id="empName" type="text" pInputText formControlName="name" class="w-full" placeholder="Full Name" />
+              @if (editForm.get('name')?.invalid && editForm.get('name')?.touched) {
+                <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Name is required</div>
+              }
+            </div>
+          </div>
+
+          <!-- Official Email -->
+          <div class="col-12 col-sm-6">
+            <div class="ff">
+              <label for="empEmail" class="ff-label">Corporate Email <span class="required-mark">*</span></label>
+              <input id="empEmail" type="email" pInputText formControlName="email" class="w-full" placeholder="john.doe@company.com" />
+              @if (editForm.get('email')?.invalid && editForm.get('email')?.touched) {
+                <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Valid corporate email required</div>
+              }
+            </div>
+          </div>
+
+          <!-- Phone Number -->
+          <div class="col-12 col-sm-6">
+            <div class="ff">
+              <label for="empPhone" class="ff-label">Phone Number <span class="required-mark">*</span></label>
+              <input id="empPhone" type="text" pInputText formControlName="phone" class="w-full" placeholder="10-digit mobile number" />
+              @if (editForm.get('phone')?.invalid && editForm.get('phone')?.touched) {
+                <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Phone number is required</div>
+              }
+            </div>
+          </div>
+
+          <!-- Emergency Contact -->
+          <div class="col-12 col-sm-6">
+            <div class="ff">
+              <label for="empEmergency" class="ff-label">Emergency Contact <span class="optional-mark">(Optional)</span></label>
+              <input id="empEmergency" type="text" pInputText formControlName="emergencyContact" class="w-full" placeholder="Emergency contact number" />
+            </div>
+          </div>
+
+          <!-- Gender -->
+          <div class="col-12 col-sm-6">
+            <div class="ff">
+              <label for="empGender" class="ff-label">Gender</label>
+              <p-select id="empGender" [options]="genderOptions" optionLabel="label" optionValue="value" formControlName="gender" appendTo="body" styleClass="w-full"></p-select>
+            </div>
+          </div>
+
+          <!-- PAN Number -->
+          <div class="col-12 col-sm-6">
+            <div class="ff">
+              <label for="empPan" class="ff-label">PAN Number</label>
+              <input id="empPan" type="text" pInputText formControlName="panNo" class="w-full" placeholder="ABCDE1234F" />
+            </div>
+          </div>
+
+          <!-- Residential Address -->
+          <div class="col-12">
+            <div class="ff">
+              <label for="empAddress" class="ff-label">Residential Address <span class="required-mark">*</span></label>
+              <input id="empAddress" type="text" pInputText formControlName="address" class="w-full" placeholder="Flat, Street, City, State, PIN" />
+              @if (editForm.get('address')?.invalid && editForm.get('address')?.touched) {
+                <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Address is required</div>
+              }
+            </div>
+          </div>
+
+          <!-- Bank Name -->
+          <div class="col-12 col-sm-4">
+            <div class="ff">
+              <label for="empBank" class="ff-label">Bank Name</label>
+              <input id="empBank" type="text" pInputText formControlName="bankName" class="w-full" placeholder="e.g. SBI" />
+            </div>
+          </div>
+
+          <!-- Account Number -->
+          <div class="col-12 col-sm-4">
+            <div class="ff">
+              <label for="empAccNo" class="ff-label">Account Number</label>
+              <input id="empAccNo" type="text" pInputText formControlName="bankAccountNo" class="w-full" placeholder="Account Number" />
+            </div>
+          </div>
+
+          <!-- IFSC Code -->
+          <div class="col-12 col-sm-4">
+            <div class="ff">
+              <label for="empIfsc" class="ff-label">IFSC Code</label>
+              <input id="empIfsc" type="text" pInputText formControlName="ifscCode" class="w-full" placeholder="SBIN0001234" />
+            </div>
+          </div>
+        </div>
+
+        <div class="dialog-footer-actions">
+          <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="showEditModal.set(false)"></p-button>
+          <p-button type="submit" label="Update Profile" icon="pi pi-check" [loading]="isSaving()"></p-button>
+        </div>
+      </form>
+    </p-dialog>
 
     <!-- Profile Overview Card -->
     <div class="profile-hero-card">
@@ -36,7 +136,17 @@
           </div>
         </div>
       </div>
+      <div class="hero-right">
+        <p-button
+          *appHasPermission="'employee:edit'"
+          label="Edit Profile"
+          icon="pi pi-user-edit"
+          size="small"
+          (onClick)="openEditModal()"
+        ></p-button>
+      </div>
     </div>
+
 
     <!-- 360 Information Tabs -->
     <div class="tabs-container">

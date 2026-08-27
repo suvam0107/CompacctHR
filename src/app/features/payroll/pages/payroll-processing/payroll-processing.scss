@@ -1,106 +1,102 @@
 // src/app/features/payroll/pages/payroll-processing/payroll-processing.scss
+@use '../../../../../../theme/variables' as *;
+
 .payroll-processing-page {
-  .run-card {
-    background: var(--color-surface, #FFFFFF);
-    border: 1px solid var(--color-border, #E3E8EF);
-    border-radius: var(--radius-md, 8px);
-    padding: 1.5rem 2rem;
-    box-shadow: var(--shadow-sm, 0 1px 2px rgba(16, 24, 40, 0.06));
-    max-width: 720px;
+  .payroll-card-wrapper {
+    max-width: 820px;
+  }
 
-    .card-header {
+  .payroll-run-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border-subtle);
+    border-top: 4px solid var(--color-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-6);
+
+    @media (max-width: 576px) {
+      padding: var(--space-4);
+    }
+  }
+
+  .card-hero-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    padding-bottom: var(--space-4);
+    margin-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border-subtle);
+
+    .hero-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      background-color: var(--color-primary-container);
+      color: var(--color-primary);
       display: flex;
       align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
 
-      .header-icon {
-        width: 44px;
-        height: 44px;
-        border-radius: var(--radius-sm, 4px);
-        background: var(--color-primary-tint, #EAF2FB);
-        color: var(--color-primary, #14539A);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.25rem;
-      }
+    .hero-text {
+      flex: 1;
 
-      .card-title {
-        font-size: 1rem;
-        font-weight: 600;
-        color: var(--color-text, #1F2937);
-        margin: 0 0 0.25rem 0;
-      }
-
-      .card-desc {
-        font-size: 0.8125rem;
-        color: var(--color-text-muted, #6B7280);
+      .hero-title {
+        font-size: clamp(1.125rem, 2.5vw, 1.25rem);
+        font-weight: 700;
+        color: var(--color-text);
         margin: 0;
+        letter-spacing: -0.01em;
+      }
+
+      .hero-desc {
+        font-size: var(--fs-label-md);
+        color: var(--color-text-muted);
+        margin: var(--space-1) 0 0 0;
+        line-height: 1.4;
       }
     }
 
-    .success-banner {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.875rem 1rem;
-      background-color: #ECFDF5;
-      border: 1px solid #A7F3D0;
-      border-radius: var(--radius-sm, 4px);
-      color: #065F46;
-      margin-bottom: 1.25rem;
+    @media (max-width: 576px) {
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+  }
 
-      .pi {
-        font-size: 1.25rem;
-        color: var(--color-success, #1E8E5A);
-      }
+  .info-notice-box {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--color-surface-container);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    .notice-icon {
+      color: var(--color-primary);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 2px;
     }
 
-    .error-banner {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1rem;
-      background-color: #FEF2F2;
-      border: 1px solid #FCA5A5;
-      border-radius: var(--radius-sm, 4px);
-      color: var(--color-danger, #C0362C);
-      font-size: 0.8125rem;
-      margin-bottom: 1.25rem;
-    }
+    .notice-text {
+      font-size: var(--fs-label-sm);
+      color: var(--color-text-muted);
+      line-height: 1.5;
 
-    .run-form {
-      .form-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1.25rem;
-
-        .form-group {
-          display: flex;
-          flex-direction: column;
-          gap: 0.375rem;
-
-          label {
-            font-size: 0.8125rem;
-            font-weight: 500;
-            color: var(--color-text, #1F2937);
-          }
-
-          ::ng-deep .p-select {
-            height: 38px;
-            font-size: 0.875rem;
-          }
-        }
-      }
-
-      .form-footer {
-        display: flex;
-        justify-content: flex-end;
-        padding-top: 1.5rem;
-        margin-top: 1.5rem;
-        border-top: 1px solid var(--color-border, #E3E8EF);
+      strong {
+        color: var(--color-text);
       }
     }
   }
+
+  ::ng-deep .payroll-submit-btn {
+    height: 42px;
+    font-weight: 600;
+    padding-left: var(--space-5) !important;
+    padding-right: var(--space-5) !important;
+  }
 }
+

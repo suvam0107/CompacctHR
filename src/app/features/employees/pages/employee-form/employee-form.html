@@ -2,183 +2,275 @@
   <app-page-header
     [title]="isEditMode() ? 'Edit Employee Profile' : 'Add New Employee'"
   >
-    <div actions class="header-actions">
-      <a routerLink="/employees">
-        <p-button label="Cancel" icon="pi pi-times" [outlined]="true" severity="secondary" size="small"></p-button>
-      </a>
-    </div>
+    <a routerLink="/employees">
+      <p-button label="Cancel" icon="pi pi-times" [outlined]="true" severity="secondary" size="small"></p-button>
+    </a>
   </app-page-header>
 
-  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="form-card">
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="form-card-surface" novalidate>
+
     @if (errorMessage()) {
-      <div class="error-banner">
+      <div class="status-banner status-banner--error mb-4">
         <i class="pi pi-exclamation-circle"></i>
         <span>{{ errorMessage() }}</span>
       </div>
     }
 
-    <!-- Personal Info Section -->
-    <div class="form-section">
-      <h3 class="section-title"><i class="pi pi-user"></i> Personal Information</h3>
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="employeeCode">Employee Code *</label>
-          <input id="employeeCode" type="text" pInputText formControlName="employeeCode" placeholder="e.g. EMP-016" class="w-full"
-            [class.ng-invalid]="employeeForm.get('employeeCode')?.invalid && employeeForm.get('employeeCode')?.touched" />
-          @if (employeeForm.get('employeeCode')?.invalid && employeeForm.get('employeeCode')?.touched) {
-            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Employee code is required</div>
-          }
+    <!-- ── Section 1: Personal Information ───────────────────────────────── -->
+    <div class="form-section-block">
+      <div class="form-section-hdr">
+        <div class="section-icon-pill"><i class="pi pi-user"></i></div>
+        <div class="section-hdr-text">
+          <span class="section-hdr-title">Personal Information</span>
+          <span class="section-hdr-desc">Basic personal and contact details</span>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <!-- Employee Code -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="ff">
+            <label for="employeeCode" class="ff-label">Employee Code <span class="required-mark">*</span></label>
+            <input id="employeeCode" type="text" pInputText formControlName="employeeCode"
+              placeholder="e.g. EMP-016" class="w-full"
+              [class.ng-invalid]="employeeForm.get('employeeCode')?.invalid && employeeForm.get('employeeCode')?.touched" />
+            @if (employeeForm.get('employeeCode')?.invalid && employeeForm.get('employeeCode')?.touched) {
+              <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Employee code is required</div>
+            }
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="name">Full Name *</label>
-          <input id="name" type="text" pInputText formControlName="name" placeholder="John Doe" class="w-full"
-            [class.ng-invalid]="employeeForm.get('name')?.invalid && employeeForm.get('name')?.touched" />
-          @if (employeeForm.get('name')?.invalid && employeeForm.get('name')?.touched) {
-            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Full name is required</div>
-          }
+        <!-- Full Name -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="ff">
+            <label for="name" class="ff-label">Full Name <span class="required-mark">*</span></label>
+            <input id="name" type="text" pInputText formControlName="name"
+              placeholder="e.g. Priya Sharma" class="w-full"
+              [class.ng-invalid]="employeeForm.get('name')?.invalid && employeeForm.get('name')?.touched" />
+            @if (employeeForm.get('name')?.invalid && employeeForm.get('name')?.touched) {
+              <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Full name is required</div>
+            }
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="email">Corporate Email *</label>
-          <input id="email" type="email" pInputText formControlName="email" placeholder="john.doe@compacct.in" class="w-full"
-            [class.ng-invalid]="employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched" />
-          @if (employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched) {
-            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Valid corporate email is required</div>
-          }
+        <!-- Corporate Email -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="ff">
+            <label for="email" class="ff-label">Corporate Email <span class="required-mark">*</span></label>
+            <input id="email" type="email" pInputText formControlName="email"
+              placeholder="priya.sharma@compacct.in" class="w-full"
+              [class.ng-invalid]="employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched" />
+            @if (employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched) {
+              <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Valid corporate email is required</div>
+            }
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="phone">Phone Number *</label>
-          <input id="phone" type="text" pInputText formControlName="phone" placeholder="10-digit mobile number" class="w-full"
-            [class.ng-invalid]="employeeForm.get('phone')?.invalid && employeeForm.get('phone')?.touched" />
-          @if (employeeForm.get('phone')?.invalid && employeeForm.get('phone')?.touched) {
-            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Valid 10-digit Indian mobile number required</div>
-          }
+        <!-- Phone -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="ff">
+            <label for="phone" class="ff-label">Phone Number <span class="required-mark">*</span></label>
+            <input id="phone" type="text" pInputText formControlName="phone"
+              placeholder="10-digit mobile number" class="w-full"
+              [class.ng-invalid]="employeeForm.get('phone')?.invalid && employeeForm.get('phone')?.touched" />
+            @if (employeeForm.get('phone')?.invalid && employeeForm.get('phone')?.touched) {
+              <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Valid 10-digit mobile number required</div>
+            }
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="emergencyContact">Emergency Contact</label>
-          <input id="emergencyContact" type="text" pInputText formControlName="emergencyContact" placeholder="Emergency contact number" class="w-full"
-            [class.ng-invalid]="employeeForm.get('emergencyContact')?.invalid && employeeForm.get('emergencyContact')?.touched" />
-          @if (employeeForm.get('emergencyContact')?.invalid && employeeForm.get('emergencyContact')?.touched) {
-            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Valid 10-digit number required</div>
-          }
+        <!-- Emergency Contact -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="ff">
+            <label for="emergencyContact" class="ff-label">Emergency Contact</label>
+            <input id="emergencyContact" type="text" pInputText formControlName="emergencyContact"
+              placeholder="Emergency contact number" class="w-full"
+              [class.ng-invalid]="employeeForm.get('emergencyContact')?.invalid && employeeForm.get('emergencyContact')?.touched" />
+            @if (employeeForm.get('emergencyContact')?.invalid && employeeForm.get('emergencyContact')?.touched) {
+              <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Valid 10-digit number required</div>
+            }
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="dob">Date of Birth *</label>
-          <p-datepicker id="dob" formControlName="dob" [showIcon]="true" iconDisplay="input" dateFormat="dd M yy" appendTo="body" styleClass="w-full"
-            [class.ng-invalid]="employeeForm.get('dob')?.invalid && employeeForm.get('dob')?.touched"></p-datepicker>
-          @if (employeeForm.get('dob')?.invalid && employeeForm.get('dob')?.touched) {
-            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Date of birth is required</div>
-          }
+        <!-- Date of Birth -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="ff">
+            <label for="dob" class="ff-label">Date of Birth <span class="required-mark">*</span></label>
+            <p-datepicker id="dob" formControlName="dob" [showIcon]="true" iconDisplay="input"
+              dateFormat="dd M yy" appendTo="body" styleClass="w-full"
+              [class.ng-invalid]="employeeForm.get('dob')?.invalid && employeeForm.get('dob')?.touched"></p-datepicker>
+            @if (employeeForm.get('dob')?.invalid && employeeForm.get('dob')?.touched) {
+              <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Date of birth is required</div>
+            }
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="gender">Gender *</label>
-          <p-select id="gender" [options]="genderOptions" optionLabel="label" optionValue="value" formControlName="gender" appendTo="body" styleClass="w-full"></p-select>
+        <!-- Gender -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="ff">
+            <label for="gender" class="ff-label">Gender <span class="required-mark">*</span></label>
+            <p-select id="gender" [options]="genderOptions" optionLabel="label" optionValue="value"
+              formControlName="gender" appendTo="body" styleClass="w-full"></p-select>
+          </div>
         </div>
 
-        <div class="form-group full-width">
-          <label for="address">Residential Address *</label>
-          <input id="address" type="text" pInputText formControlName="address" placeholder="Flat, Street, City, State, PIN" class="w-full"
-            [class.ng-invalid]="employeeForm.get('address')?.invalid && employeeForm.get('address')?.touched" />
-          @if (employeeForm.get('address')?.invalid && employeeForm.get('address')?.touched) {
-            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Residential address is required</div>
-          }
+        <!-- Residential Address (full width) -->
+        <div class="col-12">
+          <div class="ff">
+            <label for="address" class="ff-label">Residential Address <span class="required-mark">*</span></label>
+            <input id="address" type="text" pInputText formControlName="address"
+              placeholder="Flat, Street, City, State, PIN" class="w-full"
+              [class.ng-invalid]="employeeForm.get('address')?.invalid && employeeForm.get('address')?.touched" />
+            @if (employeeForm.get('address')?.invalid && employeeForm.get('address')?.touched) {
+              <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Residential address is required</div>
+            }
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Job & Employment Details Section -->
-    <div class="form-section">
-      <h3 class="section-title"><i class="pi pi-briefcase"></i> Job & Position</h3>
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="departmentId">Department *</label>
-          <p-select id="departmentId" [options]="departmentOptions()" optionLabel="name" optionValue="id" formControlName="departmentId" placeholder="Select Department" appendTo="body" styleClass="w-full"
-            [class.ng-invalid]="employeeForm.get('departmentId')?.invalid && employeeForm.get('departmentId')?.touched"></p-select>
-          @if (employeeForm.get('departmentId')?.invalid && employeeForm.get('departmentId')?.touched) {
-            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Department selection is required</div>
-          }
+    <!-- ── Section 2: Job & Position ─────────────────────────────────────── -->
+    <div class="form-section-block">
+      <div class="form-section-hdr">
+        <div class="section-icon-pill"><i class="pi pi-briefcase"></i></div>
+        <div class="section-hdr-text">
+          <span class="section-hdr-title">Job &amp; Position</span>
+          <span class="section-hdr-desc">Employment role and organizational placement</span>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <!-- Department -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="ff">
+            <label for="departmentId" class="ff-label">Department <span class="required-mark">*</span></label>
+            <p-select id="departmentId" [options]="departmentOptions()" optionLabel="name" optionValue="id"
+              formControlName="departmentId" placeholder="Select Department" appendTo="body" styleClass="w-full"
+              [class.ng-invalid]="employeeForm.get('departmentId')?.invalid && employeeForm.get('departmentId')?.touched"></p-select>
+            @if (employeeForm.get('departmentId')?.invalid && employeeForm.get('departmentId')?.touched) {
+              <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Department selection is required</div>
+            }
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="designationId">Designation *</label>
-          <p-select id="designationId" [options]="designationOptions()" optionLabel="title" optionValue="id" formControlName="designationId" placeholder="Select Designation" appendTo="body" styleClass="w-full"
-            [class.ng-invalid]="employeeForm.get('designationId')?.invalid && employeeForm.get('designationId')?.touched"></p-select>
-          @if (employeeForm.get('designationId')?.invalid && employeeForm.get('designationId')?.touched) {
-            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Designation selection is required</div>
-          }
+        <!-- Designation -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="ff">
+            <label for="designationId" class="ff-label">Designation <span class="required-mark">*</span></label>
+            <p-select id="designationId" [options]="designationOptions()" optionLabel="title" optionValue="id"
+              formControlName="designationId" placeholder="Select Designation" appendTo="body" styleClass="w-full"
+              [class.ng-invalid]="employeeForm.get('designationId')?.invalid && employeeForm.get('designationId')?.touched"></p-select>
+            @if (employeeForm.get('designationId')?.invalid && employeeForm.get('designationId')?.touched) {
+              <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Designation selection is required</div>
+            }
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="joinDate">Date of Joining *</label>
-          <p-datepicker id="joinDate" formControlName="joinDate" [showIcon]="true" iconDisplay="input" dateFormat="dd M yy" appendTo="body" styleClass="w-full"
-            [class.ng-invalid]="employeeForm.get('joinDate')?.invalid && employeeForm.get('joinDate')?.touched"></p-datepicker>
-          @if (employeeForm.get('joinDate')?.invalid && employeeForm.get('joinDate')?.touched) {
-            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Date of joining is required</div>
-          }
+        <!-- Date of Joining -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="ff">
+            <label for="joinDate" class="ff-label">Date of Joining <span class="required-mark">*</span></label>
+            <p-datepicker id="joinDate" formControlName="joinDate" [showIcon]="true" iconDisplay="input"
+              dateFormat="dd M yy" appendTo="body" styleClass="w-full"
+              [class.ng-invalid]="employeeForm.get('joinDate')?.invalid && employeeForm.get('joinDate')?.touched"></p-datepicker>
+            @if (employeeForm.get('joinDate')?.invalid && employeeForm.get('joinDate')?.touched) {
+              <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Date of joining is required</div>
+            }
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="employmentType">Employment Type *</label>
-          <p-select id="employmentType" [options]="employmentTypeOptions" optionLabel="label" optionValue="value" formControlName="employmentType" styleClass="w-full"></p-select>
+        <!-- Employment Type -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="ff">
+            <label for="employmentType" class="ff-label">Employment Type <span class="required-mark">*</span></label>
+            <p-select id="employmentType" [options]="employmentTypeOptions" optionLabel="label" optionValue="value"
+              formControlName="employmentType" styleClass="w-full"></p-select>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="status">Employment Status *</label>
-          <p-select id="status" [options]="statusOptions" optionLabel="label" optionValue="value" formControlName="status" styleClass="w-full"></p-select>
+        <!-- Status -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="ff">
+            <label for="status" class="ff-label">Employment Status <span class="required-mark">*</span></label>
+            <p-select id="status" [options]="statusOptions" optionLabel="label" optionValue="value"
+              formControlName="status" styleClass="w-full"></p-select>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="ctc">Annual CTC (INR) *</label>
-          <input id="ctc" type="number" pInputText formControlName="ctc" placeholder="e.g. 750000" class="w-full"
-            [class.ng-invalid]="employeeForm.get('ctc')?.invalid && employeeForm.get('ctc')?.touched" />
-          @if (employeeForm.get('ctc')?.invalid && employeeForm.get('ctc')?.touched) {
-            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Valid non-negative CTC is required</div>
-          }
+        <!-- Annual CTC -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="ff">
+            <label for="ctc" class="ff-label">Annual CTC (INR) <span class="required-mark">*</span></label>
+            <input id="ctc" type="number" pInputText formControlName="ctc"
+              placeholder="e.g. 750000" class="w-full"
+              [class.ng-invalid]="employeeForm.get('ctc')?.invalid && employeeForm.get('ctc')?.touched" />
+            @if (employeeForm.get('ctc')?.invalid && employeeForm.get('ctc')?.touched) {
+              <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Valid non-negative CTC is required</div>
+            }
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Banking & Statutory Details Section -->
-    <div class="form-section">
-      <h3 class="section-title"><i class="pi pi-wallet"></i> Banking & Financial Details</h3>
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="panNo">PAN Number</label>
-          <input id="panNo" type="text" pInputText formControlName="panNo" placeholder="ABCDE1234F" class="w-full"
-            [class.ng-invalid]="employeeForm.get('panNo')?.invalid && employeeForm.get('panNo')?.touched" />
-          @if (employeeForm.get('panNo')?.invalid && employeeForm.get('panNo')?.touched) {
-            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Invalid PAN format (e.g. ABCDE1234F)</div>
-          }
+    <!-- ── Section 3: Banking & Financial Details ─────────────────────────── -->
+    <div class="form-section-block">
+      <div class="form-section-hdr">
+        <div class="section-icon-pill"><i class="pi pi-wallet"></i></div>
+        <div class="section-hdr-text">
+          <span class="section-hdr-title">Banking &amp; Financial Details</span>
+          <span class="section-hdr-desc">Salary disbursement and statutory information</span>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <!-- PAN -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="ff">
+            <label for="panNo" class="ff-label">PAN Number</label>
+            <input id="panNo" type="text" pInputText formControlName="panNo"
+              placeholder="ABCDE1234F" class="w-full"
+              [class.ng-invalid]="employeeForm.get('panNo')?.invalid && employeeForm.get('panNo')?.touched" />
+            @if (employeeForm.get('panNo')?.invalid && employeeForm.get('panNo')?.touched) {
+              <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Invalid PAN format (e.g. ABCDE1234F)</div>
+            }
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="bankName">Bank Name</label>
-          <input id="bankName" type="text" pInputText formControlName="bankName" placeholder="e.g. State Bank of India" class="w-full" />
+        <!-- Bank Name -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="ff">
+            <label for="bankName" class="ff-label">Bank Name</label>
+            <input id="bankName" type="text" pInputText formControlName="bankName"
+              placeholder="e.g. State Bank of India" class="w-full" />
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="bankAccountNo">Account Number</label>
-          <input id="bankAccountNo" type="text" pInputText formControlName="bankAccountNo" placeholder="Account Number" class="w-full" />
+        <!-- Account Number -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="ff">
+            <label for="bankAccountNo" class="ff-label">Account Number</label>
+            <input id="bankAccountNo" type="text" pInputText formControlName="bankAccountNo"
+              placeholder="Account Number" class="w-full" />
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="ifscCode">IFSC Code</label>
-          <input id="ifscCode" type="text" pInputText formControlName="ifscCode" placeholder="e.g. SBIN0001234" class="w-full"
-            [class.ng-invalid]="employeeForm.get('ifscCode')?.invalid && employeeForm.get('ifscCode')?.touched" />
-          @if (employeeForm.get('ifscCode')?.invalid && employeeForm.get('ifscCode')?.touched) {
-            <div class="form-error-msg"><i class="pi pi-exclamation-triangle"></i> Invalid IFSC format (e.g. SBIN0001234)</div>
-          }
+        <!-- IFSC Code -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="ff">
+            <label for="ifscCode" class="ff-label">IFSC Code</label>
+            <input id="ifscCode" type="text" pInputText formControlName="ifscCode"
+              placeholder="e.g. SBIN0001234" class="w-full"
+              [class.ng-invalid]="employeeForm.get('ifscCode')?.invalid && employeeForm.get('ifscCode')?.touched" />
+            @if (employeeForm.get('ifscCode')?.invalid && employeeForm.get('ifscCode')?.touched) {
+              <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Invalid IFSC format (e.g. SBIN0001234)</div>
+            }
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Form Footer Actions -->
-    <div class="form-footer">
+    <!-- ── Form Footer ─────────────────────────────────────────────────────── -->
+    <div class="form-footer-actions">
       <a routerLink="/employees">
         <p-button label="Cancel" [text]="true" severity="secondary" size="small"></p-button>
       </a>
@@ -187,8 +279,8 @@
         [label]="isEditMode() ? 'Update Employee' : 'Save Employee'"
         icon="pi pi-check"
         [loading]="isSubmitting()"
-        size="small"
       ></p-button>
     </div>
   </form>
 </div>
+

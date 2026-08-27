@@ -13,6 +13,11 @@
     padding: 1.5rem;
     margin-bottom: 1.5rem;
     box-shadow: var(--shadow-sm, 0 1px 2px rgba(16, 24, 40, 0.06));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
 
     .hero-left {
       display: flex;
@@ -62,6 +67,12 @@
           }
         }
       }
+    }
+
+    .hero-right {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
     }
   }
 

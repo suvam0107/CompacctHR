@@ -97,18 +97,44 @@ textarea.ng-invalid.ng-touched,
   padding: var(--space-4) var(--space-6);
 }
 
-// ── Button contrast fixes — outlined & secondary must not look disabled ───────
-// PrimeNG's default outlined secondary buttons are too pale; boost them so they
-// look clearly interactive rather than dimmed/disabled.
+// ── Button contrast fixes & unified typography (Reference: Add Employee button) ──
+.p-button,
+.btn {
+  font-family: inherit !important;
+  font-size: 0.8125rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em !important;
+  line-height: 1.25 !important;
+  border-radius: var(--radius-sm, 6px) !important;
+  transition: background-color 120ms ease-out, border-color 120ms ease-out, color 120ms ease-out, box-shadow 120ms ease-out !important;
+  padding-top: var(--space-2) !important;
+  padding-bottom: var(--space-2) !important;
 
-// Outlined primary buttons
-.p-button.p-button-outlined:not(.p-button-secondary):not(.p-button-danger):not(.p-button-success):not(.p-button-warning) {
+  .pi, i {
+    font-size: 0.875rem !important;
+  }
+}
+
+// Outlined primary buttons (consistent primary color accent)
+.p-button.p-button-outlined:not(.p-button-secondary):not(.p-button-danger):not(.p-button-success):not(.p-button-warning),
+.btn-outline-primary {
   border-color: var(--color-primary) !important;
   color: var(--color-primary) !important;
+  background: transparent !important;
 
   &:hover:not(:disabled) {
     background: var(--color-primary-tint) !important;
     border-color: var(--color-primary-hover) !important;
+    color: var(--color-primary-hover) !important;
+  }
+}
+
+// Text primary buttons
+.p-button.p-button-text:not(.p-button-secondary):not(.p-button-danger):not(.p-button-success):not(.p-button-warning) {
+  color: var(--color-primary) !important;
+
+  &:hover:not(:disabled) {
+    background: var(--color-primary-tint) !important;
     color: var(--color-primary-hover) !important;
   }
 }
@@ -137,6 +163,15 @@ textarea.ng-invalid.ng-touched,
   }
 }
 
+@media (max-width: 576px) {
+  .p-button, .btn {
+    font-size: 0.8125rem !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+}
+
+
 // ── DatePicker & Select Overlay Panel Rules ────────────────────────────────────
 // Ensures calendar panels and dropdown popups are never squashed by parent heights
 // and float cleanly above all container boundaries.
@@ -154,5 +189,225 @@ textarea.ng-invalid.ng-touched,
   min-width: 290px;
 }
 
+// ── Global Responsive Typography & Icon Utilities ──────────────────────────────
+.icon-responsive {
+  font-size: clamp(1rem, 4vw, 1.5rem);
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: var(--fs-body-md);
+  }
+
+  .content-area {
+    padding: var(--space-3) !important;
+  }
+
+  /* Make forms fit mobile screens gracefully */
+  form, .form-container {
+    width: 100%;
+  }
+
+  /* Ensure dialogs/modals span full width on small mobile screens */
+  .p-dialog {
+    width: 95vw !important;
+    max-width: 95vw !important;
+    margin: 0 auto;
+  }
+}
 
 
+// ─────────────────────────────────────────────────────────────────────────────
+// GLOBAL FORM DESIGN SYSTEM
+// All forms use these shared primitives. Override per-component only if needed.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ── Form Field (label + control + error wrapper) ──────────────────────────────
+.ff {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ff-label {
+  font-size: var(--fs-label-md);
+  font-weight: var(--fw-label);
+  color: var(--color-text);
+  line-height: var(--lh-label-md);
+  letter-spacing: var(--ls-label-md);
+
+  .required-mark {
+    color: var(--color-danger);
+    margin-left: 2px;
+  }
+}
+
+.ff-error {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--color-danger);
+  font-size: var(--fs-label-sm);
+  font-weight: 500;
+  line-height: var(--lh-label-sm);
+  margin-top: 2px;
+
+  i { font-size: 0.75rem; flex-shrink: 0; }
+}
+
+// ── Input with leading icon wrapper ──────────────────────────────────────────
+.ff-icon-wrap {
+  position: relative;
+
+  .ff-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .p-inputtext,
+  input.p-inputtext {
+    padding-left: 36px !important;
+  }
+}
+
+// ── Form Section Header (icon pill + title row) ───────────────────────────────
+.form-section-hdr {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-primary-container);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-4);
+
+  .section-icon-pill {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .section-hdr-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+
+    .section-hdr-title {
+      font-size: var(--fs-h5);
+      font-weight: var(--fw-headline);
+      color: var(--color-text);
+      margin: 0;
+      line-height: var(--lh-h5);
+    }
+
+    .section-hdr-desc {
+      font-size: var(--fs-label-sm);
+      color: var(--color-text-muted);
+      margin: 0;
+      line-height: var(--lh-label-sm);
+    }
+  }
+}
+
+// ── Form Card (white elevated surface) ───────────────────────────────────────
+.form-card-surface {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-6);
+
+  @media (max-width: 576px) {
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+  }
+}
+
+// ── Form Section Divider ──────────────────────────────────────────────────────
+.form-section-block {
+  padding-bottom: var(--space-6);
+  margin-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-border-subtle);
+
+  &:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+}
+
+// ── Form Footer Actions ───────────────────────────────────────────────────────
+.form-footer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  margin-top: var(--space-4);
+  border-top: 1px solid var(--color-border-subtle);
+
+  @media (max-width: 576px) {
+    flex-direction: column-reverse;
+    align-items: stretch;
+
+    .p-button { width: 100%; justify-content: center; }
+  }
+}
+
+// ── Status Banner (success / error) ──────────────────────────────────────────
+.status-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-label-md);
+  margin-bottom: var(--space-4);
+
+  i { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+
+  &.status-banner--error {
+    background-color: color-mix(in srgb, var(--color-danger) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-danger) 30%, transparent);
+    color: var(--color-danger);
+  }
+
+  &.status-banner--success {
+    background-color: color-mix(in srgb, var(--color-success) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-success) 30%, transparent);
+    color: var(--color-success-muted);
+  }
+}
+
+// ── Dialog Form Styles ────────────────────────────────────────────────────────
+.dialog-form-body {
+  padding: var(--space-2) 0 var(--space-4) 0;
+}
+
+.dialog-footer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  margin-top: var(--space-2);
+  border-top: 1px solid var(--color-border-subtle);
+
+  @media (max-width: 480px) {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    .p-button { width: 100%; justify-content: center; }
+  }
+}

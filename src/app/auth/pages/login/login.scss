@@ -2,88 +2,72 @@
 
 .login-card {
   width: 100%;
-  max-width: 420px;
+  max-width: 440px;
   margin: 0 auto;
 }
 
+// ── Heading ───────────────────────────────────────────────────────────────────
 .login-header {
   margin-bottom: var(--space-6);
 
   h2 {
-    font-size: 1.5rem;
+    font-size: clamp(1.375rem, 3vw, 1.625rem);
     font-weight: 700;
     color: var(--color-text);
-    margin-bottom: var(--space-2);
+    margin: 0 0 var(--space-1) 0;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
   }
 }
 
-// Inline Error Alert Banner
-.alert-banner {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-3) var(--space-4);
-  background-color: color-mix(in srgb, var(--color-danger) 8%, transparent);
-  border: 1px solid var(--color-danger);
-  border-radius: var(--radius-sm);
+.login-tagline {
+  font-size: var(--fs-label-md);
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: var(--lh-label-md);
+}
+
+// ── Alert (inherits .status-banner from global styles.scss) ──────────────────
+.login-alert {
   margin-bottom: var(--space-4);
-
-  .alert-icon {
-    color: var(--color-danger);
-    font-size: 1rem;
-    flex-shrink: 0;
-  }
-
-  .alert-message {
-    color: var(--color-danger);
-    font-size: 0.85rem;
-    font-weight: 500;
-    line-height: 1.4;
-  }
 }
 
+// ── Form ─────────────────────────────────────────────────────────────────────
 .login-form {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-
-    .form-label {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--color-text);
-    }
-
-    .field-error {
-      color: var(--color-danger);
-      font-size: 0.75rem;
-      margin-top: 2px;
-    }
-  }
-
-  .submit-btn {
-    margin-top: var(--space-2);
-    font-weight: 600;
-    padding: var(--space-3) var(--space-4);
-  }
 }
 
+// Password field icon padding — the p-password wrapper needs the icon offset too
+::ng-deep .login-password-input .p-inputtext {
+  padding-left: 36px !important;
+}
+
+// ── Submit Button ─────────────────────────────────────────────────────────────
+.login-submit-btn {
+  margin-top: var(--space-2);
+  height: 44px;
+  font-size: var(--fs-body-md);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+// ── Support Link ──────────────────────────────────────────────────────────────
 .login-support {
   margin-top: var(--space-6);
   text-align: center;
-  font-size: 0.8125rem;
+  font-size: var(--fs-label-sm);
   color: var(--color-text-muted);
 
   .support-link {
     color: var(--color-primary);
     font-weight: 500;
+    text-decoration: none;
 
     &:hover {
       color: var(--color-primary-hover);
+      text-decoration: underline;
     }
   }
-}
+}

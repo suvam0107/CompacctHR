@@ -6,13 +6,12 @@ import { AppShellStore } from '../../core/state/app-shell.store';
 import { AuthStore } from '../../core/auth/auth.store';
 import { AuthService } from '../../core/auth/auth.service';
 import { NotificationService } from '../../core/state/notification.service';
-import { BreadcrumbComponent } from '../breadcrumb/breadcrumb';
 import { InitialsPipe } from '../../shared/pipes/initials.pipe';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule, BreadcrumbComponent, InitialsPipe],
+  imports: [CommonModule, RouterModule, InitialsPipe],
   templateUrl: './header.html',
   styleUrls: ['./header.scss']
 })

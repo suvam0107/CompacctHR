@@ -14,7 +14,6 @@
       <p-button
         label="Request Regularization"
         icon="pi pi-plus"
-        size="small"
         (onClick)="openApplyModal()"
       ></p-button>
     </ng-template>
@@ -54,32 +53,46 @@
     [visible]="showApplyDialog()"
     (visibleChange)="showApplyDialog.set($event)"
     [modal]="true"
-    [style]="{ width: '480px' }"
+    [style]="{ width: 'min(520px, 95vw)' }"
     [draggable]="false"
     [resizable]="false"
   >
-    <form [formGroup]="regForm" (ngSubmit)="onSubmitRegularization()" class="dialog-form">
-      <div class="form-group mb-3">
-        <label for="regDate" class="form-label fw-semibold text-sm">Attendance Date *</label>
-        <p-datepicker id="regDate" formControlName="date" [showIcon]="true" iconDisplay="input" dateFormat="dd M yy" appendTo="body" styleClass="w-full"></p-datepicker>
+    <form [formGroup]="regForm" (ngSubmit)="onSubmitRegularization()" class="dialog-form-body" novalidate>
+      <div class="row g-3">
+        <!-- Attendance Date -->
+        <div class="col-12">
+          <div class="ff">
+            <label for="regDate" class="ff-label">Attendance Date <span class="required-mark">*</span></label>
+            <p-datepicker id="regDate" formControlName="date" [showIcon]="true" iconDisplay="input"
+              dateFormat="dd M yy" appendTo="body" styleClass="w-full"></p-datepicker>
+          </div>
+        </div>
+
+        <!-- Correction Requested -->
+        <div class="col-12">
+          <div class="ff">
+            <label for="requestedStatus" class="ff-label">Correction Requested <span class="required-mark">*</span></label>
+            <p-select id="requestedStatus" [options]="statusOptions" optionLabel="label" optionValue="value"
+              formControlName="requestedStatus" appendTo="body" styleClass="w-full"></p-select>
+          </div>
+        </div>
+
+        <!-- Reason / Justification -->
+        <div class="col-12">
+          <div class="ff">
+            <label for="reason" class="ff-label">Reason / Justification <span class="required-mark">*</span></label>
+            <input id="reason" type="text" pInputText formControlName="reason"
+              placeholder="e.g. Biometric reader was unresponsive" class="w-full" />
+            @if (regForm.get('reason')?.invalid && regForm.get('reason')?.touched) {
+              <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Please provide a valid reason (min 5 characters)</div>
+            }
+          </div>
+        </div>
       </div>
 
-      <div class="form-group mb-3">
-        <label for="requestedStatus" class="form-label fw-semibold text-sm">Correction Requested *</label>
-        <p-select id="requestedStatus" [options]="statusOptions" optionLabel="label" optionValue="value" formControlName="requestedStatus" appendTo="body" styleClass="w-full"></p-select>
-      </div>
-
-      <div class="form-group mb-3">
-        <label for="reason" class="form-label fw-semibold text-sm">Reason / Justification *</label>
-        <input id="reason" type="text" pInputText formControlName="reason" placeholder="e.g. Biometric reader was unresponsive" class="w-full" />
-        @if (regForm.get('reason')?.invalid && regForm.get('reason')?.touched) {
-          <span class="error-text text-danger text-xs mt-1 d-block">Please provide a valid reason (min 5 characters)</span>
-        }
-      </div>
-
-      <div class="dialog-footer d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
-        <p-button label="Cancel" [text]="true" severity="secondary" size="small" (onClick)="showApplyDialog.set(false)"></p-button>
-        <p-button type="submit" label="Submit Request" icon="pi pi-send" [loading]="isSubmitting()" size="small"></p-button>
+      <div class="dialog-footer-actions">
+        <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="showApplyDialog.set(false)"></p-button>
+        <p-button type="submit" label="Submit Request" icon="pi pi-send" [loading]="isSubmitting()"></p-button>
       </div>
     </form>
   </p-dialog>
@@ -90,20 +103,20 @@
     [visible]="showActionDialog()"
     (visibleChange)="showActionDialog.set($event)"
     [modal]="true"
-    [style]="{ width: '450px' }"
+    [style]="{ width: 'min(480px, 95vw)' }"
     [draggable]="false"
     [resizable]="false"
   >
     @if (selectedRequest(); as req) {
-      <div class="action-dialog-body">
-        <p class="dialog-prompt mb-3 text-sm">
-          Are you sure you want to <strong>{{ actionType() }}</strong> the attendance regularization request for
-          <strong>{{ req.employeeName }}</strong> on <strong>{{ req.date | date:'dd MMM yyyy' }}</strong>
+      <div class="action-dialog-body dialog-form-body">
+        <p class="dialog-prompt mb-4" style="font-size: var(--fs-body-md); color: var(--color-text-muted); line-height: 1.6;">
+          Are you sure you want to <strong style="color: var(--color-text);">{{ actionType() }}</strong> the attendance regularization request for
+          <strong style="color: var(--color-text);">{{ req.employeeName }}</strong> on <strong style="color: var(--color-text);">{{ req.date | date:'dd MMM yyyy' }}</strong>
           (Status change: {{ req.originalStatus }} &rarr; {{ req.requestedStatus }})?
         </p>
 
-        <div class="form-group mb-3">
-          <label for="approverRemarks" class="form-label fw-semibold text-sm">Approver Remarks (Optional)</label>
+        <div class="ff">
+          <label for="approverRemarks" class="ff-label">Approver Remarks <span class="optional-mark">(Optional)</span></label>
           <input
             id="approverRemarks"
             type="text"
@@ -115,13 +128,12 @@
           />
         </div>
 
-        <div class="dialog-footer d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
-          <p-button label="Cancel" [text]="true" severity="secondary" size="small" (onClick)="showActionDialog.set(false)"></p-button>
+        <div class="dialog-footer-actions">
+          <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="showActionDialog.set(false)"></p-button>
           <p-button
             [label]="actionType() === 'approve' ? 'Confirm Approval' : 'Confirm Rejection'"
             [severity]="actionType() === 'approve' ? 'success' : 'danger'"
             [loading]="isProcessing()"
-            size="small"
             (onClick)="confirmApprovalAction()"
           ></p-button>
         </div>
@@ -129,3 +141,4 @@
     }
   </p-dialog>
 </div>
+

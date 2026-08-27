@@ -4,13 +4,14 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { DialogModule } from 'primeng/dialog';
+import { SelectModule } from 'primeng/select';
+import { DatePickerModule } from 'primeng/datepicker';
 import { PageHeader } from '../../../../shared/components/page-header/page-header';
 import { Avatar } from '../../../../shared/components/avatar/avatar';
 import { StatusBadge } from '../../../../shared/components/status-badge/status-badge';
 import { LoadingSkeleton } from '../../../../shared/components/loading-skeleton/loading-skeleton';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format.pipe';
-import { CurrencyPipe } from '../../../../shared/pipes/currency.pipe';
-import { FileSizePipe } from '../../../../shared/pipes/file-size.pipe';
 import { ProfileService } from '../../services/profile.service';
 
 @Component({
@@ -21,6 +22,9 @@ import { ProfileService } from '../../services/profile.service';
     ReactiveFormsModule,
     ButtonModule,
     InputTextModule,
+    DialogModule,
+    SelectModule,
+    DatePickerModule,
     PageHeader,
     Avatar,
     StatusBadge,
@@ -38,17 +42,39 @@ export class MyProfile implements OnInit {
   isSaving = signal<boolean>(false);
   saveSuccess = signal<boolean>(false);
 
+  genderOptions = [
+    { label: 'Male', value: 'Male' },
+    { label: 'Female', value: 'Female' },
+    { label: 'Other', value: 'Other' }
+  ];
+
   profileForm: FormGroup = this.fb.group({
+    name: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
     phone: ['', Validators.required],
-    address: ['', Validators.required]
+    emergencyContact: [''],
+    gender: ['Male'],
+    address: ['', Validators.required],
+    bankName: [''],
+    bankAccountNo: [''],
+    ifscCode: [''],
+    panNo: ['']
   });
 
   ngOnInit(): void {
     this.profileService.loadMyProfile().subscribe(data => {
       if (data) {
         this.profileForm.patchValue({
-          phone: data.personal.phone,
-          address: data.personal.address
+          name: data.personal.name || data.personal.empName || '',
+          email: data.personal.email || '',
+          phone: data.personal.phone || data.personal.mobileNumber || '',
+          emergencyContact: data.personal.emergencyContact || '',
+          gender: data.personal.gender || 'Male',
+          address: data.personal.address || '',
+          bankName: data.bankInfo?.bankName || '',
+          bankAccountNo: data.bankInfo?.bankAccountNo || '',
+          ifscCode: data.bankInfo?.ifscCode || '',
+          panNo: data.personal.panNo || ''
         });
       }
     });
@@ -76,3 +102,4 @@ export class MyProfile implements OnInit {
     });
   }
 }
+

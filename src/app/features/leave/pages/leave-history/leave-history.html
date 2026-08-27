@@ -14,7 +14,6 @@
       <p-button
         label="Apply Leave"
         icon="pi pi-plus"
-        size="small"
         (onClick)="openApplyModal()"
       ></p-button>
     </ng-template>
@@ -26,63 +25,73 @@
     [visible]="showApplyDialog()"
     (visibleChange)="showApplyDialog.set($event)"
     [modal]="true"
-    [style]="{ width: '640px' }"
+    [style]="{ width: 'min(660px, 95vw)' }"
     [draggable]="false"
     [resizable]="false"
   >
-    <!-- Live Balances Bar -->
-    @if (leaveService.balances(); as balancesList) {
-      <div class="row g-2 mb-3">
-        @for (b of balancesList; track b.code) {
-          <div class="col-md-4">
-            <app-leave-balance-card [balance]="b"></app-leave-balance-card>
-          </div>
-        }
-      </div>
-    }
-
     @if (errorMessage()) {
-      <div class="p-2 mb-3 bg-danger-subtle text-danger rounded text-sm d-flex align-items-center gap-2">
+      <div class="status-banner status-banner--error mb-3">
         <i class="pi pi-exclamation-circle"></i>
         <span>{{ errorMessage() }}</span>
       </div>
     }
 
-    <form [formGroup]="leaveForm" (ngSubmit)="onSubmitLeave()" class="dialog-form">
+    <form [formGroup]="leaveForm" (ngSubmit)="onSubmitLeave()" class="dialog-form-body" novalidate>
       <div class="row g-3">
+        <!-- Leave Type -->
         <div class="col-12">
-          <label for="leaveType" class="form-label fw-semibold text-sm">Leave Type *</label>
-          <p-select id="leaveType" [options]="leaveTypeOptions()" optionLabel="name" optionValue="id" formControlName="leaveTypeId" appendTo="body" styleClass="w-full"></p-select>
+          <div class="ff">
+            <label for="leaveType" class="ff-label">Leave Type <span class="required-mark">*</span></label>
+            <p-select id="leaveType" [options]="leaveTypeOptions()" optionLabel="name" optionValue="id"
+              formControlName="leaveTypeId" appendTo="body" styleClass="w-full"></p-select>
+          </div>
         </div>
 
-        <div class="col-md-6">
-          <label for="fromDate" class="form-label fw-semibold text-sm">From Date *</label>
-          <p-datepicker id="fromDate" formControlName="fromDate" [showIcon]="true" iconDisplay="input" dateFormat="dd M yy" appendTo="body" styleClass="w-full"></p-datepicker>
+        <!-- From Date -->
+        <div class="col-12 col-sm-6">
+          <div class="ff">
+            <label for="fromDate" class="ff-label">From Date <span class="required-mark">*</span></label>
+            <p-datepicker id="fromDate" formControlName="fromDate" [showIcon]="true" iconDisplay="input"
+              dateFormat="dd M yy" appendTo="body" styleClass="w-full"></p-datepicker>
+          </div>
         </div>
 
-        <div class="col-md-6">
-          <label for="toDate" class="form-label fw-semibold text-sm">To Date *</label>
-          <p-datepicker id="toDate" formControlName="toDate" [showIcon]="true" iconDisplay="input" dateFormat="dd M yy" appendTo="body" styleClass="w-full"></p-datepicker>
+        <!-- To Date -->
+        <div class="col-12 col-sm-6">
+          <div class="ff">
+            <label for="toDate" class="ff-label">To Date <span class="required-mark">*</span></label>
+            <p-datepicker id="toDate" formControlName="toDate" [showIcon]="true" iconDisplay="input"
+              dateFormat="dd M yy" appendTo="body" styleClass="w-full"></p-datepicker>
+          </div>
         </div>
 
+        <!-- Reason -->
         <div class="col-12">
-          <label for="reason" class="form-label fw-semibold text-sm">Reason for Leave *</label>
-          <input id="reason" type="text" pInputText formControlName="reason" placeholder="e.g. Family medical emergency" class="w-full" />
-          @if (leaveForm.get('reason')?.invalid && leaveForm.get('reason')?.touched) {
-            <span class="error-text text-danger text-xs mt-1 d-block">Reason is required (minimum 5 characters)</span>
-          }
+          <div class="ff">
+            <label for="reason" class="ff-label">Reason for Leave <span class="required-mark">*</span></label>
+            <input id="reason" type="text" pInputText formControlName="reason"
+              placeholder="e.g. Family medical emergency" class="w-full" />
+            @if (leaveForm.get('reason')?.invalid && leaveForm.get('reason')?.touched) {
+              <div class="ff-error"><i class="pi pi-exclamation-triangle"></i> Reason is required (minimum 5 characters)</div>
+            }
+          </div>
         </div>
 
+        <!-- Emergency Contact -->
         <div class="col-12">
-          <label for="emergencyContact" class="form-label fw-semibold text-sm">Emergency Contact (Optional)</label>
-          <input id="emergencyContact" type="text" pInputText formControlName="emergencyContact" placeholder="e.g. 9876543210" class="w-full" />
+          <div class="ff">
+            <label for="emergencyContact" class="ff-label">Emergency Contact <span class="optional-mark">(Optional)</span></label>
+            <input id="emergencyContact" type="text" pInputText formControlName="emergencyContact"
+              placeholder="e.g. 9876543210" class="w-full" />
+          </div>
         </div>
       </div>
 
-      <div class="dialog-footer d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
-        <p-button label="Cancel" [text]="true" severity="secondary" size="small" (onClick)="showApplyDialog.set(false)"></p-button>
-        <p-button type="submit" label="Submit Leave Application" icon="pi pi-send" [loading]="isSubmitting()" size="small"></p-button>
+      <div class="dialog-footer-actions">
+        <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="showApplyDialog.set(false)"></p-button>
+        <p-button type="submit" label="Submit Application" icon="pi pi-send" [loading]="isSubmitting()"></p-button>
       </div>
     </form>
   </p-dialog>
 </div>
+
