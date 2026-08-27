@@ -60,22 +60,7 @@
   }
 }
 
-.notification-badge {
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  background-color: var(--color-danger);
-  color: #ffffff;
-  font-size: 0.65rem;
-  font-weight: 700;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid var(--color-primary);
-}
+
 
 .user-profile-btn {
   background: transparent;

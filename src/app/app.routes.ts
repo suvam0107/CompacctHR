@@ -48,10 +48,6 @@ export const routes: Routes = [
         loadChildren: () => import('./features/profile/profile.routes').then(m => m.PROFILE_ROUTES)
       },
       {
-        path: 'notifications',
-        loadComponent: () => import('./features/notifications/notifications').then(m => m.Notifications)
-      },
-      {
         path: 'admin',
         canMatch: [permissionGuard('admin:access')],
         loadChildren: () => import('./features/admin/admin.routes').then(m => m.ADMIN_ROUTES)

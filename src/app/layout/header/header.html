@@ -13,16 +13,6 @@
 
 
   <div class="d-flex align-items-center gap-3">
-    <!-- Notification Bell -->
-    <div class="notification-wrapper position-relative">
-      <button type="button" class="btn-icon position-relative" aria-label="Notifications" routerLink="/notifications">
-        <i class="pi pi-bell"></i>
-        @if (unreadNotifications() > 0) {
-          <span class="notification-badge">{{ unreadNotifications() }}</span>
-        }
-      </button>
-    </div>
-
     <!-- User Profile Dropdown -->
     <div class="user-dropdown-wrapper position-relative">
       <button

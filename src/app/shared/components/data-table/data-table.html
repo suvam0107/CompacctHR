@@ -66,18 +66,17 @@
     <p-table
       #dt
       [columns]="columns"
-      [value]="value"
+      [value]="filteredValue()"
       [lazy]="lazy"
       (onLazyLoad)="onLazyLoad($event)"
       [paginator]="paginator"
       [rows]="rows"
-      [totalRecords]="totalRecords || value.length"
+      [totalRecords]="lazy ? totalRecords : filteredValue().length"
       [rowsPerPageOptions]="rowsPerPageOptions"
       [dataKey]="dataKey"
       [size]="size"
       [stripedRows]="stripedRows"
       [responsiveLayout]="responsiveLayout"
-      [globalFilterFields]="filterFieldNames"
       styleClass="p-datatable-gridlines custom-p-datatable"
     >
       <ng-template pTemplate="header">

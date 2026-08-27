@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AppShellStore } from '../../../../core/state/app-shell.store';
 import { PageHeader } from '../../../../shared/components/page-header/page-header';
-import { EmptyState } from '../../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-dashboard-home',
@@ -12,8 +11,7 @@ import { EmptyState } from '../../../../shared/components/empty-state/empty-stat
   imports: [
     CommonModule,
     RouterModule,
-    PageHeader,
-    EmptyState
+    PageHeader
   ],
   templateUrl: './dashboard-home.html',
   styleUrls: ['./dashboard-home.scss']

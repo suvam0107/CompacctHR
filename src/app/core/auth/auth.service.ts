@@ -9,7 +9,6 @@ import { AuthStore } from './auth.store';
 import { AuthLoginResponse, AuthSessionResponse } from './models/auth-response.model';
 import { getErrorMessage } from '../api/error-code-map';
 import { LookupCacheService } from '../state/lookup-cache.service';
-import { NotificationService } from '../state/notification.service';
 import { DashboardService } from '../../features/dashboard/services/dashboard.service';
 import { LeaveService } from '../../features/dashboard/services/leave.service';
 
@@ -20,7 +19,6 @@ export class AuthService {
   private router = inject(Router);
 
   private lookupCache = inject(LookupCacheService);
-  private notifService = inject(NotificationService);
   private dashboardService = inject(DashboardService);
   private leaveService = inject(LeaveService);
 
@@ -50,7 +48,6 @@ export class AuthService {
       tap(() => {
         // Trigger background prefetching for lookup & summary data
         this.lookupCache.warmUp().subscribe();
-        this.notifService.prefetchCount().subscribe();
         this.dashboardService.prefetchSummary().subscribe();
         this.leaveService.prefetchBalance().subscribe();
 

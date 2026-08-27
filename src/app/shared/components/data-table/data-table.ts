@@ -134,6 +134,56 @@ export class DataTable<T extends Record<string, unknown> = Record<string, unknow
   filterFieldNames: string[] = [];
   exportColumns: ExportColumn[] = [];
 
+  private searchableMap = new Map<T, string>();
+
+  // Formatted & Multi-word Filtered Table Rows
+  filteredValue = computed(() => {
+    const rawData = this._value();
+    if (!rawData || rawData.length === 0) return [];
+    if (this.lazy) return rawData;
+
+    const searchTerm = this.globalFilter().toLowerCase().trim();
+    const colFilters = this.activeFilters();
+    const hasGlobalSearch = searchTerm.length > 0;
+    const hasColFilters = Object.keys(colFilters).length > 0;
+
+    if (!hasGlobalSearch && !hasColFilters) {
+      return rawData;
+    }
+
+    const tokens = hasGlobalSearch ? searchTerm.split(/\s+/).filter(Boolean) : [];
+
+    return rawData.filter(row => {
+      // 1. Column Filter Match
+      if (hasColFilters) {
+        for (const [field, filterVal] of Object.entries(colFilters)) {
+          if (filterVal !== undefined && filterVal !== null && filterVal !== '') {
+            const rowVal = this.resolveFieldValue(row, field);
+            if (String(rowVal) !== String(filterVal)) {
+              return false;
+            }
+          }
+        }
+      }
+
+      // 2. Global Multi-Word & Formatted Date Search Match
+      if (hasGlobalSearch) {
+        let searchableText = this.searchableMap.get(row);
+        if (searchableText === undefined) {
+          searchableText = this.buildRowSearchableText(row);
+          this.searchableMap.set(row, searchableText);
+        }
+        for (const token of tokens) {
+          if (!searchableText.includes(token)) {
+            return false;
+          }
+        }
+      }
+
+      return true;
+    });
+  });
+
   hasRecords = computed(() => this._value().length > 0 || this._loading());
   isFiltered = computed(() => Object.keys(this.activeFilters()).length > 0 || !!this.globalFilter());
 
@@ -152,13 +202,135 @@ export class DataTable<T extends Record<string, unknown> = Record<string, unknow
       field: c.field,
       width: c.width
     }));
+    this.buildSearchableMap();
+  }
+
+  private buildSearchableMap(): void {
+    this.searchableMap.clear();
+    const rows = this._value();
+    if (!rows || rows.length === 0) return;
+
+    for (const row of rows) {
+      this.searchableMap.set(row, this.buildRowSearchableText(row));
+    }
+  }
+
+  private resolveFieldValue(row: Record<string, unknown>, field: string): unknown {
+    if (!field) return undefined;
+    if (!field.includes('.')) return row[field];
+    const parts = field.split('.');
+    let curr: unknown = row;
+    for (const p of parts) {
+      if (curr && typeof curr === 'object') {
+        curr = (curr as Record<string, unknown>)[p];
+      } else {
+        return undefined;
+      }
+    }
+    return curr;
+  }
+
+  private formatDateVariants(val: unknown): string[] {
+    if (!val) return [];
+    let d: Date | null = null;
+
+    if (val instanceof Date) {
+      d = val;
+    } else if (typeof val === 'number') {
+      d = new Date(val);
+    } else if (typeof val === 'string') {
+      const trimmed = val.trim();
+      if (!trimmed) return [];
+      if (trimmed.includes('-') || trimmed.includes('/') || trimmed.includes('T') || trimmed.includes(',')) {
+        const parsed = Date.parse(trimmed);
+        if (!isNaN(parsed)) {
+          d = new Date(parsed);
+        }
+      }
+    }
+
+    if (!d || isNaN(d.getTime())) return [];
+
+    const monthsShort = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+    const monthsFull = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+
+    const day = d.getDate();
+    const dayPadded = String(day).padStart(2, '0');
+    const monthIdx = d.getMonth();
+    const monthShort = monthsShort[monthIdx];
+    const monthFull = monthsFull[monthIdx];
+    const monthNum = monthIdx + 1;
+    const monthNumPadded = String(monthNum).padStart(2, '0');
+    const year = d.getFullYear();
+
+    return [
+      `${day} ${monthShort} ${year}`,
+      `${dayPadded} ${monthShort} ${year}`,
+      `${day} ${monthFull} ${year}`,
+      `${dayPadded} ${monthFull} ${year}`,
+      `${monthShort} ${day}`,
+      `${monthShort} ${dayPadded}`,
+      `${monthFull} ${day}`,
+      `${dayPadded}-${monthNumPadded}-${year}`,
+      `${dayPadded}/${monthNumPadded}/${year}`,
+      `${day}-${monthNum}-${year}`,
+      `${day}/${monthNum}/${year}`,
+      `${year}-${monthNumPadded}-${dayPadded}`,
+      `${dayPadded}-${monthShort}-${year}`,
+      `${dayPadded}/${monthShort}/${year}`
+    ];
+  }
+
+  private buildRowSearchableText(row: T): string {
+    const parts: string[] = [];
+
+    // 1. Inspect defined columns
+    for (const col of this.columns) {
+      const val = this.resolveFieldValue(row, col.field);
+      if (val === undefined || val === null) continue;
+
+      const strVal = String(val);
+      parts.push(strVal);
+
+      if (col.type === 'date' || (typeof val === 'string' && (val.includes('T') || /^\d{4}-\d{2}-\d{2}/.test(val)))) {
+        parts.push(...this.formatDateVariants(val));
+      }
+
+      if (col.type === 'currency' && typeof val === 'number') {
+        parts.push(`₹${val.toLocaleString('en-IN')}`);
+        parts.push(val.toLocaleString('en-IN'));
+      }
+    }
+
+    // 2. Also collect all root and nested primitive values
+    this.collectAllPrimitiveStrings(row, parts);
+
+    return parts.join(' ').toLowerCase();
+  }
+
+  private collectAllPrimitiveStrings(obj: unknown, parts: string[], depth = 0): void {
+    if (!obj || depth > 2) return;
+    if (typeof obj === 'string' || typeof obj === 'number' || typeof obj === 'boolean') {
+      parts.push(String(obj));
+      return;
+    }
+    if (typeof obj === 'object') {
+      for (const key of Object.keys(obj as Record<string, unknown>)) {
+        const val = (obj as Record<string, unknown>)[key];
+        if (typeof val === 'string' || typeof val === 'number') {
+          parts.push(String(val));
+          if (typeof val === 'string' && (val.includes('T') || /^\d{4}-\d{2}-\d{2}/.test(val))) {
+            parts.push(...this.formatDateVariants(val));
+          }
+        } else if (typeof val === 'object' && val !== null && !(val instanceof Date)) {
+          this.collectAllPrimitiveStrings(val, parts, depth + 1);
+        }
+      }
+    }
   }
 
   onSearch(term: string): void {
     this.globalFilter.set(term);
-    if (this.dtTable) {
-      this.dtTable.filterGlobal(term, 'contains');
-    }
     this.search.emit(term);
   }
 
@@ -167,9 +339,7 @@ export class DataTable<T extends Record<string, unknown> = Record<string, unknow
   }
 
   getExportData(): T[] {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const filtered = (this.dtTable as any)?.filteredValue;
-    return (filtered && Array.isArray(filtered) && filtered.length > 0) ? filtered : this.value;
+    return this.filteredValue();
   }
 
   onRowClick(row: T): void {
@@ -207,12 +377,11 @@ export class DataTable<T extends Record<string, unknown> = Record<string, unknow
       return col.filterOptions.filter(o => o.label.toLowerCase().includes(search));
     }
 
-    // Extract unique values from data
     const valuesSet = new Set<unknown>();
-    const currentData = this._value();
+    const currentData = this.filteredValue();
     if (currentData && currentData.length > 0) {
       for (const row of currentData) {
-        const val = row[col.field];
+        const val = this.resolveFieldValue(row, col.field);
         if (val !== undefined && val !== null && val !== '') {
           valuesSet.add(val);
         }
@@ -233,14 +402,8 @@ export class DataTable<T extends Record<string, unknown> = Record<string, unknow
     const updated = { ...this.activeFilters() };
     if (value === null || value === undefined || value === '') {
       delete updated[field];
-      if (this.dtTable) {
-        this.dtTable.filter(null, field, 'equals');
-      }
     } else {
       updated[field] = value;
-      if (this.dtTable) {
-        this.dtTable.filter(value, field, 'equals');
-      }
     }
     this.activeFilters.set(updated);
     if (popover) {
@@ -258,10 +421,7 @@ export class DataTable<T extends Record<string, unknown> = Record<string, unknow
     if (this.searchInputComponent) {
       this.searchInputComponent.clear();
     }
-    if (this.dtTable) {
-      this.dtTable.clear();
-      this.dtTable.filterGlobal('', 'contains');
-    }
     this.clearFilters.emit();
   }
 }
+

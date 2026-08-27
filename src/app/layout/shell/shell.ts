@@ -54,11 +54,6 @@ export class Shell implements OnInit, OnDestroy {
   private updateBreadcrumbs(url: string): void {
     const cleanUrl = url.split('?')[0];
 
-    if (cleanUrl === '/notifications') {
-      this.shellStore.setBreadcrumbs([{ label: 'Notifications', url: '/notifications' }]);
-      return;
-    }
-
     if (cleanUrl === '/profile') {
       this.shellStore.setBreadcrumbs([{ label: 'My Profile', url: '/profile' }]);
       return;

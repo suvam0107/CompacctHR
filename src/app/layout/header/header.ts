@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { AppShellStore } from '../../core/state/app-shell.store';
 import { AuthStore } from '../../core/auth/auth.store';
 import { AuthService } from '../../core/auth/auth.service';
-import { NotificationService } from '../../core/state/notification.service';
 import { InitialsPipe } from '../../shared/pipes/initials.pipe';
 
 @Component({
@@ -19,10 +18,8 @@ export class Header {
   private shellStore = inject(AppShellStore);
   private authStore = inject(AuthStore);
   private authService = inject(AuthService);
-  private notifService = inject(NotificationService);
 
   readonly user = this.authStore.user;
-  readonly unreadNotifications = this.notifService.unreadCount;
   readonly sidebarCollapsed = this.shellStore.sidebarCollapsed;
 
   isUserMenuOpen = signal<boolean>(false);
